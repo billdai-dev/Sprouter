@@ -1,10 +1,12 @@
+import 'package:rxdart/rxdart.dart';
+import 'package:sprouter/data/Repository.dart';
 import 'package:sprouter/data/local/AppLocalRepo.dart';
 import 'package:sprouter/data/local/LocalRepo.dart';
 import 'package:sprouter/data/remote/AppRemoteRepo.dart';
 import 'package:sprouter/data/remote/RemoteRepo.dart';
 
-class AppRepository {
-  static final AppRepository _repo = new AppRepository._internal();
+class AppRepository implements Repository {
+  static final AppRepository _repo = AppRepository._internal();
 
   static AppRepository get repo => _repo;
 
@@ -16,7 +18,14 @@ class AppRepository {
     _localRepo = AppLocalRepo.repo;
   }
 
-  void saveSlackToken(String token) {
-    _remoteRepo.setSlackToken(token);
+  @override
+  Observable<String> getSlackUserData({String token}) {
+    Observable<String> tokenObservable =
+    token == null ? _localRepo.loadSlackToken() : Observable.just(token);
+    return tokenObservable.concatMap((token) {
+      return _remoteRepo.getSlackUserData(token);
+    }).map((user) {
+      return user?.user?.name;
+    });
   }
 }
