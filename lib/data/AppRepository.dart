@@ -1,4 +1,5 @@
-import 'package:rxdart/rxdart.dart';
+import 'dart:async';
+
 import 'package:sprouter/data/Repository.dart';
 import 'package:sprouter/data/local/AppLocalRepo.dart';
 import 'package:sprouter/data/local/LocalRepo.dart';
@@ -19,13 +20,15 @@ class AppRepository implements Repository {
   }
 
   @override
-  Observable<String> getSlackUserData({String token}) {
-    Observable<String> tokenObservable =
-    token == null ? _localRepo.loadSlackToken() : Observable.just(token);
-    return tokenObservable.concatMap((token) {
-      return _remoteRepo.getSlackUserData(token);
-    }).map((user) {
-      return user?.user?.name;
-    });
+  Future<String> getSlackUserData({String token}) {
+    Future<String> tokenFuture = token == null
+        ? _localRepo.loadSlackToken() : getFuture(token);
+    return tokenFuture
+        .then((token) => _remoteRepo.getSlackUserData(token))
+        .then((user) => user?.user?.name);
+  }
+
+  Future<String> getFuture(String str) async {
+    return str;
   }
 }

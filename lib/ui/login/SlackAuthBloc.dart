@@ -21,9 +21,11 @@ class SlackAuthBloc {
   SlackAuthBloc({AppRepository repository})
       :this.repository = repository ?? AppRepository.repo {
     _onUserLogin.stream.listen((token) async {
-      repository.getSlackUserData(token: token).listen((userName) {
+      String userName = await this.repository.getSlackUserData(token: token);
+      _userName.sink.add(userName);
+      /*repository.getSlackUserData(token: token).listen((userName) {
         _userName.sink.add(userName);
-      });
+      });*/
     });
   }
 

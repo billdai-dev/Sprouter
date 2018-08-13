@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_slack_oauth/oauth/model/token.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/local/LocalRepo.dart';
@@ -10,12 +12,12 @@ class AppLocalRepo implements LocalRepo {
   AppLocalRepo.internal();
 
   @override
-  Observable<String> saveSlackToken(String token) {
-    return Observable.fromFuture(Token.storeAccessToken(token));
+  Future<String> saveSlackToken(String token) {
+    return Token.storeAccessToken(token);
   }
 
   @override
-  Observable<String> loadSlackToken() {
-    return Observable.fromFuture(Token.getLocalAccessToken());
+  Future<String> loadSlackToken() {
+    return Token.getLocalAccessToken();
   }
 }

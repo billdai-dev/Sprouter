@@ -6,5 +6,5 @@ import 'package:rxdart/rxdart.dart';
 abstract class RemoteRepo{
   void setSlackTokenCache(String token);
 
-  Observable<UserIdentity> getSlackUserData(String token);
+  Future<UserIdentity> getSlackUserData(String token);
 }

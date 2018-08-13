@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_slack_oauth/oauth/model/user_identity.dart';
 import 'package:flutter_slack_oauth/oauth/slack.dart' as slack;
 import 'package:rxdart/rxdart.dart';
@@ -22,7 +24,7 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Observable<UserIdentity> getSlackUserData(String token) {
-    return Observable.fromFuture(slack.getUserIdentity(token));
+  Future<UserIdentity> getSlackUserData(String token) {
+    return slack.getUserIdentity(token);
   }
 }
