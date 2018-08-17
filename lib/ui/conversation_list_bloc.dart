@@ -3,10 +3,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 
-class SlackAuthBloc {
-  final String _slackClientId = "373821001234.373821382898";
-  final String _slackClientSecret = "f0ce30315c4689da519c5281883c0667";
-
+class ConversationListBloc {
   AppRepository repository;
 
   final BehaviorSubject<String> _userName = BehaviorSubject<String>(
@@ -18,10 +15,9 @@ class SlackAuthBloc {
 
   Sink<String> get onUserLogin => _onUserLogin.sink;
 
-  SlackAuthBloc({AppRepository repository})
+  ConversationListBloc({AppRepository repository})
       :this.repository = repository ?? AppRepository.repo {
     _onUserLogin.stream.listen((token) async {
-      this.repository.setTokenCache(token);
       String userName = await this.repository.getSlackUserData(token: token);
       _userName.sink.add(userName);
       /*repository.getSlackUserData(token: token).listen((userName) {

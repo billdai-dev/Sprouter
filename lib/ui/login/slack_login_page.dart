@@ -24,12 +24,12 @@ class _SlackLoginPageState extends State<SlackLoginPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             _userName = snapshot.data;
-            *//*Scaffold.of(context).showSnackBar(SnackBar(
+            */ /*Scaffold.of(context).showSnackBar(SnackBar(
               content: Text("Hi $_userName"),
-            ));*//*
-            *//*Scaffold.of(context).showSnackBar(SnackBar(
+            ));*/ /*
+            */ /*Scaffold.of(context).showSnackBar(SnackBar(
                 content: Text("Hi ${snapshot.data}"),
-              ));*//*
+              ));*/ /*
             return Center();
           }
           return Center(
@@ -41,15 +41,15 @@ class _SlackLoginPageState extends State<SlackLoginPage> {
                   provider.bloc.onUserLogin.add(null);
                 },
                 onFailure: () {
-                  *//*Scaffold.of(context).showSnackBar(new SnackBar(
+                  */ /*Scaffold.of(context).showSnackBar(new SnackBar(
                     content: new Text('Slack Login Failed'),
-                  ));*//*
+                  ));*/ /*
                 },
                 onCancelledByUser: () {
-                  *//*Scaffold.of(context).showSnackBar(new SnackBar(
+                  */ /*Scaffold.of(context).showSnackBar(new SnackBar(
                     content: new Text(
                         'Slack Login Cancelled by user'),
-                  ));*//*
+                  ));*/ /*
                 },
               ));
         }
@@ -66,6 +66,7 @@ class SlackLoginPage extends StatelessWidget {
         stream: provider.bloc.userName,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+
             /*Scaffold.of(context).showSnackBar(SnackBar(
               content: Text("Hi $_userName"),
             ));*/
@@ -81,6 +82,7 @@ class SlackLoginPage extends StatelessWidget {
                 onSuccess: () {
                   //The library has already saved the token internally
                   provider.bloc.onUserLogin.add(null);
+                  Navigator.pushNamed(context, "/conversation_list_page");
                 },
                 onFailure: () {
                   /*Scaffold.of(context).showSnackBar(new SnackBar(
