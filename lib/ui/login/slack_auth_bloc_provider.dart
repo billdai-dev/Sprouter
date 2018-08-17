@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprouter/ui/login/SlackAuthBloc.dart';
+import 'package:sprouter/ui/login/slack_auth_bloc.dart';
 
 class SlackAuthBlocProvider extends InheritedWidget {
   final SlackAuthBloc bloc;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slack_oauth/flutter_slack_oauth.dart';
-import 'package:sprouter/ui/login/SlackAuthBlocProvider.dart';
+import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
 
 /*class SlackLoginPage extends StatefulWidget {
   @override

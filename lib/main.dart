@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sprouter/ui/login/SlackAuthBlocProvider.dart';
-import 'package:sprouter/ui/login/SlackLoginPage.dart';
+import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
+import 'package:sprouter/ui/login/slack_login_page.dart';
 
 void main() {
   int _pageIndex = 0;

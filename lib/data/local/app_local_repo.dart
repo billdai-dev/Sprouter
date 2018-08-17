@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_slack_oauth/oauth/model/token.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:sprouter/data/local/LocalRepo.dart';
+import 'package:sprouter/data/local/local_repo.dart';
 
 class AppLocalRepo implements LocalRepo {
   static final AppLocalRepo _repo = new AppLocalRepo.internal();

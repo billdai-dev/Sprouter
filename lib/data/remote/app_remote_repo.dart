@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_slack_oauth/oauth/model/user_identity.dart';
 import 'package:flutter_slack_oauth/oauth/slack.dart' as slack;
 import 'package:rxdart/rxdart.dart';
-import 'package:sprouter/data/remote/RemoteRepo.dart';
+import 'package:sprouter/data/remote/remote_repo.dart';
 
 class AppRemoteRepo implements RemoteRepo {
   static final AppRemoteRepo _repo = AppRemoteRepo.internal();

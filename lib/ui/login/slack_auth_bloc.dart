@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
-import 'package:sprouter/data/AppRepository.dart';
+import 'package:sprouter/data/app_repository.dart';
 
 class SlackAuthBloc {
   final String _slackClientId = "373821001234.373821382898";

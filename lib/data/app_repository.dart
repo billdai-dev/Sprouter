@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:sprouter/data/Repository.dart';
-import 'package:sprouter/data/local/AppLocalRepo.dart';
-import 'package:sprouter/data/local/LocalRepo.dart';
-import 'package:sprouter/data/remote/AppRemoteRepo.dart';
-import 'package:sprouter/data/remote/RemoteRepo.dart';
+import 'package:sprouter/data/repository.dart';
+import 'package:sprouter/data/local/app_local_repo.dart';
+import 'package:sprouter/data/local/local_repo.dart';
+import 'package:sprouter/data/remote/app_remote_repo.dart';
+import 'package:sprouter/data/remote/remote_repo.dart';
 
 class AppRepository implements Repository {
   static final AppRepository _repo = AppRepository._internal();
