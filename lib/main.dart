@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sprouter/ui/today_drink_page.dart';
 import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
 import 'package:sprouter/ui/login/slack_login_page.dart';
+import 'package:sprouter/ui/today_drink_page.dart';
 
 void main() {
   int _pageIndex = 0;
@@ -19,13 +19,13 @@ void main() {
             type: BottomNavigationBarType.fixed,
             items: [
               new BottomNavigationBarItem(
-                  icon: const Icon(Icons.star),
-                  title: new Text('First'),
+                  icon: const Icon(Icons.local_drink),
+                  title: new Text('Drink'),
                   backgroundColor: Colors.lightBlue
               ),
 
               new BottomNavigationBarItem(
-                  icon: const Icon(Icons.star),
+                  icon: const Icon(Icons.access_time),
                   title: new Text('Second'),
                   backgroundColor: Colors.red
               )

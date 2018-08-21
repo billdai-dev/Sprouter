@@ -70,7 +70,7 @@ class AppRemoteRepo implements RemoteRepo {
       "ts": ts
     };
     query.removeWhere((key, value) => value == null);
-    Future<Response> response = dio.get(CONVERSATION_HISTORY_PATH, data: query);
+    Future<Response> response = dio.get(CONVERSATION_REPLIES_PATH, data: query);
     return response.then((response) {
       return ConversationList.fromJson(json.encode(response.data));
     });
