@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dio/dio.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/message.dart';
@@ -44,12 +44,25 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<Response<Message>> getLunchConversations(
-      {String oldest, String latest, int count}) async {
-    Response<Message> response = await _remoteRepo.fetchLunchMessages(
-        oldest: oldest, latest: latest, count: count).catchError((error) {
-      print(error);
-    });
-    return response;
+  Future<Message> fetchLatestDrinkMessages() {
+    return _remoteRepo.fetchLunchMessages()
+        .then((conversationList) {
+      BuiltList<Message> messages = conversationList.messages;
+      Message orderBroadcastMessage = messages.firstWhere((message) =>
+          message.text.contains("今天點的是"));
+      String shopName = orderBroadcastMessage == null
+          ? "" : (orderBroadcastMessage.text.split("："))[1];
+
+      Message drinkMessage = messages.firstWhere((message) {
+        if (message.files == null) {
+          return false;
+        }
+        return message.files[0].title.contains(shopName);
+      });
+      return drinkMessage == null ? "" : drinkMessage.ts;
+    })
+        .then((drinkMessage_ts) =>
+        _remoteRepo.fetchMessageReplies(drinkMessage_ts))
+        .then((drinkThread) => drinkThread.messages[0]);
   }
 }

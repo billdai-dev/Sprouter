@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprouter/ui/conversation_list_page.dart';
+import 'package:sprouter/ui/today_drink_page.dart';
 import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
 import 'package:sprouter/ui/login/slack_login_page.dart';
 
@@ -34,7 +34,7 @@ void main() {
         )
     ),
     routes: {
-      "/conversation_list_page": (context) => ConversationListPage()
+      "/conversation_list_page": (context) => TodayDrinkPage()
     },
   ));
 }

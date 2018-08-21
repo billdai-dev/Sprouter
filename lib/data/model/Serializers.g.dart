@@ -15,13 +15,17 @@ part of 'serializers.dart';
 // ignore_for_file: sort_constructors_first
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(ConversationList.serializer)
+      ..add(File.serializer)
       ..add(Message.serializer)
-      ..add(Messages.serializer)
       ..add(Reply.serializer)
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(Messages)]),
-          () => new ListBuilder<Messages>())
+          const FullType(BuiltList, const [const FullType(Message)]),
+          () => new ListBuilder<Message>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Reply)]),
-          () => new ListBuilder<Reply>()))
+          () => new ListBuilder<Reply>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(File)]),
+          () => new ListBuilder<File>()))
     .build();

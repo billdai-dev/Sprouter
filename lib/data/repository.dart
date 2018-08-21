@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:sprouter/data/model/conversation_list.dart';
 import 'package:sprouter/data/model/message.dart';
 
 abstract class Repository {
@@ -8,6 +10,5 @@ abstract class Repository {
 
   Future<String> getSlackUserData({String token});
 
-  Future<Response<Message>> getLunchConversations(
-      {String oldest, String latest, int count});
+  Future<Message> fetchLatestDrinkMessages();
 }
