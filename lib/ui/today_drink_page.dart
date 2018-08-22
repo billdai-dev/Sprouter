@@ -71,36 +71,33 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
 
   @override
   Widget build(BuildContext context) {
-    TodayDrinkBloc bloc = TodayDrinkBloc();
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
     bloc.fetchMessage.add(null);
-    return TodayDrinkBlocProvider(
-      bloc: bloc,
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: <Widget>[
-            StreamBuilder<Map<String, dynamic>>(
-              stream:
-                  bloc.slackToken.zipWith(bloc.drinkMessage, (token, message) {
-                return {_ARG_MESSAGES: message, _ARG_TOKEN: token};
-              }),
-              builder: (context, snapshot) {
-                return SliverAppBar(
-                    expandedHeight: 250.0,
-                    pinned: true,
-                    floating: true,
-                    title: widget._createTitle(snapshot),
-                    flexibleSpace: FlexibleSpaceBar(
-                        background: widget._createImage(snapshot)));
-              },
-            ),
-            StreamBuilder<BuiltList<Message>>(
-              stream: bloc.drinkMessage,
-              builder: (context, snapshot) {
-                return widget._createReplyListView(context, snapshot.data);
-              },
-            )
-          ],
-        ),
+    return Scaffold(
+      body: CustomScrollView(
+        slivers: <Widget>[
+          StreamBuilder<Map<String, dynamic>>(
+            stream:
+                bloc.slackToken.zipWith(bloc.drinkMessage, (token, message) {
+              return {_ARG_MESSAGES: message, _ARG_TOKEN: token};
+            }),
+            builder: (context, snapshot) {
+              return SliverAppBar(
+                  expandedHeight: 250.0,
+                  pinned: true,
+                  floating: true,
+                  title: widget._createTitle(snapshot),
+                  flexibleSpace: FlexibleSpaceBar(
+                      background: widget._createImage(snapshot)));
+            },
+          ),
+          StreamBuilder<BuiltList<Message>>(
+            stream: bloc.drinkMessage,
+            builder: (context, snapshot) {
+              return widget._createReplyListView(context, snapshot.data);
+            },
+          )
+        ],
       ),
     );
   }

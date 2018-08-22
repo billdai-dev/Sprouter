@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
 import 'package:sprouter/ui/login/slack_login_page.dart';
+import 'package:sprouter/ui/today_drink_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink_page.dart';
 
 void main() {
@@ -27,6 +28,10 @@ void main() {
                   title: new Text('Second'),
                   backgroundColor: Colors.red)
             ])),
-    routes: {"/conversation_list_page": (context) => TodayDrinkPage()},
+    routes: {
+      "/conversation_list_page": (context) => TodayDrinkBlocProvider(
+            child: TodayDrinkPage(),
+          )
+    },
   ));
 }
