@@ -21,20 +21,12 @@ void main() {
               new BottomNavigationBarItem(
                   icon: const Icon(Icons.local_drink),
                   title: new Text('Drink'),
-                  backgroundColor: Colors.lightBlue
-              ),
-
+                  backgroundColor: Colors.lightBlue),
               new BottomNavigationBarItem(
                   icon: const Icon(Icons.access_time),
                   title: new Text('Second'),
-                  backgroundColor: Colors.red
-              )
-            ]
-
-        )
-    ),
-    routes: {
-      "/conversation_list_page": (context) => TodayDrinkPage()
-    },
+                  backgroundColor: Colors.red)
+            ])),
+    routes: {"/conversation_list_page": (context) => TodayDrinkPage()},
   ));
 }

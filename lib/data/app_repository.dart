@@ -21,22 +21,24 @@ class AppRepository implements Repository {
     _localRepo = AppLocalRepo.repo;
   }
 
-
   @override
   void setTokenCache(String token) {
     _remoteRepo.setSlackTokenCache(token);
   }
 
   @override
+  Future<String> getTokenCache() {
+    return _localRepo.loadSlackToken();
+  }
+
+  @override
   Future<String> getSlackUserData({String token}) {
-    Future<String> tokenFuture = token == null
-        ? _localRepo.loadSlackToken() : getFuture(token);
-    return tokenFuture
-        .then((token) {
+    Future<String> tokenFuture =
+        token == null ? _localRepo.loadSlackToken() : getFuture(token);
+    return tokenFuture.then((token) {
       _remoteRepo.setSlackTokenCache(token);
       return _remoteRepo.getSlackUserData(token);
-    })
-        .then((user) => user?.user?.name);
+    }).then((user) => user?.user?.name);
   }
 
   Future<String> getFuture(String str) async {
@@ -44,25 +46,29 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<Message> fetchLatestDrinkMessages() {
-    return _remoteRepo.fetchLunchMessages()
-        .then((conversationList) {
-      BuiltList<Message> messages = conversationList.messages;
-      Message orderBroadcastMessage = messages.firstWhere((message) =>
-          message.text.contains("今天點的是"));
-      String shopName = orderBroadcastMessage == null
-          ? "" : (orderBroadcastMessage.text.split("："))[1];
+  Future<BuiltList<Message>> fetchLatestDrinkMessages() {
+    const String ORDER_BROADCAST_KEYWORD = "今天點的是";
 
-      Message drinkMessage = messages.firstWhere((message) {
-        if (message.files == null) {
-          return false;
-        }
-        return message.files[0].title.contains(shopName);
-      });
-      return drinkMessage == null ? "" : drinkMessage.ts;
-    })
+    return _remoteRepo
+        .fetchLunchMessages()
+        .then((conversationList) {
+          BuiltList<Message> messages = conversationList.messages;
+          Message orderBroadcastMessage = messages.firstWhere(
+              (message) => message.text.contains(ORDER_BROADCAST_KEYWORD));
+          String shopName = orderBroadcastMessage == null
+              ? ""
+              : (orderBroadcastMessage.text.split("："))[1];
+
+          Message drinkMessage = messages.firstWhere((message) {
+            if (message.files == null) {
+              return false;
+            }
+            return message.files[0].title.contains(shopName);
+          });
+          return drinkMessage == null ? "" : drinkMessage.ts;
+        })
         .then((drinkMessage_ts) =>
-        _remoteRepo.fetchMessageReplies(drinkMessage_ts))
-        .then((drinkThread) => drinkThread.messages[0]);
+            _remoteRepo.fetchMessageReplies(drinkMessage_ts))
+        .then((drinkThread) => drinkThread.messages);
   }
 }
