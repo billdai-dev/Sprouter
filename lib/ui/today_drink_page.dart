@@ -6,6 +6,8 @@ import 'package:sprouter/ui/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink_bloc_provider.dart';
 
 class TodayDrinkPage extends StatefulWidget {
+  TodayDrinkPage({Key key}) : super(key: key);
+
   @override
   TodayDrinkPageState createState() {
     return new TodayDrinkPageState();
@@ -72,13 +74,13 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
   @override
   Widget build(BuildContext context) {
     TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
-    bloc.fetchMessage.add(null);
+    bloc?.fetchMessage?.add(null);
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           StreamBuilder<Map<String, dynamic>>(
             stream:
-                bloc.slackToken.zipWith(bloc.drinkMessage, (token, message) {
+                bloc?.slackToken?.zipWith(bloc?.drinkMessage, (token, message) {
               return {_ARG_MESSAGES: message, _ARG_TOKEN: token};
             }),
             builder: (context, snapshot) {
@@ -92,7 +94,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
             },
           ),
           StreamBuilder<BuiltList<Message>>(
-            stream: bloc.drinkMessage,
+            stream: bloc?.drinkMessage,
             builder: (context, snapshot) {
               return widget._createReplyListView(context, snapshot.data);
             },

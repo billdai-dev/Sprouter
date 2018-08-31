@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_slack_oauth/flutter_slack_oauth.dart';
 import 'package:flutter_slack_oauth/oauth/model/user_identity.dart';
 import 'package:flutter_slack_oauth/oauth/slack.dart' as slack;
 import 'package:sprouter/data/model/conversation_list.dart';
@@ -26,8 +27,9 @@ class AppRemoteRepo implements RemoteRepo {
   static const String CONVERSATION_HISTORY_PATH = "/api/conversations.history";
   static const String CONVERSATION_REPLIES_PATH = "/api/conversations.replies";
 
-  AppRemoteRepo.internal(){
-    dio.interceptor.request.onSend = (Options options) {
+  AppRemoteRepo.internal() {
+    dio.interceptor.request.onSend = (Options options) async {
+      _slackToken ??= await Token.getLocalAccessToken();
       options.headers.update(
           "Authorization", (token) => "Bearer " + _slackToken,
           ifAbsent: () => "Bearer " + _slackToken);
@@ -65,16 +67,11 @@ class AppRemoteRepo implements RemoteRepo {
 
   @override
   Future<ConversationList> fetchMessageReplies(String ts) {
-    var query = {
-      "channel": "CAZQ503L2",
-      "ts": ts
-    };
+    var query = {"channel": "CAZQ503L2", "ts": ts};
     query.removeWhere((key, value) => value == null);
     Future<Response> response = dio.get(CONVERSATION_REPLIES_PATH, data: query);
     return response.then((response) {
       return ConversationList.fromJson(json.encode(response.data));
     });
   }
-
-
 }

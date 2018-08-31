@@ -4,7 +4,7 @@ import 'package:sprouter/ui/today_drink_bloc.dart';
 class TodayDrinkBlocProvider extends StatefulWidget {
   final Widget child;
 
-  TodayDrinkBlocProvider({this.child});
+  TodayDrinkBlocProvider({Key key, this.child}) : super(key: key);
 
   @override
   _TodayDrinkBlocProviderState createState() =>
@@ -13,7 +13,7 @@ class TodayDrinkBlocProvider extends StatefulWidget {
   static TodayDrinkBloc of(BuildContext context) =>
       (context.inheritFromWidgetOfExactType(_TodayDrinkBlocProvider)
               as _TodayDrinkBlocProvider)
-          .bloc;
+          ?.bloc;
 }
 
 class _TodayDrinkBlocProviderState extends State<TodayDrinkBlocProvider> {
