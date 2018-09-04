@@ -7,8 +7,7 @@ class TodayDrinkBlocProvider extends StatefulWidget {
   TodayDrinkBlocProvider({Key key, this.child}) : super(key: key);
 
   @override
-  _TodayDrinkBlocProviderState createState() =>
-      new _TodayDrinkBlocProviderState();
+  _TodayDrinkBlocProviderState createState() => _TodayDrinkBlocProviderState();
 
   static TodayDrinkBloc of(BuildContext context) =>
       (context.inheritFromWidgetOfExactType(_TodayDrinkBlocProvider)
@@ -17,7 +16,13 @@ class TodayDrinkBlocProvider extends StatefulWidget {
 }
 
 class _TodayDrinkBlocProviderState extends State<TodayDrinkBlocProvider> {
-  final TodayDrinkBloc _bloc = TodayDrinkBloc();
+  TodayDrinkBloc _bloc;
+
+  @override
+  void initState() {
+    _bloc = TodayDrinkBloc();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

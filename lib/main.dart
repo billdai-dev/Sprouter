@@ -7,11 +7,6 @@ import 'package:sprouter/ui/today_drink_page.dart';
 void main() {
   runApp(new MaterialApp(
     home: MainPage(),
-    routes: {
-      "/conversation_list_page": (context) => TodayDrinkBlocProvider(
-            child: TodayDrinkPage(),
-          )
-    },
   ));
 }
 
@@ -21,7 +16,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  BottomNavigationBar _bottomNavigationBar;
   final Key _todayDrinkPage_key = PageStorageKey("TodayDrinkPage");
   final Key _jibblerPage_key = PageStorageKey("JibblerPage");
 
@@ -39,25 +33,45 @@ class _MainPageState extends State<MainPage> {
               title: Text("Sprouter"),
             ),
       body: _pages[_pageIndex],
-      bottomNavigationBar: _bottomNavigationBar,
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _pageIndex,
+          onTap: (index) {
+            setState(() {
+              _pageIndex = index;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          items: [
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.local_drink),
+              title: Text('Drink'),
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(
+                Icons.access_time,
+                color: Colors.orange,
+              ),
+              title: Text('Jibbler'),
+            )
+          ]),
     );
   }
 
   @override
   void initState() {
-    _todayDrinkPage = TodayDrinkPage(
+    /*_todayDrinkPage = TodayDrinkPage(
       key: _todayDrinkPage_key,
-    );
-    /*_todayDrinkPage = TodayDrinkBlocProvider(
-      key: _todayDrinkPage_key,
-      child: TodayDrinkPage(key: _todayDrinkPage_key),
     );*/
+    _todayDrinkPage = TodayDrinkBlocProvider(
+      //key: _todayDrinkPage_key,
+      child: TodayDrinkPage(key: _todayDrinkPage_key),
+    );
     _jibblerPage = SlackAuthBlocProvider(
       child: SlackLoginPage(),
     );
     _pages = [_todayDrinkPage, _jibblerPage];
 
-    _bottomNavigationBar = BottomNavigationBar(
+    /*_bottomNavigationBar = BottomNavigationBar(
         currentIndex: _pageIndex,
         onTap: (index) {
           setState(() {
@@ -77,7 +91,7 @@ class _MainPageState extends State<MainPage> {
             ),
             title: Text('Jibbler'),
           )
-        ]);
+        ]);*/
     super.initState();
   }
 }

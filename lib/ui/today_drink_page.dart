@@ -10,7 +10,7 @@ class TodayDrinkPage extends StatefulWidget {
 
   @override
   TodayDrinkPageState createState() {
-    return new TodayDrinkPageState();
+    return TodayDrinkPageState();
   }
 
   Widget _createReplyListView(
