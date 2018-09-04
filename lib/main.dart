@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
-import 'package:sprouter/ui/login/slack_login_page.dart';
-import 'package:sprouter/ui/today_drink_bloc_provider.dart';
-import 'package:sprouter/ui/today_drink_page.dart';
+import 'package:sprouter/ui/tab_navigator.dart';
 
 void main() {
   runApp(new MaterialApp(
@@ -16,82 +13,61 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final Key _todayDrinkPage_key = PageStorageKey("TodayDrinkPage");
-  final Key _jibblerPage_key = PageStorageKey("JibblerPage");
+  Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+    0: GlobalKey<NavigatorState>(),
+    1: GlobalKey<NavigatorState>(),
+  };
 
-  Widget _todayDrinkPage;
-  Widget _jibblerPage;
-  List<Widget> _pages;
-  int _pageIndex = 0;
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: _pageIndex == 0
-          ? null
-          : AppBar(
-              title: Text("Sprouter"),
-            ),
-      body: _pages[_pageIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _pageIndex,
-          onTap: (index) {
-            setState(() {
-              _pageIndex = index;
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.local_drink),
-              title: Text('Drink'),
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(
-                Icons.access_time,
-                color: Colors.orange,
+    return WillPopScope(
+      onWillPop: () async {
+        return !await navigatorKeys[_currentPage].currentState.maybePop();
+      },
+      child: Scaffold(
+        appBar: _currentPage == 0
+            ? null
+            : AppBar(
+                title: Text("Sprouter"),
               ),
-              title: Text('Jibbler'),
-            )
-          ]),
+        body: Stack(children: <Widget>[
+          _buildOffstageNavigator(0),
+          _buildOffstageNavigator(1),
+        ]),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentPage,
+            onTap: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.local_drink),
+                title: Text('Drink'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(
+                  Icons.access_time,
+                  color: Colors.orange,
+                ),
+                title: Text('Jibbler'),
+              )
+            ]),
+      ),
     );
   }
 
-  @override
-  void initState() {
-    /*_todayDrinkPage = TodayDrinkPage(
-      key: _todayDrinkPage_key,
-    );*/
-    _todayDrinkPage = TodayDrinkBlocProvider(
-      //key: _todayDrinkPage_key,
-      child: TodayDrinkPage(key: _todayDrinkPage_key),
+  Widget _buildOffstageNavigator(int pageIndex) {
+    return Offstage(
+      offstage: _currentPage != pageIndex,
+      child: TabNavigator(
+        pageIndex,
+        navigatorKey: navigatorKeys[pageIndex],
+      ),
     );
-    _jibblerPage = SlackAuthBlocProvider(
-      child: SlackLoginPage(),
-    );
-    _pages = [_todayDrinkPage, _jibblerPage];
-
-    /*_bottomNavigationBar = BottomNavigationBar(
-        currentIndex: _pageIndex,
-        onTap: (index) {
-          setState(() {
-            _pageIndex = index;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.local_drink),
-            title: Text('Drink'),
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(
-              Icons.access_time,
-              color: Colors.orange,
-            ),
-            title: Text('Jibbler'),
-          )
-        ]);*/
-    super.initState();
   }
 }

@@ -6,7 +6,9 @@ import 'package:sprouter/ui/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink_bloc_provider.dart';
 
 class TodayDrinkPage extends StatefulWidget {
-  TodayDrinkPage({Key key}) : super(key: key);
+  final GestureTapCallback onItemClick;
+
+  TodayDrinkPage(this.onItemClick, {Key key}) : super(key: key);
 
   @override
   TodayDrinkPageState createState() {
@@ -28,6 +30,7 @@ class TodayDrinkPage extends StatefulWidget {
                 children: <Widget>[
                   ListTile(
                     title: Text(replies[index].text),
+                    onTap: onItemClick,
                   ),
                   Divider(height: 2.0)
                 ],
