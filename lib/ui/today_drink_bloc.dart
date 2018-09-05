@@ -13,6 +13,10 @@ class TodayDrinkBloc {
 
   Stream<BuiltList<Message>> get drinkMessage => _drinkMessage.stream;
 
+  final BehaviorSubject<bool> _isOrdering = BehaviorSubject(seedValue: null);
+
+  Stream<bool> get isOrdering => _isOrdering.stream;
+
   final BehaviorSubject<String> _slackToken = BehaviorSubject(seedValue: null);
 
   Observable<String> get slackToken => _slackToken.stream;
@@ -26,6 +30,10 @@ class TodayDrinkBloc {
     _fetchMessage.stream.listen((_) async {
       BuiltList<Message> drinkThread =
           await this.repository.fetchLatestDrinkMessages();
+      List<Message> orderKeywords = drinkThread.where((message) {
+        return message.text == "點單" || message.text == "收單";
+      }).toList(growable: false);
+      _isOrdering.sink.add(orderKeywords.length.isOdd);
       _drinkMessage.sink.add(drinkThread);
 
       String token = await this.repository.getTokenCache();
@@ -34,6 +42,8 @@ class TodayDrinkBloc {
   }
 
   void dispose() {
+    _isOrdering?.close();
+    _slackToken?.close();
     _drinkMessage?.close();
     _fetchMessage?.close();
   }

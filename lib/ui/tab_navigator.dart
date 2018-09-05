@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
 import 'package:sprouter/ui/login/slack_login_page.dart';
-import 'package:sprouter/ui/today_drink_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink_page.dart';
 
 class TabNavigatorRoutes {
@@ -31,19 +29,12 @@ class TabNavigator extends StatelessWidget {
     switch (pageIndex) {
       case 0:
         return {
-          TabNavigatorRoutes.ROOT: (context) => TodayDrinkBlocProvider(
-                child: TodayDrinkPage(() => _push(context, pageIndex)),
-              ),
-          TabNavigatorRoutes.ORDER_DRINK: (context) => SlackAuthBlocProvider(
-                child: SlackLoginPage(),
-              ),
+          TabNavigatorRoutes.ROOT: (context) =>
+              TodayDrinkPage(() => _push(context, pageIndex)),
+          TabNavigatorRoutes.ORDER_DRINK: (context) => SlackLoginPage()
         };
       case 1:
-        return {
-          TabNavigatorRoutes.ROOT: (context) => SlackAuthBlocProvider(
-                child: SlackLoginPage(),
-              ),
-        };
+        return {TabNavigatorRoutes.ROOT: (context) => SlackLoginPage()};
       default:
         return null;
     }

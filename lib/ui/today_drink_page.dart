@@ -1,6 +1,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slack_oauth/oauth/slack_login.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/ui/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink_bloc_provider.dart';
@@ -23,6 +25,12 @@ class TodayDrinkPage extends StatefulWidget {
         replies.isEmpty) {
       return SliverFillRemaining(
           child: Center(child: CircularProgressIndicator()));
+    }
+    Message lastOrderKeywords = drinkThread.lastWhere((message) {
+      return message.text == "點單" || message.text == "收單";
+    }, orElse: () => null);
+    if (lastOrderKeywords == null || lastOrderKeywords.text == "收單") {
+      return SliverFillRemaining(child: Center(child: Text("Closed")));
     }
     return SliverList(
       delegate: SliverChildBuilderDelegate(
@@ -73,11 +81,16 @@ class TodayDrinkPage extends StatefulWidget {
 class TodayDrinkPageState extends State<TodayDrinkPage> {
   static const String _ARG_TOKEN = "token";
   static const String _ARG_MESSAGES = "messages";
+  bool _isInited = false;
 
   @override
   Widget build(BuildContext context) {
     TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
-    bloc?.fetchMessage?.add(null);
+    if (!_isInited) {
+      bloc?.fetchMessage?.add(null);
+      _isInited = true;
+    }
+
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -90,8 +103,33 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
               return SliverAppBar(
                   expandedHeight: 250.0,
                   pinned: true,
-                  floating: true,
+                  floating: false,
                   title: widget._createTitle(snapshot),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(
+                        FontAwesomeIcons.slack,
+                      ),
+                      onPressed: () async {
+                        bool success = await Navigator.of(context)
+                            .push(MaterialPageRoute<bool>(
+                          builder: (BuildContext context) =>
+                              new SlackLoginWebViewPage(
+                                clientId: "373821001234.373821382898",
+                                clientSecret:
+                                    "f0ce30315c4689da519c5281883c0667",
+                                redirectUrl:
+                                    "https://kunstmaan.github.io/flutter_slack_oauth/success.html",
+                              ),
+                        ));
+                        if (success) {
+                          TodayDrinkBlocProvider.of(context)
+                              .fetchMessage
+                              .add(null);
+                        }
+                      },
+                    )
+                  ],
                   flexibleSpace: FlexibleSpaceBar(
                       background: widget._createImage(snapshot)));
             },

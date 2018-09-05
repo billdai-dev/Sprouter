@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
 import 'package:sprouter/ui/tab_navigator.dart';
+import 'package:sprouter/ui/today_drink_bloc_provider.dart';
 
 void main() {
   runApp(new MaterialApp(
@@ -22,41 +24,45 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return !await navigatorKeys[_currentPage].currentState.maybePop();
-      },
-      child: Scaffold(
-        appBar: _currentPage == 0
-            ? null
-            : AppBar(
-                title: Text("Sprouter"),
-              ),
-        body: Stack(children: <Widget>[
-          _buildOffstageNavigator(0),
-          _buildOffstageNavigator(1),
-        ]),
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentPage,
-            onTap: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.local_drink),
-                title: Text('Drink'),
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(
-                  Icons.access_time,
-                  color: Colors.orange,
-                ),
-                title: Text('Jibbler'),
-              )
+    return SlackAuthBlocProvider(
+      child: TodayDrinkBlocProvider(
+        child: WillPopScope(
+          onWillPop: () async {
+            return !await navigatorKeys[_currentPage].currentState.maybePop();
+          },
+          child: Scaffold(
+            appBar: _currentPage == 0
+                ? null
+                : AppBar(
+                    title: Text("Sprouter"),
+                  ),
+            body: Stack(children: <Widget>[
+              _buildOffstageNavigator(0),
+              _buildOffstageNavigator(1),
             ]),
+            bottomNavigationBar: BottomNavigationBar(
+                currentIndex: _currentPage,
+                onTap: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+                type: BottomNavigationBarType.fixed,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: const Icon(Icons.local_drink),
+                    title: Text('Drink'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(
+                      Icons.access_time,
+                      color: Colors.orange,
+                    ),
+                    title: Text('Jibbler'),
+                  )
+                ]),
+          ),
+        ),
       ),
     );
   }

@@ -67,8 +67,8 @@ class AppRepository implements Repository {
           });
           return drinkMessage == null ? "" : drinkMessage.ts;
         })
-        .then((drinkMessage_ts) =>
-            _remoteRepo.fetchMessageReplies(drinkMessage_ts))
+        .then(
+            (drinkMessageTs) => _remoteRepo.fetchMessageReplies(drinkMessageTs))
         .then((drinkThread) => drinkThread.messages);
   }
 }

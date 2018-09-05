@@ -48,6 +48,9 @@ class _TodayDrinkBlocProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
+    if (oldWidget is _TodayDrinkBlocProvider) {
+      return oldWidget.bloc != bloc;
+    }
     return oldWidget != this;
   }
 }
