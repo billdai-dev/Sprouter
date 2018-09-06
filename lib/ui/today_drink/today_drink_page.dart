@@ -1,5 +1,9 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slack_oauth/oauth/slack_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -9,6 +13,8 @@ import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
 class TodayDrinkPage extends StatefulWidget {
+  static const String _ARG_TOKEN = "token";
+  static const String _ARG_MESSAGES = "messages";
   final GestureTapCallback onItemClick;
 
   TodayDrinkPage(this.onItemClick, {Key key}) : super(key: key);
@@ -16,6 +22,71 @@ class TodayDrinkPage extends StatefulWidget {
   @override
   TodayDrinkPageState createState() {
     return TodayDrinkPageState();
+  }
+
+  Widget _createScaffoldBody(BuildContext context, bool withRefreshIndicator) {
+    return withRefreshIndicator
+        ? RefreshIndicator(
+            child: _createScrollView(context),
+            onRefresh: () => _createRefreshCallback(context),
+          )
+        : _createScrollView(context);
+  }
+
+  Widget _createScrollView(BuildContext context) {
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    return CustomScrollView(
+      slivers: <Widget>[
+        StreamBuilder<Map<String, dynamic>>(
+          stream:
+              bloc?.slackToken?.zipWith(bloc?.drinkMessage, (token, message) {
+            return {_ARG_MESSAGES: message, _ARG_TOKEN: token};
+          }),
+          builder: (context, snapshot) {
+            return SliverAppBar(
+                expandedHeight: 250.0,
+                pinned: true,
+                floating: false,
+                title: _createTitle(snapshot),
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      FontAwesomeIcons.slack,
+                    ),
+                    onPressed: () async {
+                      bool success = await Navigator.of(context)
+                          .push(MaterialPageRoute<bool>(
+                        builder: (BuildContext context) =>
+                            new SlackLoginWebViewPage(
+                              clientId: "373821001234.373821382898",
+                              clientSecret: "f0ce30315c4689da519c5281883c0667",
+                              redirectUrl:
+                                  "https://kunstmaan.github.io/flutter_slack_oauth/success.html",
+                            ),
+                      ));
+                      if (success) {
+                        TodayDrinkBlocProvider.of(context)
+                            .fetchMessage
+                            .add(null);
+                      }
+                    },
+                  )
+                ],
+                flexibleSpace: FlexibleSpaceBar(
+                    background: _createImage(context, snapshot)));
+          },
+        ),
+        CupertinoSliverRefreshControl(
+          onRefresh: () => _createRefreshCallback(context),
+        ),
+        StreamBuilder<BuiltList<Message>>(
+          stream: bloc?.drinkMessage,
+          builder: (context, snapshot) {
+            return _createReplyListView(context, snapshot.data);
+          },
+        )
+      ],
+    );
   }
 
   Widget _createReplyListView(
@@ -52,8 +123,7 @@ class TodayDrinkPage extends StatefulWidget {
     if (!snapshot.hasData) {
       return Text("");
     }
-    BuiltList<Message> drinkThread =
-        snapshot.data[TodayDrinkPageState._ARG_MESSAGES];
+    BuiltList<Message> drinkThread = snapshot.data[_ARG_MESSAGES];
     List<String> parsedTitle = drinkThread[0]?.files[0]?.title?.split(" ");
     String shopName =
         parsedTitle.isEmpty || parsedTitle.length < 2 ? "" : parsedTitle[1];
@@ -71,11 +141,10 @@ class TodayDrinkPage extends StatefulWidget {
           color: Colors.grey,
           child: Center(child: CircularProgressIndicator()));
     }
-    BuiltList<Message> messages =
-        snapshot.data[TodayDrinkPageState._ARG_MESSAGES];
+    BuiltList<Message> messages = snapshot.data[_ARG_MESSAGES];
 
     String imageUrl = messages[0].files[0].urlPrivate;
-    String token = snapshot.data[TodayDrinkPageState._ARG_TOKEN];
+    String token = snapshot.data[_ARG_TOKEN];
 
     return Container(
       color: Colors.grey,
@@ -99,11 +168,20 @@ class TodayDrinkPage extends StatefulWidget {
       ),
     );
   }
+
+  Future<void> _createRefreshCallback(BuildContext context) async {
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    bloc?.fetchMessage?.add(null);
+    try {
+      await bloc.drinkMessage.timeout(Duration(seconds: 3)).forEach((messages) {
+        print(messages);
+      });
+    } catch (e) {}
+    return null;
+  }
 }
 
 class TodayDrinkPageState extends State<TodayDrinkPage> {
-  static const String _ARG_TOKEN = "token";
-  static const String _ARG_MESSAGES = "messages";
   bool _isInited = false;
 
   @override
@@ -115,56 +193,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
     }
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          StreamBuilder<Map<String, dynamic>>(
-            stream:
-                bloc?.slackToken?.zipWith(bloc?.drinkMessage, (token, message) {
-              return {_ARG_MESSAGES: message, _ARG_TOKEN: token};
-            }),
-            builder: (context, snapshot) {
-              return SliverAppBar(
-                  expandedHeight: 250.0,
-                  pinned: true,
-                  floating: false,
-                  title: widget._createTitle(snapshot),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(
-                        FontAwesomeIcons.slack,
-                      ),
-                      onPressed: () async {
-                        bool success = await Navigator.of(context)
-                            .push(MaterialPageRoute<bool>(
-                          builder: (BuildContext context) =>
-                              new SlackLoginWebViewPage(
-                                clientId: "373821001234.373821382898",
-                                clientSecret:
-                                    "f0ce30315c4689da519c5281883c0667",
-                                redirectUrl:
-                                    "https://kunstmaan.github.io/flutter_slack_oauth/success.html",
-                              ),
-                        ));
-                        if (success) {
-                          TodayDrinkBlocProvider.of(context)
-                              .fetchMessage
-                              .add(null);
-                        }
-                      },
-                    )
-                  ],
-                  flexibleSpace: FlexibleSpaceBar(
-                      background: widget._createImage(context, snapshot)));
-            },
-          ),
-          StreamBuilder<BuiltList<Message>>(
-            stream: bloc?.drinkMessage,
-            builder: (context, snapshot) {
-              return widget._createReplyListView(context, snapshot.data);
-            },
-          )
-        ],
-      ),
+      body: widget._createScaffoldBody(context, Platform.isAndroid),
     );
   }
 }
