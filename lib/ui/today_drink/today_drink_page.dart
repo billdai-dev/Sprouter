@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slack_oauth/oauth/slack_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sprouter/data/model/message.dart';
-import 'package:sprouter/ui/today_drink_bloc.dart';
-import 'package:sprouter/ui/today_drink_bloc_provider.dart';
+import 'package:sprouter/ui/today_drink/detail_photo/detail_photo_page.dart';
+import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
+import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
 class TodayDrinkPage extends StatefulWidget {
   final GestureTapCallback onItemClick;
@@ -56,25 +57,47 @@ class TodayDrinkPage extends StatefulWidget {
     List<String> parsedTitle = drinkThread[0]?.files[0]?.title?.split(" ");
     String shopName =
         parsedTitle.isEmpty || parsedTitle.length < 2 ? "" : parsedTitle[1];
-    return Text(shopName);
+    return Text(
+      shopName,
+      style: TextStyle(
+        color: Colors.black87,
+      ),
+    );
   }
 
-  Widget _createImage(AsyncSnapshot snapshot) {
+  Widget _createImage(BuildContext context, AsyncSnapshot snapshot) {
     if (!snapshot.hasData) {
       return Container(
           color: Colors.grey,
           child: Center(child: CircularProgressIndicator()));
     }
-    String token = snapshot.data[TodayDrinkPageState._ARG_TOKEN];
     BuiltList<Message> messages =
         snapshot.data[TodayDrinkPageState._ARG_MESSAGES];
+
+    String imageUrl = messages[0].files[0].urlPrivate;
+    String token = snapshot.data[TodayDrinkPageState._ARG_TOKEN];
+
     return Container(
-        color: Colors.grey,
-        child: CachedNetworkImage(
+      color: Colors.grey,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context, rootNavigator: false).push(
+            MaterialPageRoute(
+              builder: (context) => DetailPhotoPage(imageUrl, token),
+            ),
+          );
+        },
+        child: Hero(
+          tag: "photo",
+          child: CachedNetworkImage(
             placeholder: Center(child: CircularProgressIndicator()),
             imageUrl: messages[0].files[0].urlPrivate,
             fit: BoxFit.contain,
-            httpHeaders: {"Authorization": "Bearer $token"}));
+            httpHeaders: {"Authorization": "Bearer $token"},
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -131,7 +154,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
                     )
                   ],
                   flexibleSpace: FlexibleSpaceBar(
-                      background: widget._createImage(snapshot)));
+                      background: widget._createImage(context, snapshot)));
             },
           ),
           StreamBuilder<BuiltList<Message>>(

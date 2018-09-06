@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprouter/ui/login/slack_login_page.dart';
-import 'package:sprouter/ui/today_drink_page.dart';
+import 'package:sprouter/ui/today_drink/today_drink_page.dart';
 
 class TabNavigatorRoutes {
   static const String ROOT = '/';
@@ -10,6 +10,7 @@ class TabNavigatorRoutes {
 
 class TabNavigator extends StatelessWidget {
   final int _pageIndex;
+
   TabNavigator(this._pageIndex, {this.navigatorKey});
 
   final GlobalKey<NavigatorState> navigatorKey;
@@ -45,11 +46,13 @@ class TabNavigator extends StatelessWidget {
     Map<String, WidgetBuilder> routeBuilders =
         _routeBuilders(context, _pageIndex);
     return Navigator(
-        key: navigatorKey,
-        initialRoute: TabNavigatorRoutes.ROOT,
-        onGenerateRoute: (routeSettings) {
-          return MaterialPageRoute(
-              builder: (context) => routeBuilders[routeSettings.name](context));
-        });
+      key: navigatorKey,
+      initialRoute: TabNavigatorRoutes.ROOT,
+      onGenerateRoute: (routeSettings) {
+        return MaterialPageRoute(
+            builder: (context) => routeBuilders[routeSettings.name](context));
+      },
+      observers: [HeroController()],
+    );
   }
 }

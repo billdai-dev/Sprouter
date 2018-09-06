@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slack_oauth/flutter_slack_oauth.dart';
 import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
-import 'package:sprouter/ui/today_drink_bloc_provider.dart';
-import 'package:sprouter/ui/today_drink_page.dart';
+import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
+import 'package:sprouter/ui/today_drink/today_drink_page.dart';
 
 /*class SlackLoginPage extends StatefulWidget {
   @override
@@ -86,7 +86,7 @@ class SlackLoginPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => TodayDrinkBlocProvider(
-                        child: TodayDrinkPage(),
+                        child: TodayDrinkPage(() {}),
                       ),
                 ),
               );

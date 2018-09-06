@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprouter/ui/today_drink_bloc.dart';
+import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 
 class TodayDrinkBlocProvider extends StatefulWidget {
   final Widget child;
