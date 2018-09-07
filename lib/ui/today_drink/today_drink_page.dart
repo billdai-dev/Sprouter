@@ -9,6 +9,7 @@ import 'package:flutter_slack_oauth/oauth/slack_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/ui/today_drink/detail_photo/detail_photo_page.dart';
+import 'package:sprouter/ui/today_drink/order_drink/order_drink_page.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
@@ -194,6 +195,18 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
               child: _createScrollView(context),
               onRefresh: () => _createRefreshCallback(context),
             ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          FontAwesomeIcons.plus,
+        ),
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(
+              builder: (context) => OrderDrinkPage(),
+            ),
+          );
+        },
+      ),
     );
   }
 }
