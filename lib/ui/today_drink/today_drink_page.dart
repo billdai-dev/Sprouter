@@ -13,8 +13,6 @@ import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
 class TodayDrinkPage extends StatefulWidget {
-  static const String _ARG_TOKEN = "token";
-  static const String _ARG_MESSAGES = "messages";
   final GestureTapCallback onItemClick;
 
   TodayDrinkPage(this.onItemClick, {Key key}) : super(key: key);
@@ -23,15 +21,17 @@ class TodayDrinkPage extends StatefulWidget {
   TodayDrinkPageState createState() {
     return TodayDrinkPageState();
   }
+}
 
-  Widget _createScaffoldBody(BuildContext context, bool withRefreshIndicator) {
-    return withRefreshIndicator
-        ? RefreshIndicator(
-            child: _createScrollView(context),
-            onRefresh: () => _createRefreshCallback(context),
-          )
-        : _createScrollView(context);
-  }
+class TodayDrinkPageState extends State<TodayDrinkPage> {
+  static const String _ARG_TOKEN = "token";
+  static const String _ARG_MESSAGES = "messages";
+  static const String _CLIENT_ID = "373821001234.373821382898";
+  static const String _CLIENT_SECRET = "f0ce30315c4689da519c5281883c0667";
+  static const String _REDIRECT_URL =
+      "https://kunstmaan.github.io/flutter_slack_oauth/success.html";
+
+  bool _isInited = false;
 
   Widget _createScrollView(BuildContext context) {
     TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
@@ -58,10 +58,9 @@ class TodayDrinkPage extends StatefulWidget {
                           .push(MaterialPageRoute<bool>(
                         builder: (BuildContext context) =>
                             new SlackLoginWebViewPage(
-                              clientId: "373821001234.373821382898",
-                              clientSecret: "f0ce30315c4689da519c5281883c0667",
-                              redirectUrl:
-                                  "https://kunstmaan.github.io/flutter_slack_oauth/success.html",
+                              clientId: _CLIENT_ID,
+                              clientSecret: _CLIENT_SECRET,
+                              redirectUrl: _REDIRECT_URL,
                             ),
                       ));
                       if (success) {
@@ -110,7 +109,7 @@ class TodayDrinkPage extends StatefulWidget {
                 children: <Widget>[
                   ListTile(
                     title: Text(replies[index].text),
-                    onTap: onItemClick,
+                    onTap: widget.onItemClick,
                   ),
                   Divider(height: 2.0)
                 ],
@@ -179,10 +178,6 @@ class TodayDrinkPage extends StatefulWidget {
     } catch (e) {}
     return null;
   }
-}
-
-class TodayDrinkPageState extends State<TodayDrinkPage> {
-  bool _isInited = false;
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +188,12 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
     }
 
     return Scaffold(
-      body: widget._createScaffoldBody(context, Platform.isAndroid),
+      body: Platform.isIOS
+          ? _createScrollView(context)
+          : RefreshIndicator(
+              child: _createScrollView(context),
+              onRefresh: () => _createRefreshCallback(context),
+            ),
     );
   }
 }
