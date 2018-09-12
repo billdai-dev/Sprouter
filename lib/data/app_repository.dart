@@ -9,6 +9,9 @@ import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/data/repository.dart';
 
 class AppRepository implements Repository {
+  static const String CLIENT_ID = AppRemoteRepo.SLACK_CLIENT_ID;
+  static const String REDIRECT_URL = AppRemoteRepo.SLACK_REDIRECT_URL;
+
   static final AppRepository _repo = AppRepository._internal();
 
   static AppRepository get repo => _repo;
@@ -32,12 +35,23 @@ class AppRepository implements Repository {
   }
 
   @override
+  Future<String> getSlackOAuthToken(String code) {
+    Future<String> tokenFuture =
+        _remoteRepo.getSlackOauthToken(code).then((slackToken) async {
+      String token = slackToken?.accessToken;
+      await _localRepo.saveSlackToken(token);
+      return token;
+    });
+    return tokenFuture;
+  }
+
+  @override
   Future<String> getSlackUserData({String token}) {
     Future<String> tokenFuture =
         token == null ? _localRepo.loadSlackToken() : getFuture(token);
     return tokenFuture.then((token) {
       _remoteRepo.setSlackTokenCache(token);
-      return _remoteRepo.getSlackUserData(token);
+      return _remoteRepo.getUserIdentity(accessToken: token);
     }).then((user) => user?.user?.name);
   }
 

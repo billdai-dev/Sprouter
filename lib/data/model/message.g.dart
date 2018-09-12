@@ -9,7 +9,9 @@ part of 'message.dart';
 // ignore_for_file: always_put_control_body_on_new_line
 // ignore_for_file: annotate_overrides
 // ignore_for_file: avoid_annotating_with_dynamic
+// ignore_for_file: avoid_catches_without_on_clauses
 // ignore_for_file: avoid_returning_this
+// ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
@@ -26,7 +28,7 @@ class _$MessageSerializer implements StructuredSerializer<Message> {
 
   @override
   Iterable serialize(Serializers serializers, Message object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
     if (object.type != null) {
       result
@@ -108,7 +110,7 @@ class _$MessageSerializer implements StructuredSerializer<Message> {
 
   @override
   Message deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new MessageBuilder();
 
     final iterator = serialized.iterator;
@@ -184,7 +186,7 @@ class _$ReplySerializer implements StructuredSerializer<Reply> {
 
   @override
   Iterable serialize(Serializers serializers, Reply object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'user',
       serializers.serialize(object.user, specifiedType: const FullType(String)),
@@ -197,7 +199,7 @@ class _$ReplySerializer implements StructuredSerializer<Reply> {
 
   @override
   Reply deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new ReplyBuilder();
 
     final iterator = serialized.iterator;
@@ -229,7 +231,7 @@ class _$FileSerializer implements StructuredSerializer<File> {
 
   @override
   Iterable serialize(Serializers serializers, File object,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
@@ -352,7 +354,7 @@ class _$FileSerializer implements StructuredSerializer<File> {
 
   @override
   File deserialize(Serializers serializers, Iterable serialized,
-      {FullType specifiedType: FullType.unspecified}) {
+      {FullType specifiedType = FullType.unspecified}) {
     final result = new FileBuilder();
 
     final iterator = serialized.iterator;

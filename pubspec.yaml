@@ -9,8 +9,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
 
-  flutter_slack_oauth: ^0.1.1
-
   flutter_webview_plugin: ^0.1.6
 
   rxdart: ^0.18.1
@@ -23,13 +21,17 @@ dependencies:
 
   cached_network_image: ^0.4.1
 
-  font_awesome_flutter: any
+  font_awesome_flutter: ^8.0.1
+
+  shared_preferences: ^0.4.2
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: any
+  build_runner: ^0.8.8
   built_value_generator: ^5.5.0
 
 # For information on the generic Dart part of this file, see the

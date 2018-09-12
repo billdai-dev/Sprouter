@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sprouter/ui/login/slack_login_page.dart';
 import 'package:sprouter/ui/today_drink/today_drink_page.dart';
 
 class TabNavigatorRoutes {
@@ -32,10 +31,10 @@ class TabNavigator extends StatelessWidget {
         return {
           TabNavigatorRoutes.ROOT: (context) =>
               TodayDrinkPage(() => _push(context, pageIndex)),
-          TabNavigatorRoutes.ORDER_DRINK: (context) => SlackLoginPage()
+          TabNavigatorRoutes.ORDER_DRINK: (context) => null
         };
       case 1:
-        return {TabNavigatorRoutes.ROOT: (context) => SlackLoginPage()};
+        return {TabNavigatorRoutes.ROOT: (context) => null};
       default:
         return null;
     }

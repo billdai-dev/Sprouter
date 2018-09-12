@@ -5,9 +5,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slack_oauth/oauth/slack_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/ui/slack_login/slack_login_web_view_page.dart';
 import 'package:sprouter/ui/today_drink/detail_photo/detail_photo_page.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_page.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
@@ -24,15 +24,65 @@ class TodayDrinkPage extends StatefulWidget {
   }
 }
 
-class TodayDrinkPageState extends State<TodayDrinkPage> {
+class TodayDrinkPageState extends State<TodayDrinkPage>
+    with SingleTickerProviderStateMixin {
   static const String _ARG_TOKEN = "token";
   static const String _ARG_MESSAGES = "messages";
-  static const String _CLIENT_ID = "373821001234.373821382898";
-  static const String _CLIENT_SECRET = "f0ce30315c4689da519c5281883c0667";
-  static const String _REDIRECT_URL =
-      "https://kunstmaan.github.io/flutter_slack_oauth/success.html";
 
   bool _isInited = false;
+  AnimationController _slackIconController;
+  Animation<double> _slackIconAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _slackIconController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _slackIconAnimation =
+        Tween(begin: 24.0, end: 30.0).animate(_slackIconController);
+    _slackIconController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _slackIconController.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _slackIconController.forward();
+      }
+    });
+    _slackIconController.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    if (!_isInited) {
+      bloc?.fetchMessage?.add(null);
+      _isInited = true;
+    }
+
+    return Scaffold(
+      body: Platform.isIOS
+          ? _createScrollView(context)
+          : RefreshIndicator(
+              child: _createScrollView(context),
+              onRefresh: () => _createRefreshCallback(context),
+            ),
+      floatingActionButton: _AddDrinkFab(
+        animation: _slackIconAnimation,
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+            builder: (context) => OrderDrinkPage(),
+          ));
+        },
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _slackIconController?.dispose();
+  }
 
   Widget _createScrollView(BuildContext context) {
     TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
@@ -50,19 +100,13 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
                 floating: false,
                 title: _createTitle(snapshot),
                 actions: <Widget>[
-                  IconButton(
-                    icon: Icon(
-                      FontAwesomeIcons.slack,
-                    ),
+                  _SlackLoginAction(
+                    animation: _slackIconAnimation,
                     onPressed: () async {
                       bool success = await Navigator.of(context)
                           .push(MaterialPageRoute<bool>(
                         builder: (BuildContext context) =>
-                            new SlackLoginWebViewPage(
-                              clientId: _CLIENT_ID,
-                              clientSecret: _CLIENT_SECRET,
-                              redirectUrl: _REDIRECT_URL,
-                            ),
+                            SlackLoginWebViewPage(),
                       ));
                       if (success) {
                         TodayDrinkBlocProvider.of(context)
@@ -70,7 +114,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
                             .add(null);
                       }
                     },
-                  )
+                  ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
                     background: _createImage(context, snapshot)));
@@ -87,6 +131,17 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
         )
       ],
     );
+  }
+
+  Future<void> _createRefreshCallback(BuildContext context) async {
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    bloc?.fetchMessage?.add(null);
+    try {
+      await bloc.drinkMessage.timeout(Duration(seconds: 3)).forEach((messages) {
+        print(messages);
+      });
+    } catch (e) {}
+    return null;
   }
 
   Widget _createReplyListView(
@@ -168,45 +223,43 @@ class TodayDrinkPageState extends State<TodayDrinkPage> {
       ),
     );
   }
+}
 
-  Future<void> _createRefreshCallback(BuildContext context) async {
-    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
-    bloc?.fetchMessage?.add(null);
-    try {
-      await bloc.drinkMessage.timeout(Duration(seconds: 3)).forEach((messages) {
-        print(messages);
-      });
-    } catch (e) {}
-    return null;
-  }
+class _AddDrinkFab extends AnimatedWidget {
+  final VoidCallback onPressed;
+
+  _AddDrinkFab({Key key, Animation<double> animation, @required this.onPressed})
+      : super(key: key, listenable: animation);
 
   @override
   Widget build(BuildContext context) {
-    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
-    if (!_isInited) {
-      bloc?.fetchMessage?.add(null);
-      _isInited = true;
-    }
-
-    return Scaffold(
-      body: Platform.isIOS
-          ? _createScrollView(context)
-          : RefreshIndicator(
-              child: _createScrollView(context),
-              onRefresh: () => _createRefreshCallback(context),
-            ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          FontAwesomeIcons.plus,
-        ),
-        onPressed: () {
-          Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(
-              builder: (context) => OrderDrinkPage(),
-            ),
-          );
-        },
+    final Animation<double> animation = listenable;
+    return FloatingActionButton(
+      child: Icon(
+        FontAwesomeIcons.plus,
+        size: animation?.value ?? 24.0,
       ),
+      onPressed: onPressed,
+    );
+  }
+}
+
+class _SlackLoginAction extends AnimatedWidget {
+  final VoidCallback onPressed;
+
+  _SlackLoginAction(
+      {Key key, Animation<double> animation, @required this.onPressed})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    return IconButton(
+      icon: Icon(
+        FontAwesomeIcons.slack,
+        size: animation?.value ?? 24.0,
+      ),
+      onPressed: onPressed,
     );
   }
 }

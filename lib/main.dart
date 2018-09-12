@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprouter/ui/login/slack_auth_bloc_provider.dart';
+import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/tab_navigator.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SlackAuthBlocProvider(
+    return SlackLoginBlocProvider(
       child: TodayDrinkBlocProvider(
         child: WillPopScope(
           onWillPop: () async {
