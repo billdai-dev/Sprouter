@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/tab_navigator.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  debugPaintSizeEnabled = true;
   runApp(new MaterialApp(
     home: MainPage(),
   ));
