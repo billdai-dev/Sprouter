@@ -1,7 +1,7 @@
 class Drink {
   String name;
   String price;
-  List<Ingredient> ingredients = [Ice()];
+  List<Ingredient> ingredients = [];
 }
 
 class Ingredient {}

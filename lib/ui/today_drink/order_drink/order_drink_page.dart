@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc.dart';
@@ -74,6 +75,10 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
                                     ),
                                     Expanded(
                                       child: TextField(
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(3)
+                                        ],
+                                        keyboardType: TextInputType.number,
                                         onChanged: (price) =>
                                             bloc.changePrice.add(price),
                                       ),
@@ -131,13 +136,15 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
                     ),
                     Expanded(
                       flex: 8,
-                      child: TextField(),
+                      child: TextField(
+                        onChanged: (name) => bloc.changeDrinkName.add(name),
+                      ),
                     ),
                     Expanded(
                       flex: 2,
-                      child: Icon(
-                        Icons.send,
-                        size: 30.0,
+                      child: IconButton(
+                        icon: Icon(Icons.send),
+                        onPressed: () => bloc.submitOrder.add(null),
                       ),
                     )
                   ],
@@ -178,7 +185,16 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
         String completeDrinkName;
         if (!snapshot.hasData) {
           completeDrinkName = "";
-        } else {}
+        } else {
+          Drink drink = snapshot.data;
+          StringBuffer ingredientString = StringBuffer("");
+          drink.ingredients.forEach((ingredient) {
+            ingredientString.write(" / ${getIngredientMapping(ingredient)}");
+          });
+          String price = drink.price == null ? "" : " / ${drink.price}\$";
+          completeDrinkName =
+              "${drink.name}${ingredientString.toString()}$price";
+        }
         String state = "I want to drink... $completeDrinkName";
         return Text(state);
       },
