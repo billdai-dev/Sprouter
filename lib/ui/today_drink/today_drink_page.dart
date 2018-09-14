@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/ui/slack_login/slack_login_web_view_page.dart';
 import 'package:sprouter/ui/today_drink/detail_photo/detail_photo_page.dart';
+import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_page.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
@@ -71,7 +72,9 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         animation: _slackIconAnimation,
         onPressed: () {
           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
-            builder: (context) => OrderDrinkPage(),
+            builder: (context) => OrderDrinkBlocProvider(
+                  child: OrderDrinkPage(),
+                ),
           ));
         },
       ),

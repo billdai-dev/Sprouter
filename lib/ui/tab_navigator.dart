@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink/today_drink_page.dart';
 
 class TabNavigatorRoutes {
@@ -29,8 +30,11 @@ class TabNavigator extends StatelessWidget {
     switch (pageIndex) {
       case 0:
         return {
-          TabNavigatorRoutes.ROOT: (context) =>
-              TodayDrinkPage(() => _push(context, pageIndex)),
+          TabNavigatorRoutes.ROOT: (context) => TodayDrinkBlocProvider(
+                child: TodayDrinkPage(
+                  () => _push(context, pageIndex),
+                ),
+              ),
           TabNavigatorRoutes.ORDER_DRINK: (context) => null
         };
       case 1:

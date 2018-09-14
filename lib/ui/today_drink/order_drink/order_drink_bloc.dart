@@ -17,21 +17,17 @@ class OrderDrinkBloc {
 
   Sink<Ingredient> get addIngredient => _addIngredient.sink;
 
-  final StreamController<IceLevel> _configIce = StreamController();
+  final StreamController<Ingredient> _removeIngredient = StreamController();
 
-  Sink<IceLevel> get configIce => _configIce.sink;
+  Sink<Ingredient> get removeIngredient => _removeIngredient.sink;
 
-  final StreamController<SugarLevel> _configSugar = StreamController();
+  final StreamController<IceLevel> configIce = StreamController();
 
-  Sink<SugarLevel> get configSugar => _configSugar.sink;
+  final StreamController<SugarLevel> configSugar = StreamController();
 
-  final StreamController<PearlType> _configPearl = StreamController();
+  final StreamController<PearlType> configPearl = StreamController();
 
-  Sink<PearlType> get configPearl => _configPearl.sink;
-
-  final StreamController<String> _configOther = StreamController();
-
-  Sink<String> get configOther => _configOther.sink;
+  final StreamController<String> configOther = StreamController();
 
   final StreamController<String> _changePrice = StreamController();
 
@@ -56,34 +52,30 @@ class OrderDrinkBloc {
 
   OrderDrinkBloc({AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
-    _addIngredient.stream.listen(_handleIngredientAddition);
+    _addIngredient.stream.listen((ingredient) =>
+        _handleIngredientChange(ingredient, true));
+    _removeIngredient.stream.listen((ingredient) =>
+        _handleIngredientChange(ingredient, false))
     _changePrice.stream.listen(_handlePriceChange);
     _changeDrinkName.stream.listen(_handleDrinkNameChange);
     _submitOrder.stream.listen(_handleOrderSubmission);
   }
 
-  void _handleIngredientAddition(Ingredient ingredient) {
+  void _handleIngredientChange(Ingredient ingredient, bool isAdding) {
     List<Ingredient> currentIngredients = _drink.ingredients;
     Type ingredientType = ingredient.runtimeType;
-    currentIngredients.removeWhere((ingredient) {
-      Type type = ingredient.runtimeType;
-      return type != OtherIngredient && type == ingredientType;
+    currentIngredients.removeWhere((indexedIngredient) {
+      Type indexedIngredientType = indexedIngredient.runtimeType;
+      if (ingredient is OtherIngredient) {
+        return indexedIngredient is OtherIngredient &&
+            indexedIngredient.ingredientName == ingredient.ingredientName;
+      }
+      return indexedIngredientType == ingredientType;
     });
-    currentIngredients.add(ingredient);
+    if (isAdding) {
+      currentIngredients.add(ingredient);
+    }
     _currentDrink.sink.add(_drink);
-  }
-
-  void dispose() {
-    _addIngredient?.close();
-    _configIce?.close();
-    _configSugar?.close();
-    _configPearl?.close();
-    _configOther?.close();
-    _changePrice?.close();
-    _changeDrinkName?.close();
-    //_changeIngredientDetail?.close();
-    _currentDrink?.close();
-    _submitOrder?.close();
   }
 
   void _handlePriceChange(String price) {
@@ -97,4 +89,18 @@ class OrderDrinkBloc {
   }
 
   void _handleOrderSubmission(void event) {}
+
+  void dispose() {
+    _addIngredient?.close();
+    _removeIngredient?.close();
+    configIce?.close();
+    configSugar?.close();
+    configPearl?.close();
+    configOther?.close();
+    _changePrice?.close();
+    _changeDrinkName?.close();
+    //_changeIngredientDetail?.close();
+    _currentDrink?.close();
+    _submitOrder?.close();
+  }
 }
