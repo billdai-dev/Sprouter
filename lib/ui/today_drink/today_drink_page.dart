@@ -136,11 +136,9 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   Future<void> _createRefreshCallback(BuildContext context) async {
     TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
     bloc?.fetchMessage?.add(null);
-    try {
-      await bloc.drinkMessage.timeout(Duration(seconds: 3)).forEach((messages) {
-        print(messages);
-      });
-    } catch (e) {}
+    await bloc.drinkMessage
+        .timeout(Duration(seconds: 3), onTimeout: (sink) => sink.close())
+        .forEach((messages) {});
     return null;
   }
 
