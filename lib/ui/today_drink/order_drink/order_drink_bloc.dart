@@ -21,13 +21,13 @@ class OrderDrinkBloc {
 
   Sink<Ingredient> get removeIngredient => _removeIngredient.sink;
 
-  final StreamController<IceLevel> configIce = StreamController();
+  final StreamController<Ingredient> configIce = StreamController();
 
-  final StreamController<SugarLevel> configSugar = StreamController();
+  final StreamController<Ingredient> configSugar = StreamController();
 
-  final StreamController<PearlType> configPearl = StreamController();
+  final StreamController<Ingredient> configPearl = StreamController();
 
-  final StreamController<String> configOther = StreamController();
+  final StreamController<Ingredient> configOther = StreamController();
 
   final StreamController<String> _changePrice = StreamController();
 
@@ -52,10 +52,10 @@ class OrderDrinkBloc {
 
   OrderDrinkBloc({AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
-    _addIngredient.stream.listen((ingredient) =>
-        _handleIngredientChange(ingredient, true));
-    _removeIngredient.stream.listen((ingredient) =>
-        _handleIngredientChange(ingredient, false))
+    _addIngredient.stream
+        .listen((ingredient) => _handleIngredientChange(ingredient, true));
+    _removeIngredient.stream
+        .listen((ingredient) => _handleIngredientChange(ingredient, false));
     _changePrice.stream.listen(_handlePriceChange);
     _changeDrinkName.stream.listen(_handleDrinkNameChange);
     _submitOrder.stream.listen(_handleOrderSubmission);

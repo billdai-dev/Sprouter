@@ -5,7 +5,7 @@ import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 import 'package:flutter/rendering.dart';
 
 void main() {
-  debugPaintSizeEnabled = true;
+  //debugPaintSizeEnabled = true;
   runApp(new MaterialApp(
     home: MainPage(),
   ));

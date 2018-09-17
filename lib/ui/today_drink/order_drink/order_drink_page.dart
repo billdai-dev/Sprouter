@@ -304,16 +304,44 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
         imageFileName = ".png";
     }
     ingredientName = getIngredientMapping(ingredient);
-    print(ingredientName);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Draggable(
-        child: _buildIngredient(),
-        dragAnchor: DragAnchor.pointer,
-        feedback: _createIngredientImage(ingredient),
+    OrderDrinkBloc bloc = OrderDrinkBlocProvider.of(context);
+    return GestureDetector(
+      onTap: () async {
+        if (ingredient is CoconutJelly) {
+          return;
+        }
+        Ingredient newIngredient = await showDialog(
+          context: context,
+          builder: (context) => _AdjustIngredientDialog(ingredient),
+        );
+        if (newIngredient == null) {
+          return;
+        }
+        switch (newIngredient.runtimeType) {
+          case Ice:
+            bloc?.configIce?.add(newIngredient);
+            break;
+          case Sugar:
+            bloc?.configSugar?.add(newIngredient);
+            break;
+          case Pearl:
+            bloc?.configPearl?.add(newIngredient);
+            break;
+          case OtherIngredient:
+            bloc?.configOther?.add(newIngredient);
+            break;
+        }
+      },
+      child: Center(
+        child: Draggable(
+          child: _buildIngredient(),
+          dragAnchor: DragAnchor.pointer,
+          feedback: _createIngredientImage(ingredient),
+        ),
       ),
     );
   }
@@ -336,10 +364,14 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
 
     return ingredient is CoconutJelly
         ? _buildGrid(ingredient)
-        : StreamBuilder<dynamic>(
+        : StreamBuilder<Ingredient>(
             stream: _getIngredientChangeStream(),
-            builder: (context, snapshot) =>
-                _buildGrid(snapshot.data ?? ingredient),
+            builder: (context, snapshot) {
+              if (snapshot.data != null) {
+                ingredient = snapshot.data;
+              }
+              return _buildGrid(ingredient);
+            },
           );
   }
 
@@ -364,5 +396,155 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
       default:
         return bloc.configOther.stream;
     }
+  }
+}
+
+class _AdjustIngredientDialog extends StatefulWidget {
+  final Ingredient ingredient;
+
+  _AdjustIngredientDialog(this.ingredient);
+
+  @override
+  _AdjustIngredientDialogState createState() {
+    return new _AdjustIngredientDialogState();
+  }
+}
+
+class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
+  Ingredient ingredient;
+  double sliderValue = 0.0;
+  double sliderMinValue = 0.0;
+  double sliderMaxValue;
+  int divisions;
+  String ingredientName;
+  String otherIngredient;
+  TextEditingController textEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    ingredient = widget.ingredient;
+    switch (widget.ingredient.runtimeType) {
+      case Ice:
+        ingredientName = "冰塊";
+        sliderValue = (widget.ingredient as Ice).level.index.toDouble();
+        sliderMaxValue = IceLevel.values.length.toDouble() - 1;
+        break;
+      case Sugar:
+        ingredientName = "甜度";
+        sliderValue = (widget.ingredient as Sugar).level.index.toDouble();
+        sliderMaxValue = SugarLevel.values.length.toDouble() - 1;
+        break;
+      case Pearl:
+        ingredientName = "珍珠";
+        sliderValue = (widget.ingredient as Pearl).type.index.toDouble();
+        sliderMaxValue = PearlType.values.length.toDouble() - 1;
+        break;
+      case OtherIngredient:
+        ingredientName = "其他配料";
+        otherIngredient = (widget.ingredient as OtherIngredient).ingredientName;
+        textEditingController = TextEditingController(text: otherIngredient);
+        break;
+    }
+    if (sliderMaxValue != null) {
+      divisions = sliderMaxValue.toInt();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("調整$ingredientName"),
+      content: _createDialogContent(otherIngredient != null),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+          child: Text("取消"),
+        ),
+        FlatButton(
+          onPressed: ingredient is OtherIngredient && otherIngredient.isEmpty
+              ? null
+              : () {
+                  Ingredient newIngredient;
+                  switch (widget.ingredient.runtimeType) {
+                    case Ice:
+                      newIngredient =
+                          Ice(level: IceLevel.values[sliderValue.toInt()]);
+                      break;
+                    case Sugar:
+                      newIngredient =
+                          Sugar(level: SugarLevel.values[sliderValue.toInt()]);
+                      break;
+                    case Pearl:
+                      newIngredient =
+                          Pearl(type: PearlType.values[sliderValue.toInt()]);
+                      break;
+                    case OtherIngredient:
+                      newIngredient =
+                          OtherIngredient(ingredientName: otherIngredient);
+                      break;
+                  }
+                  Navigator.of(context, rootNavigator: true).pop(newIngredient);
+                },
+          child: Text("確定"),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    textEditingController?.dispose();
+    super.dispose();
+  }
+
+  Widget _createDialogContent(bool isOtherIngredient) {
+    return FractionallySizedBox(
+      widthFactor: 0.9,
+      heightFactor: 0.2,
+      child: isOtherIngredient
+          ? TextField(
+              controller: textEditingController,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(3),
+              ],
+              onChanged: (value) {
+                bool needRebuild =
+                    otherIngredient.isEmpty && value.isNotEmpty ||
+                        otherIngredient.isNotEmpty && value.isEmpty;
+                otherIngredient = value;
+                if (needRebuild) {
+                  setState(() {});
+                }
+              },
+            )
+          : Slider(
+              value: sliderValue,
+              onChanged: (value) {
+                switch (ingredient.runtimeType) {
+                  case Ice:
+                    (ingredient as Ice).level = IceLevel.values[value.toInt()];
+                    break;
+                  case Sugar:
+                    (ingredient as Sugar).level =
+                        SugarLevel.values[value.toInt()];
+                    break;
+                  case Pearl:
+                    (ingredient as Pearl).type =
+                        PearlType.values[value.toInt()];
+                    break;
+                  case OtherIngredient:
+                    (ingredient as OtherIngredient).ingredientName =
+                        textEditingController.value.toString();
+                    break;
+                }
+                setState(() => sliderValue = value);
+              },
+              min: sliderMinValue,
+              max: sliderMaxValue,
+              divisions: divisions,
+              label: getIngredientMapping(ingredient),
+            ),
+    );
   }
 }
