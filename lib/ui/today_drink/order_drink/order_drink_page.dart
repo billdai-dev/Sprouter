@@ -36,7 +36,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(bottom: 10.0),
+                    margin: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
                     child: _buildCompleteDrinkName(context),
                   ),
                   Expanded(
@@ -53,16 +53,23 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
                           child: Column(
                             children: <Widget>[
                               Expanded(
-                                child: DragTarget(
-                                  builder: (BuildContext context,
-                                      List<dynamic> candidateData,
-                                      List<dynamic> rejectedData) {
-                                    return Image.asset(
+                                child: DragTarget<Ingredient>(
+                                  builder:
+                                      (context, candidateData, rejectedData) {
+                                    Widget handmadeDrink = Image.asset(
                                       "assets/images/handmade_drink.png",
                                     );
+                                    return candidateData.isEmpty
+                                        ? handmadeDrink
+                                        : Opacity(
+                                            opacity: 0.5,
+                                            child: handmadeDrink,
+                                          );
                                   },
-                                  onWillAccept: (data) => false,
-                                  onAccept: (data) => print("accept!"),
+                                  onWillAccept: (data) => true,
+                                  onAccept: (data) {
+                                    bloc.addIngredient.add(data);
+                                  },
                                 ),
                               ),
                               FractionallySizedBox(
@@ -162,16 +169,24 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
     return StreamBuilder<Drink>(
       stream: bloc.currentDrink,
       builder: (context, snapshot) {
+        print(snapshot.data?.ingredients);
         List<Widget> chips = snapshot.hasData
-            ? snapshot.data.ingredients
-                .map((ingredient) => _IngredientChip(
-                      ingredient: ingredient,
-                    ))
-                .toList(growable: false)
+            ? snapshot.data.ingredients.map((ingredient) {
+                ValueKey key = ValueKey(ingredient is OtherIngredient
+                    ? ingredient.ingredientName
+                    : ingredient.runtimeType.toString());
+                return _IngredientChip(
+                  key: key,
+                  ingredient: ingredient,
+                );
+              }).toList(growable: false)
             : [];
-        return Wrap(
-          spacing: 16.0,
-          children: chips,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Wrap(
+            spacing: 16.0,
+            children: chips,
+          ),
         );
       },
     );
@@ -191,12 +206,18 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
           drink.ingredients.forEach((ingredient) {
             ingredientString.write(" / ${getIngredientMapping(ingredient)}");
           });
-          String price = drink.price == null ? "" : " / ${drink.price}\$";
+          String price = drink.price == null ? "" : " / \$${drink.price}";
           completeDrinkName =
-              "${drink.name}${ingredientString.toString()}$price";
+              "${drink.name ?? ""}${ingredientString.toString()}$price";
         }
-        String state = "I want to drink... $completeDrinkName";
-        return Text(state);
+        String state = "我想喝...\n$completeDrinkName";
+        return Text(
+          state,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 16.0,
+          ),
+        );
       },
     );
   }
@@ -216,6 +237,7 @@ class _IngredientChipState extends State<_IngredientChip> {
 
   @override
   Widget build(BuildContext context) {
+    print(_ingredient);
     OrderDrinkBloc bloc = OrderDrinkBlocProvider.of(context);
     String iconFileName;
     String label = getIngredientMapping(_ingredient);
@@ -338,6 +360,7 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
       },
       child: Center(
         child: Draggable(
+          data: ingredient,
           child: _buildIngredient(),
           dragAnchor: DragAnchor.pointer,
           feedback: _createIngredientImage(ingredient),
