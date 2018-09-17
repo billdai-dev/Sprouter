@@ -4,6 +4,14 @@ class Drink {
   List<Ingredient> ingredients = [];
 }
 
+const List<Type> ingredientWeights = [
+  Sugar,
+  Ice,
+  Pearl,
+  CoconutJelly,
+  OtherIngredient
+];
+
 class Ingredient {}
 
 class Ice extends Ingredient {

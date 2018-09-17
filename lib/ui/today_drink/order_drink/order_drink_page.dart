@@ -169,12 +169,11 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
     return StreamBuilder<Drink>(
       stream: bloc.currentDrink,
       builder: (context, snapshot) {
-        print(snapshot.data?.ingredients);
         List<Widget> chips = snapshot.hasData
             ? snapshot.data.ingredients.map((ingredient) {
                 ValueKey key = ValueKey(ingredient is OtherIngredient
                     ? ingredient.ingredientName
-                    : ingredient.runtimeType.toString());
+                    : getIngredientMapping(ingredient));
                 return _IngredientChip(
                   key: key,
                   ingredient: ingredient,
@@ -183,9 +182,15 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
             : [];
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Wrap(
-            spacing: 16.0,
-            children: chips,
+          child: ListView.builder(
+            physics: ClampingScrollPhysics(),
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              return Wrap(
+                spacing: 16.0,
+                children: chips,
+              );
+            },
           ),
         );
       },
@@ -237,7 +242,6 @@ class _IngredientChipState extends State<_IngredientChip> {
 
   @override
   Widget build(BuildContext context) {
-    print(_ingredient);
     OrderDrinkBloc bloc = OrderDrinkBlocProvider.of(context);
     String iconFileName;
     String label = getIngredientMapping(_ingredient);
@@ -343,6 +347,7 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
         if (newIngredient == null) {
           return;
         }
+        ingredient = newIngredient;
         switch (newIngredient.runtimeType) {
           case Ice:
             bloc?.configIce?.add(newIngredient);
@@ -357,34 +362,15 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
             bloc?.configOther?.add(newIngredient);
             break;
         }
+        //setState(() {});
       },
       child: Center(
-        child: Draggable(
-          data: ingredient,
-          child: _buildIngredient(),
-          dragAnchor: DragAnchor.pointer,
-          feedback: _createIngredientImage(ingredient),
-        ),
+        child: _buildIngredient(),
       ),
     );
   }
 
   Widget _buildIngredient() {
-    Widget _buildGrid(Ingredient ingredient) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          _createIngredientImage(ingredient),
-          SizedBox(
-            height: 3.0,
-          ),
-          Text(
-            getIngredientMapping(ingredient),
-          ),
-        ],
-      );
-    }
-
     return ingredient is CoconutJelly
         ? _buildGrid(ingredient)
         : StreamBuilder<Ingredient>(
@@ -396,6 +382,26 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
               return _buildGrid(ingredient);
             },
           );
+  }
+
+  Widget _buildGrid(Ingredient ingredient) {
+    return Draggable(
+      data: ingredient,
+      dragAnchor: DragAnchor.pointer,
+      feedback: _createIngredientImage(ingredient),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          _createIngredientImage(ingredient),
+          SizedBox(
+            height: 3.0,
+          ),
+          Text(
+            getIngredientMapping(ingredient),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _createIngredientImage(Ingredient ingredient) {

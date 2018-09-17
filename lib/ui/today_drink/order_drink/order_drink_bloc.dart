@@ -72,9 +72,15 @@ class OrderDrinkBloc {
       }
       return indexedIngredientType == ingredientType;
     });
+    print(currentIngredients);
     if (isAdding) {
       currentIngredients.add(ingredient);
     }
+    currentIngredients.sort((ingredientA, ingredientB) {
+      int weightA = ingredientWeights.indexOf(ingredientA.runtimeType);
+      int weightB = ingredientWeights.indexOf(ingredientB.runtimeType);
+      return weightA - weightB;
+    });
     _currentDrink.sink.add(_drink);
   }
 
