@@ -138,7 +138,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                             fit: StackFit.passthrough,
                             children: <Widget>[
                               FractionallySizedBox(
-                                heightFactor: 0.7,
+                                heightFactor: 0.8,
                                 child: GridView.count(
                                   physics: ClampingScrollPhysics(),
                                   crossAxisCount: 2,
@@ -147,6 +147,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                                     _DraggableIngredientGrid(Sugar),
                                     _DraggableIngredientGrid(Pearl),
                                     _DraggableIngredientGrid(CoconutJelly),
+                                    _DraggableIngredientGrid(DrinkSize),
                                     _DraggableIngredientGrid(OtherIngredient),
                                   ],
                                 ),
@@ -295,6 +296,9 @@ class _IngredientChipState extends State<_IngredientChip> {
       case CoconutJelly:
         iconFileName = "coconut.png";
         break;
+      case DrinkSize:
+        iconFileName = "cup.png";
+        break;
       default:
         iconFileName = "other_ingredient.png";
     }
@@ -362,6 +366,10 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
         ingredient = CoconutJelly();
         imageFileName = "coconut.png";
         break;
+      case DrinkSize:
+        ingredient = DrinkSize();
+        imageFileName = "cup.png";
+        break;
       default:
         ingredient = OtherIngredient();
         imageFileName = "other_ingredient.png";
@@ -394,6 +402,9 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
             break;
           case Pearl:
             bloc?.configPearl?.add(newIngredient);
+            break;
+          case DrinkSize:
+            bloc?.configDrinkSize?.add(newIngredient);
             break;
           case OtherIngredient:
             bloc?.configOther?.add(newIngredient);
@@ -460,6 +471,8 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
         return bloc.configSugar.stream;
       case Pearl:
         return bloc.configPearl.stream;
+      case DrinkSize:
+        return bloc.configDrinkSize.stream;
       default:
         return bloc.configOther.stream;
     }
@@ -507,6 +520,11 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
         sliderValue = (widget.ingredient as Pearl).type.index.toDouble();
         sliderMaxValue = PearlType.values.length.toDouble() - 1;
         break;
+      case DrinkSize:
+        ingredientName = "容量";
+        sliderValue = (widget.ingredient as DrinkSize).cup.index.toDouble();
+        sliderMaxValue = Cup.values.length.toDouble() - 1;
+        break;
       case OtherIngredient:
         ingredientName = "其他配料";
         otherIngredient = (widget.ingredient as OtherIngredient).ingredientName;
@@ -545,6 +563,10 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
                     case Pearl:
                       newIngredient =
                           Pearl(type: PearlType.values[sliderValue.toInt()]);
+                      break;
+                    case DrinkSize:
+                      newIngredient =
+                          DrinkSize(cup: Cup.values[sliderValue.toInt()]);
                       break;
                     case OtherIngredient:
                       newIngredient =
@@ -599,6 +621,9 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
                   case Pearl:
                     (ingredient as Pearl).type =
                         PearlType.values[value.toInt()];
+                    break;
+                  case DrinkSize:
+                    (ingredient as DrinkSize).cup = Cup.values[value.toInt()];
                     break;
                   case OtherIngredient:
                     (ingredient as OtherIngredient).ingredientName =
@@ -684,6 +709,9 @@ class _DropIngredientAnimation extends StatelessWidget {
         break;
       case CoconutJelly:
         fileName = "coconut.png";
+        break;
+      case DrinkSize:
+        fileName = "cup.png";
         break;
       case OtherIngredient:
         fileName = "other_ingredient.png";

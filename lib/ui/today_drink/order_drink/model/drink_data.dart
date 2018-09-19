@@ -7,6 +7,7 @@ class Drink {
 const List<Type> ingredientWeights = [
   Sugar,
   Ice,
+  DrinkSize,
   Pearl,
   CoconutJelly,
   OtherIngredient
@@ -34,6 +35,12 @@ class Pearl extends Ingredient {
 
 class CoconutJelly extends Ingredient {}
 
+class DrinkSize extends Ingredient {
+  Cup cup;
+
+  DrinkSize({this.cup = Cup.medium});
+}
+
 class OtherIngredient extends Ingredient {
   OtherIngredient({this.ingredientName = "其他"});
 
@@ -45,6 +52,8 @@ enum IceLevel { no, low, less, normal }
 enum SugarLevel { no, low, half, less, standard }
 
 enum PearlType { black, white }
+
+enum Cup { medium, large }
 
 String getIngredientMapping(Ingredient ingredient) {
   String name;
@@ -92,6 +101,14 @@ String getIngredientMapping(Ingredient ingredient) {
       break;
     case CoconutJelly:
       name = "椰果";
+      break;
+    case DrinkSize:
+      Cup cup = (ingredient as DrinkSize).cup;
+      if (cup == Cup.medium) {
+        name = "中杯";
+      } else if (cup == Cup.large) {
+        name = "大杯";
+      }
       break;
     default:
       name = (ingredient as OtherIngredient)?.ingredientName;

@@ -8,11 +8,6 @@ class OrderDrinkBloc {
   AppRepository repository;
   final Drink _drink = Drink();
 
-  /*final Ice _iceConfig = Ice();
-  final Sugar _sugarConfig = Sugar();
-  final Pearl _pearlConfig = Pearl();
-  final OtherIngredient _otherConfig = OtherIngredient();*/
-
   final StreamController<Ingredient> _addIngredient = StreamController();
 
   Sink<Ingredient> get addIngredient => _addIngredient.sink;
@@ -26,6 +21,8 @@ class OrderDrinkBloc {
   final StreamController<Ingredient> configSugar = StreamController();
 
   final StreamController<Ingredient> configPearl = StreamController();
+
+  final StreamController<Ingredient> configDrinkSize = StreamController();
 
   final StreamController<Ingredient> configOther = StreamController();
 
@@ -102,6 +99,7 @@ class OrderDrinkBloc {
     configIce?.close();
     configSugar?.close();
     configPearl?.close();
+    configDrinkSize?.close();
     configOther?.close();
     _changePrice?.close();
     _changeDrinkName?.close();
