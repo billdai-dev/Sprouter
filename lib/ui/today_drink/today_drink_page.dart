@@ -256,6 +256,7 @@ class _SlackLoginAction extends AnimatedWidget {
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
     return IconButton(
+      color: Colors.white,
       icon: Icon(
         FontAwesomeIcons.slack,
         size: animation?.value ?? 24.0,

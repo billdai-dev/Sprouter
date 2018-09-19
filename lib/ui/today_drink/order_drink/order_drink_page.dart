@@ -103,17 +103,20 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                                               controller: controller),
                                     );
                                     Overlay.of(context).insert(overlayEntry);
-                                    controller.reset();
-                                    controller.forward();
-                                    bloc.addIngredient.add(data);
+                                    controller?.reset();
+                                    controller?.forward();
+                                    bloc?.addIngredient?.add(data);
                                   },
                                 ),
                               ),
                               FractionallySizedBox(
-                                widthFactor: 0.6,
+                                widthFactor: 0.7,
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(Icons.monetization_on),
+                                    Icon(
+                                      Icons.monetization_on,
+                                      color: Theme.of(context).accentColor,
+                                    ),
                                     SizedBox(
                                       width: 3.0,
                                     ),
@@ -207,17 +210,22 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
     return StreamBuilder<Drink>(
       stream: bloc.currentDrink,
       builder: (context, snapshot) {
-        List<Widget> chips = snapshot.hasData
-            ? snapshot.data.ingredients.map((ingredient) {
-                ValueKey key = ValueKey(ingredient is OtherIngredient
-                    ? ingredient.ingredientName
-                    : getIngredientMapping(ingredient));
-                return _IngredientChip(
-                  key: key,
-                  ingredient: ingredient,
-                );
-              }).toList(growable: false)
-            : [];
+        List<Widget> chips =
+            snapshot.hasData && snapshot.data.ingredients.isNotEmpty
+                ? snapshot.data.ingredients.map((ingredient) {
+                    ValueKey key = ValueKey(ingredient is OtherIngredient
+                        ? ingredient.ingredientName
+                        : getIngredientMapping(ingredient));
+                    return _IngredientChip(
+                      key: key,
+                      ingredient: ingredient,
+                    );
+                  }).toList(growable: false)
+                : [
+                    InputChip(
+                        avatar: Image.asset("assets/images/bulb.png"),
+                        label: Text("試著將配料丟進杯子..")),
+                  ];
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView.builder(
@@ -258,6 +266,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           state,
           textAlign: TextAlign.center,
           style: TextStyle(
+            height: 1.2,
             fontSize: 16.0,
           ),
         );
@@ -317,10 +326,23 @@ class _IngredientChipState extends State<_IngredientChip> {
           color: Colors.white,
         ),
       ),
+      backgroundColor: Theme.of(context).accentColor,
       deleteIconColor: Colors.black54,
       labelPadding: EdgeInsets.all(2.0),
       onDeleted: () => bloc.removeIngredient.add(_ingredient),
-      backgroundColor: Colors.lightBlue,
+      onPressed: () async {
+        if (_ingredient is CoconutJelly) {
+          return;
+        }
+        Ingredient newIngredient = await showDialog(
+          context: context,
+          builder: (context) => _AdjustIngredientDialog(_ingredient),
+        );
+        if (newIngredient == null) {
+          return;
+        }
+        bloc?.addIngredient?.add(newIngredient);
+      },
     );
   }
 
@@ -410,7 +432,6 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
             bloc?.configOther?.add(newIngredient);
             break;
         }
-        //setState(() {});
       },
       child: Center(
         child: _buildIngredient(),
@@ -669,7 +690,7 @@ class _DropIngredientAnimation extends StatelessWidget {
     Animation<double> opacityAnim = Tween(begin: 1.0, end: 0.0).animate(
         CurvedAnimation(
             parent:
-                CurvedAnimation(parent: controller, curve: Interval(0.8, 1.0)),
+                CurvedAnimation(parent: controller, curve: Interval(0.7, 1.0)),
             curve: Curves.ease));
 
     return AnimatedBuilder(
