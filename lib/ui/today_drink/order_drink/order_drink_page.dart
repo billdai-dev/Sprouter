@@ -12,9 +12,31 @@ class OrderDrinkPage extends StatefulWidget {
   _OrderDrinkPageState createState() => _OrderDrinkPageState();
 }
 
-class _OrderDrinkPageState extends State<OrderDrinkPage> {
+class _OrderDrinkPageState extends State<OrderDrinkPage>
+    with SingleTickerProviderStateMixin {
+  OverlayEntry overlayEntry;
+  GlobalKey _handmadeDrinkKey = GlobalKey();
+  AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 600),
+    );
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        overlayEntry?.remove();
+      }
+    });
+    overlayEntry?.remove();
+  }
+
   @override
   void dispose() {
+    overlayEntry?.remove();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -27,8 +49,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Expanded(
-              flex: 1,
+            Flexible(
               child: _buildIngredientChips(context),
             ),
             Expanded(
@@ -54,20 +75,36 @@ class _OrderDrinkPageState extends State<OrderDrinkPage> {
                             children: <Widget>[
                               Expanded(
                                 child: DragTarget<Ingredient>(
+                                  key: _handmadeDrinkKey,
                                   builder:
                                       (context, candidateData, rejectedData) {
                                     Widget handmadeDrink = Image.asset(
                                       "assets/images/handmade_drink.png",
                                     );
-                                    return candidateData.isEmpty
+                                    return controller.isAnimating ||
+                                            candidateData.isEmpty
                                         ? handmadeDrink
                                         : Opacity(
                                             opacity: 0.5,
                                             child: handmadeDrink,
                                           );
                                   },
-                                  onWillAccept: (data) => true,
+                                  onWillAccept: (data) =>
+                                      !controller.isAnimating,
                                   onAccept: (data) {
+                                    overlayEntry = OverlayEntry(
+                                      builder: (context) =>
+                                          _DropIngredientAnimation(
+                                              ingredientType: data.runtimeType,
+                                              handmadeDrinkRenderBox:
+                                                  _handmadeDrinkKey
+                                                      .currentContext
+                                                      .findRenderObject(),
+                                              controller: controller),
+                                    );
+                                    Overlay.of(context).insert(overlayEntry);
+                                    controller.reset();
+                                    controller.forward();
                                     bloc.addIngredient.add(data);
                                   },
                                 ),
@@ -259,7 +296,7 @@ class _IngredientChipState extends State<_IngredientChip> {
         iconFileName = "coconut.png";
         break;
       default:
-        iconFileName = ".png";
+        iconFileName = "other_ingredient.png";
     }
     return InputChip(
       avatar: iconFileName != null
@@ -327,7 +364,7 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
         break;
       default:
         ingredient = OtherIngredient();
-        imageFileName = ".png";
+        imageFileName = "other_ingredient.png";
     }
     ingredientName = getIngredientMapping(ingredient);
   }
@@ -386,6 +423,7 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
 
   Widget _buildGrid(Ingredient ingredient) {
     return Draggable(
+      maxSimultaneousDrags: 1,
       data: ingredient,
       dragAnchor: DragAnchor.pointer,
       feedback: _createIngredientImage(ingredient),
@@ -417,7 +455,7 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
     OrderDrinkBloc bloc = OrderDrinkBlocProvider.of(context);
     switch (widget.ingredientType) {
       case Ice:
-        return bloc.configIce.stream;
+        return bloc?.configIce?.stream;
       case Sugar:
         return bloc.configSugar.stream;
       case Pearl:
@@ -575,5 +613,82 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
               label: getIngredientMapping(ingredient),
             ),
     );
+  }
+}
+
+class _DropIngredientAnimation extends StatelessWidget {
+  final RenderBox handmadeDrinkRenderBox;
+  final AnimationController controller;
+  final Type ingredientType;
+
+  _DropIngredientAnimation({
+    Key key,
+    @required this.ingredientType,
+    @required this.handmadeDrinkRenderBox,
+    @required this.controller,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Offset pos = handmadeDrinkRenderBox.localToGlobal(Offset.zero);
+    double iconWidthHeight = 30.0;
+    double animBeginX =
+        pos.dx + handmadeDrinkRenderBox.size.width / 2 - iconWidthHeight / 2;
+    double animBeginY = pos.dy;
+    double translationDistanceRatio =
+        handmadeDrinkRenderBox.size.height / 4 / iconWidthHeight;
+
+    Animation<Offset> dropAnim = Tween(
+            begin: Offset(0.0, 0.0), end: Offset(0.0, translationDistanceRatio))
+        .animate(controller);
+    Animation<double> opacityAnim = Tween(begin: 1.0, end: 0.0).animate(
+        CurvedAnimation(
+            parent:
+                CurvedAnimation(parent: controller, curve: Interval(0.8, 1.0)),
+            curve: Curves.ease));
+
+    return AnimatedBuilder(
+      animation: dropAnim,
+      builder: (context, child) => Stack(children: <Widget>[child]),
+      child: Positioned(
+        left: animBeginX,
+        top: animBeginY,
+        height: iconWidthHeight,
+        child: FadeTransition(
+          opacity: opacityAnim,
+          child: SlideTransition(
+            position: dropAnim,
+            child: Image.asset(
+              _getImageFileName(ingredientType),
+              width: iconWidthHeight,
+              height: iconWidthHeight,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  String _getImageFileName(Type ingredientType) {
+    String fileName;
+    switch (ingredientType) {
+      case Ice:
+        fileName = "ice.png";
+        break;
+      case Sugar:
+        fileName = "sugar.png";
+        break;
+      case Pearl:
+        fileName = "pearl.png";
+        break;
+      case CoconutJelly:
+        fileName = "coconut.png";
+        break;
+      case OtherIngredient:
+        fileName = "other_ingredient.png";
+        break;
+    }
+    return "assets/images/$fileName";
   }
 }
