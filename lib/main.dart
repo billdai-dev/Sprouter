@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/tab_navigator.dart';
 
 void main() {
-  //debugPaintSizeEnabled = true;
+  debugPaintSizeEnabled = false;
   runApp(new MaterialApp(
     theme: ThemeData(
       primarySwatch: Colors.green,

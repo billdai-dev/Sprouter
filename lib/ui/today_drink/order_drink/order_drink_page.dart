@@ -52,12 +52,16 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
             Flexible(
               child: _buildIngredientChips(context),
             ),
+            Container(
+              height: 1.0,
+              color: Colors.grey,
+            ),
             Expanded(
               flex: 3,
               child: Column(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                    margin: EdgeInsets.only(left: 8.0, right: 8.0),
                     child: _buildCompleteDrinkName(context),
                   ),
                   Expanded(
@@ -130,6 +134,9 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                                             bloc.changePrice.add(price),
                                       ),
                                     ),
+                                    SizedBox(
+                                      width: 15.0,
+                                    )
                                   ],
                                 ),
                               ),
@@ -138,13 +145,15 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                         ),
                         Expanded(
                           child: Stack(
+                            overflow: Overflow.visible,
                             fit: StackFit.passthrough,
                             children: <Widget>[
                               FractionallySizedBox(
-                                heightFactor: 0.8,
+                                heightFactor: 0.9,
                                 child: GridView.count(
                                   physics: ClampingScrollPhysics(),
                                   crossAxisCount: 2,
+                                  childAspectRatio: 0.8,
                                   children: [
                                     _DraggableIngredientGrid(Ice),
                                     _DraggableIngredientGrid(Sugar),
@@ -266,7 +275,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           state,
           textAlign: TextAlign.center,
           style: TextStyle(
-            height: 1.2,
+            height: 1.1,
             fontSize: 16.0,
           ),
         );
@@ -314,9 +323,7 @@ class _IngredientChipState extends State<_IngredientChip> {
     return InputChip(
       avatar: iconFileName != null
           ? Image(
-              image: AssetImage(
-                "assets/images/$iconFileName",
-              ),
+              image: AssetImage("assets/images/$iconFileName"),
               color: null,
             )
           : null,
@@ -433,8 +440,12 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
             break;
         }
       },
-      child: Center(
-        child: _buildIngredient(),
+      child: Card(
+        margin: EdgeInsets.fromLTRB(1.0, 2.0, 2.0, 2.0),
+        elevation: 2.0,
+        child: Center(
+          child: _buildIngredient(),
+        ),
       ),
     );
   }
@@ -464,10 +475,11 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
         children: <Widget>[
           _createIngredientImage(ingredient),
           SizedBox(
-            height: 3.0,
+            height: 2.0,
           ),
           Text(
             getIngredientMapping(ingredient),
+            style: TextStyle(fontSize: 12.0),
           ),
         ],
       ),
