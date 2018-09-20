@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/ui/slack_login/slack_login_bloc.dart';
+import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/slack_login/slack_login_web_view_page.dart';
 import 'package:sprouter/ui/today_drink/detail_photo/detail_photo_page.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc_provider.dart';
@@ -50,7 +52,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         _slackIconController.forward();
       }
     });
-    _slackIconController.forward();
   }
 
   @override
@@ -83,25 +84,34 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   @override
   void dispose() {
-    super.dispose();
     _slackIconController?.dispose();
+    super.dispose();
   }
 
   Widget _createScrollView(BuildContext context) {
-    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    TodayDrinkBloc todayDrinkBloc = TodayDrinkBlocProvider.of(context);
+    SlackLoginBloc slackLoginBloc = SlackLoginBlocProvider.of(context);
     return CustomScrollView(
       slivers: <Widget>[
         StreamBuilder<Map<String, dynamic>>(
-          stream:
-              bloc?.slackToken?.zipWith(bloc?.drinkMessage, (token, message) {
-            return {_ARG_MESSAGES: message, _ARG_TOKEN: token};
-          }),
+          stream: Observable.combineLatest2(
+              slackLoginBloc?.getTokenCache,
+              todayDrinkBloc?.drinkMessage,
+              (token, message) => {_ARG_MESSAGES: message, _ARG_TOKEN: token}),
           builder: (context, snapshot) {
+            List<Message> messages =
+                snapshot.hasData ? snapshot.data[_ARG_MESSAGES] : [];
+            String token = snapshot.hasData ? snapshot.data[_ARG_TOKEN] : "";
+            if (token == null || token.isEmpty) {
+              _slackIconController?.forward();
+            } else {
+              _slackIconController.stop();
+            }
             return SliverAppBar(
                 expandedHeight: 250.0,
                 pinned: true,
                 floating: false,
-                title: _createTitle(snapshot),
+                title: _createTitle(messages),
                 actions: <Widget>[
                   _SlackLoginAction(
                     animation: _slackIconAnimation,
@@ -112,22 +122,20 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                             SlackLoginWebViewPage(),
                       ));
                       if (success) {
-                        TodayDrinkBlocProvider.of(context)
-                            .fetchMessage
-                            .add(null);
+                        todayDrinkBloc.fetchMessage.add(null);
                       }
                     },
                   ),
                 ],
                 flexibleSpace: FlexibleSpaceBar(
-                    background: _createImage(context, snapshot)));
+                    background: _createImage(context, token, messages)));
           },
         ),
         CupertinoSliverRefreshControl(
           onRefresh: () => _createRefreshCallback(context),
         ),
-        StreamBuilder<BuiltList<Message>>(
-          stream: bloc?.drinkMessage,
+        StreamBuilder<List<Message>>(
+          stream: todayDrinkBloc?.drinkMessage,
           builder: (context, snapshot) {
             return _createReplyListView(context, snapshot.data);
           },
@@ -145,8 +153,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     return null;
   }
 
-  Widget _createReplyListView(
-      BuildContext context, BuiltList<Message> drinkThread) {
+  Widget _createReplyListView(BuildContext context, List<Message> drinkThread) {
     List<Message> replies;
     if (drinkThread == null ||
         (replies = drinkThread?.skip(1)?.toList(growable: false)) == null ||
@@ -175,12 +182,11 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createTitle(AsyncSnapshot snapshot) {
-    if (!snapshot.hasData) {
+  Widget _createTitle(List<Message> messages) {
+    if (messages == null || messages.isEmpty) {
       return Text("");
     }
-    BuiltList<Message> drinkThread = snapshot.data[_ARG_MESSAGES];
-    List<String> parsedTitle = drinkThread[0]?.files[0]?.title?.split(" ");
+    List<String> parsedTitle = messages[0]?.files[0]?.title?.split(" ");
     String shopName =
         parsedTitle.isEmpty || parsedTitle.length < 2 ? "" : parsedTitle[1];
     return Text(
@@ -191,17 +197,15 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createImage(BuildContext context, AsyncSnapshot snapshot) {
-    if (!snapshot.hasData) {
+  Widget _createImage(
+      BuildContext context, String token, List<Message> messages) {
+    print("token:$token");
+    if (messages == null || messages.isEmpty) {
       return Container(
           color: Colors.grey,
           child: Center(child: CircularProgressIndicator()));
     }
-    BuiltList<Message> messages = snapshot.data[_ARG_MESSAGES];
-
     String imageUrl = messages[0].files[0].urlPrivate;
-    String token = snapshot.data[_ARG_TOKEN];
-
     return Container(
       color: Colors.grey,
       child: GestureDetector(
@@ -264,12 +268,12 @@ class __AddDrinkFabState extends State<_AddDrinkFab>
   @override
   Widget build(BuildContext context) {
     TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
-    return StreamBuilder(
+    return StreamBuilder<bool>(
       stream: bloc?.isOrdering,
       builder: (context, snapshot) {
-        snapshot.data ? controller?.forward() : controller?.stop();
+        snapshot.hasData ? controller?.forward() : controller?.stop();
         return Offstage(
-          offstage: !snapshot.data,
+          offstage: !snapshot.data ?? true,
           child: AnimatedBuilder(
             animation: anim,
             builder: (context, child) {
@@ -278,7 +282,8 @@ class __AddDrinkFabState extends State<_AddDrinkFab>
                   FontAwesomeIcons.plus,
                   size: anim?.value ?? 24.0,
                 ),
-                onPressed: snapshot.data ? widget.onPressed : null,
+                onPressed:
+                    snapshot.hasData && snapshot.data ? widget.onPressed : null,
               );
             },
           ),

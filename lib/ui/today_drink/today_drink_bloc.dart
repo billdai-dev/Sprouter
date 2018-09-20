@@ -9,10 +9,10 @@ class TodayDrinkBloc {
   AppRepository repository;
   String threadTs;
 
-  final BehaviorSubject<BuiltList<Message>> _drinkMessage =
+  final BehaviorSubject<List<Message>> _drinkMessage =
       BehaviorSubject(seedValue: null);
 
-  Stream<BuiltList<Message>> get drinkMessage => _drinkMessage.stream;
+  Stream<List<Message>> get drinkMessage => _drinkMessage.stream;
 
   final BehaviorSubject<bool> _isOrdering = BehaviorSubject(seedValue: false);
 
@@ -40,7 +40,7 @@ class TodayDrinkBloc {
       }).toList(growable: false);
 
       _isOrdering.sink.add(orderKeywords.length.isOdd);
-      _drinkMessage.sink.add(drinkThread);
+      _drinkMessage.sink.add(drinkThread.toList());
 
       String token = await this.repository.getTokenCache();
       _slackToken.sink.add(token);
