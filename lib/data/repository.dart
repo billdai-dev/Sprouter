@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/data/model/post_message.dart';
 
 abstract class Repository {
   void setTokenCache(String token);
@@ -13,4 +14,6 @@ abstract class Repository {
   Future<String> getSlackUserData({String token});
 
   Future<BuiltList<Message>> fetchLatestDrinkMessages();
+
+  Future<PostMessageResponse> orderDrink(String threadTs, String drink);
 }

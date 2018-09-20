@@ -4,6 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/remote/app_remote_repo.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/data/repository.dart';
@@ -84,5 +85,10 @@ class AppRepository implements Repository {
         .then(
             (drinkMessageTs) => _remoteRepo.fetchMessageReplies(drinkMessageTs))
         .then((drinkThread) => drinkThread.messages);
+  }
+
+  @override
+  Future<PostMessageResponse> orderDrink(String threadTs, String drink) {
+    return _remoteRepo.postMessage(threadTs, drink);
   }
 }

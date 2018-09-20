@@ -44,7 +44,9 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
   Widget build(BuildContext context) {
     OrderDrinkBloc bloc = OrderDrinkBlocProvider.of(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("點杯飲料"),
+      ),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -199,9 +201,18 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                     ),
                     Expanded(
                       flex: 2,
-                      child: IconButton(
-                        icon: Icon(Icons.send),
-                        onPressed: () => bloc.submitOrder.add(null),
+                      child: StreamBuilder(
+                        stream: bloc?.isLoading,
+                        builder: (context, snapshot) {
+                          return IconButton(
+                            icon: Icon(Icons.send),
+                            color: Theme.of(context).accentColor,
+                            disabledColor: Colors.grey,
+                            onPressed: snapshot.data == true
+                                ? null
+                                : () => bloc.submitOrder.add(null),
+                          );
+                        },
                       ),
                     )
                   ],
@@ -257,22 +268,8 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
     return StreamBuilder<Drink>(
       stream: bloc.currentDrink,
       builder: (context, snapshot) {
-        String completeDrinkName;
-        if (!snapshot.hasData) {
-          completeDrinkName = "";
-        } else {
-          Drink drink = snapshot.data;
-          StringBuffer ingredientString = StringBuffer("");
-          drink.ingredients.forEach((ingredient) {
-            ingredientString.write(" / ${getIngredientMapping(ingredient)}");
-          });
-          String price = drink.price == null ? "" : " / \$${drink.price}";
-          completeDrinkName =
-              "${drink.name ?? ""}${ingredientString.toString()}$price";
-        }
-        String state = "我想喝...\n$completeDrinkName";
         return Text(
-          state,
+          "我想喝...\n${snapshot.hasData ? snapshot.data.completeDrinkName : ""}",
           textAlign: TextAlign.center,
           style: TextStyle(
             height: 1.1,

@@ -7,6 +7,7 @@ import 'package:sprouter/data/model/message.dart';
 
 class TodayDrinkBloc {
   AppRepository repository;
+  String threadTs;
 
   final BehaviorSubject<BuiltList<Message>> _drinkMessage =
       BehaviorSubject(seedValue: null);
@@ -30,9 +31,14 @@ class TodayDrinkBloc {
     _fetchMessage.stream.listen((_) async {
       BuiltList<Message> drinkThread =
           await this.repository.fetchLatestDrinkMessages();
+      threadTs = drinkThread == null || drinkThread.isEmpty
+          ? null
+          : drinkThread[0].threadTs;
+
       List<Message> orderKeywords = drinkThread.where((message) {
         return message.text == "點單" || message.text == "收單";
       }).toList(growable: false);
+
       _isOrdering.sink.add(orderKeywords.length.isOdd);
       _drinkMessage.sink.add(drinkThread);
 

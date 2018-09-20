@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc.dart';
-import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 
 class OrderDrinkBlocProvider extends StatefulWidget {
   final Widget child;
+  final String threadTs;
 
-  OrderDrinkBlocProvider({Key key, this.child}) : super(key: key);
+  OrderDrinkBlocProvider({Key key, @required this.threadTs, this.child})
+      : super(key: key);
 
   @override
   _OrderDrinkBlocProviderState createState() => _OrderDrinkBlocProviderState();
@@ -21,7 +22,7 @@ class _OrderDrinkBlocProviderState extends State<OrderDrinkBlocProvider> {
 
   @override
   void initState() {
-    _bloc = OrderDrinkBloc();
+    _bloc = OrderDrinkBloc(threadTs: widget.threadTs);
     super.initState();
   }
 
@@ -43,9 +44,8 @@ class _OrderDrinkBlocProviderState extends State<OrderDrinkBlocProvider> {
 class _OrderDrinkBlocProvider extends InheritedWidget {
   final OrderDrinkBloc bloc;
 
-  _OrderDrinkBlocProvider({Key key, OrderDrinkBloc bloc, Widget child})
-      : bloc = bloc ?? OrderDrinkBloc(),
-        super(key: key, child: child);
+  _OrderDrinkBlocProvider({Key key, @required this.bloc, Widget child})
+      : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {

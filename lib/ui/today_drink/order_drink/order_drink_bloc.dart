@@ -1,11 +1,15 @@
 import 'dart:async';
 
+import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
+import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 
 class OrderDrinkBloc {
   AppRepository repository;
+
+  final String threadTs;
   final Drink _drink = Drink();
 
   final StreamController<Ingredient> _addIngredient = StreamController();
@@ -34,11 +38,6 @@ class OrderDrinkBloc {
 
   Sink<String> get changeDrinkName => _changeDrinkName.sink;
 
-  /*final StreamController<Ingredient> _changeIngredientDetail =
-      StreamController();
-
-  Sink<Ingredient> get changeIngredientDetail => _changeIngredientDetail.sink;*/
-
   final BehaviorSubject<Drink> _currentDrink = BehaviorSubject();
 
   Stream<Drink> get currentDrink => _currentDrink.stream;
@@ -47,7 +46,11 @@ class OrderDrinkBloc {
 
   Sink<void> get submitOrder => _submitOrder.sink;
 
-  OrderDrinkBloc({AppRepository repository})
+  final BehaviorSubject<bool> _isLoading = BehaviorSubject(seedValue: false);
+
+  Stream<bool> get isLoading => _isLoading.stream;
+
+  OrderDrinkBloc({@required this.threadTs, AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
     _addIngredient.stream
         .listen((ingredient) => _handleIngredientChange(ingredient, true));
@@ -69,7 +72,6 @@ class OrderDrinkBloc {
       }
       return indexedIngredientType == ingredientType;
     });
-    print(currentIngredients);
     if (isAdding) {
       currentIngredients.add(ingredient);
     }
@@ -91,7 +93,12 @@ class OrderDrinkBloc {
     _currentDrink.sink.add(_drink);
   }
 
-  void _handleOrderSubmission(void event) {}
+  void _handleOrderSubmission(void event) async {
+    _isLoading.sink.add(true);
+    PostMessageResponse response =
+        await repository.orderDrink(threadTs, _drink?.completeDrinkName);
+    _isLoading.sink.add(false);
+  }
 
   void dispose() {
     _addIngredient?.close();
@@ -103,8 +110,8 @@ class OrderDrinkBloc {
     configOther?.close();
     _changePrice?.close();
     _changeDrinkName?.close();
-    //_changeIngredientDetail?.close();
     _currentDrink?.close();
     _submitOrder?.close();
+    _isLoading?.close();
   }
 }

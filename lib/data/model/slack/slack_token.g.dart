@@ -147,27 +147,19 @@ class SlackTokenBuilder implements Builder<SlackToken, SlackTokenBuilder> {
   _$SlackToken _$v;
 
   String _accessToken;
-
   String get accessToken => _$this._accessToken;
-
   set accessToken(String accessToken) => _$this._accessToken = accessToken;
 
   String _scope;
-
   String get scope => _$this._scope;
-
   set scope(String scope) => _$this._scope = scope;
 
   String _teamName;
-
   String get teamName => _$this._teamName;
-
   set teamName(String teamName) => _$this._teamName = teamName;
 
   String _teamId;
-
   String get teamId => _$this._teamId;
-
   set teamId(String teamId) => _$this._teamId = teamId;
 
   SlackTokenBuilder();

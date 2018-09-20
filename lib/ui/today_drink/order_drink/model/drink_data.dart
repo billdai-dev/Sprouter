@@ -2,6 +2,16 @@ class Drink {
   String name;
   String price;
   List<Ingredient> ingredients = [];
+  String _completeDrinkName;
+
+  String get completeDrinkName {
+    StringBuffer ingredientString = StringBuffer("");
+    ingredients?.forEach((ingredient) =>
+        ingredientString.write(" / ${getIngredientMapping(ingredient)}"));
+    String _price = price == null ? "" : " / \$$price";
+    _completeDrinkName = "${name ?? ""}${ingredientString.toString()}$_price";
+    return _completeDrinkName;
+  }
 }
 
 const List<Type> ingredientWeights = [

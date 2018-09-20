@@ -585,7 +585,7 @@ class _$Message extends Message {
   bool operator ==(dynamic other) {
     if (identical(other, this)) return true;
     if (other is! Message) return false;
-    return type == other.ingredientType &&
+    return type == other.type &&
         user == other.user &&
         text == other.text &&
         clientMsgId == other.clientMsgId &&

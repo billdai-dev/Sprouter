@@ -73,6 +73,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         onPressed: () {
           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
             builder: (context) => OrderDrinkBlocProvider(
+                  threadTs: bloc?.threadTs,
                   child: OrderDrinkPage(),
                 ),
           ));
