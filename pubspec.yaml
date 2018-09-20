@@ -25,7 +25,7 @@ dependencies:
 
   shared_preferences: ^0.4.2
 
-
+  fluttie: ^0.2.3
 
 dev_dependencies:
   flutter_test:

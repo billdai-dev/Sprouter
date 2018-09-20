@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sprouter/ui/loading_screen.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc_provider.dart';
@@ -30,7 +31,6 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
         overlayEntry?.remove();
       }
     });
-    overlayEntry?.remove();
   }
 
   @override
@@ -48,176 +48,201 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
         title: Text("點杯飲料"),
       ),
       body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Stack(
           children: <Widget>[
-            Flexible(
-              child: _buildIngredientChips(context),
-            ),
-            Container(
-              height: 1.0,
-              color: Colors.grey,
-            ),
-            Expanded(
-              flex: 3,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: 8.0, right: 8.0),
-                    child: _buildCompleteDrinkName(context),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Flexible(
+                  child: _buildIngredientChips(context),
+                ),
+                Container(
+                  height: 1.0,
+                  color: Colors.grey,
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: _buildCompleteDrinkName(context),
+                      ),
+                      Expanded(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            Expanded(
+                              child: Container(
+                                constraints: BoxConstraints.expand(),
+                                color: Colors.transparent,
+                              ),
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: DragTarget<Ingredient>(
+                                      key: _handmadeDrinkKey,
+                                      builder: (context, candidateData,
+                                          rejectedData) {
+                                        Widget handmadeDrink = Image.asset(
+                                          "assets/images/handmade_drink.png",
+                                        );
+                                        return controller.isAnimating ||
+                                                candidateData.isEmpty
+                                            ? handmadeDrink
+                                            : Opacity(
+                                                opacity: 0.5,
+                                                child: handmadeDrink,
+                                              );
+                                      },
+                                      onWillAccept: (data) =>
+                                          !controller.isAnimating,
+                                      onAccept: (data) {
+                                        overlayEntry = OverlayEntry(
+                                          builder: (context) =>
+                                              _DropIngredientAnimation(
+                                                  ingredientType:
+                                                      data.runtimeType,
+                                                  handmadeDrinkRenderBox:
+                                                      _handmadeDrinkKey
+                                                          .currentContext
+                                                          .findRenderObject(),
+                                                  controller: controller),
+                                        );
+                                        Overlay.of(context)
+                                            .insert(overlayEntry);
+                                        controller?.reset();
+                                        controller?.forward();
+                                        bloc?.addIngredient?.add(data);
+                                      },
+                                    ),
+                                  ),
+                                  FractionallySizedBox(
+                                    widthFactor: 0.7,
+                                    child: Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.monetization_on,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                        SizedBox(
+                                          width: 3.0,
+                                        ),
+                                        Expanded(
+                                          child: TextField(
+                                            inputFormatters: [
+                                              LengthLimitingTextInputFormatter(
+                                                  3)
+                                            ],
+                                            keyboardType: TextInputType.number,
+                                            onChanged: (price) =>
+                                                bloc.changePrice.add(price),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          width: 15.0,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: Stack(
+                                overflow: Overflow.visible,
+                                fit: StackFit.passthrough,
+                                children: <Widget>[
+                                  FractionallySizedBox(
+                                    heightFactor: 0.9,
+                                    child: GridView.count(
+                                      physics: ClampingScrollPhysics(),
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 0.8,
+                                      children: [
+                                        _DraggableIngredientGrid(Ice),
+                                        _DraggableIngredientGrid(Sugar),
+                                        _DraggableIngredientGrid(Pearl),
+                                        _DraggableIngredientGrid(CoconutJelly),
+                                        _DraggableIngredientGrid(DrinkSize),
+                                        _DraggableIngredientGrid(
+                                            OtherIngredient),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  Expanded(
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 30.0),
+                    alignment: Alignment(0.0, -0.7),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Expanded(
-                          child: Container(
-                            constraints: BoxConstraints.expand(),
-                            color: Colors.transparent,
+                          flex: 2,
+                          child: Text(
+                            "品名",
+                            textAlign: TextAlign.end,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8.0,
+                        ),
+                        Expanded(
+                          flex: 8,
+                          child: TextField(
+                            onChanged: (name) => bloc.changeDrinkName.add(name),
                           ),
                         ),
                         Expanded(
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                child: DragTarget<Ingredient>(
-                                  key: _handmadeDrinkKey,
-                                  builder:
-                                      (context, candidateData, rejectedData) {
-                                    Widget handmadeDrink = Image.asset(
-                                      "assets/images/handmade_drink.png",
-                                    );
-                                    return controller.isAnimating ||
-                                            candidateData.isEmpty
-                                        ? handmadeDrink
-                                        : Opacity(
-                                            opacity: 0.5,
-                                            child: handmadeDrink,
-                                          );
-                                  },
-                                  onWillAccept: (data) =>
-                                      !controller.isAnimating,
-                                  onAccept: (data) {
-                                    overlayEntry = OverlayEntry(
-                                      builder: (context) =>
-                                          _DropIngredientAnimation(
-                                              ingredientType: data.runtimeType,
-                                              handmadeDrinkRenderBox:
-                                                  _handmadeDrinkKey
-                                                      .currentContext
-                                                      .findRenderObject(),
-                                              controller: controller),
-                                    );
-                                    Overlay.of(context).insert(overlayEntry);
-                                    controller?.reset();
-                                    controller?.forward();
-                                    bloc?.addIngredient?.add(data);
-                                  },
-                                ),
-                              ),
-                              FractionallySizedBox(
-                                widthFactor: 0.7,
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.monetization_on,
-                                      color: Theme.of(context).accentColor,
-                                    ),
-                                    SizedBox(
-                                      width: 3.0,
-                                    ),
-                                    Expanded(
-                                      child: TextField(
-                                        inputFormatters: [
-                                          LengthLimitingTextInputFormatter(3)
-                                        ],
-                                        keyboardType: TextInputType.number,
-                                        onChanged: (price) =>
-                                            bloc.changePrice.add(price),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 15.0,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
+                          flex: 2,
+                          child: StreamBuilder<bool>(
+                            stream: bloc?.isLoading,
+                            builder: (context, snapshot) {
+                              return IconButton(
+                                icon: Icon(Icons.send),
+                                color: Theme.of(context).accentColor,
+                                disabledColor: Colors.grey,
+                                onPressed: snapshot.data == true
+                                    ? null
+                                    : () => bloc.submitOrder.add(null),
+                              );
+                            },
                           ),
-                        ),
-                        Expanded(
-                          child: Stack(
-                            overflow: Overflow.visible,
-                            fit: StackFit.passthrough,
-                            children: <Widget>[
-                              FractionallySizedBox(
-                                heightFactor: 0.9,
-                                child: GridView.count(
-                                  physics: ClampingScrollPhysics(),
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.8,
-                                  children: [
-                                    _DraggableIngredientGrid(Ice),
-                                    _DraggableIngredientGrid(Sugar),
-                                    _DraggableIngredientGrid(Pearl),
-                                    _DraggableIngredientGrid(CoconutJelly),
-                                    _DraggableIngredientGrid(DrinkSize),
-                                    _DraggableIngredientGrid(OtherIngredient),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        )
                       ],
                     ),
                   ),
-                ],
-              ),
+                )
+              ],
             ),
-            Expanded(
-              flex: 1,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 30.0),
-                alignment: Alignment(0.0, -0.7),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        "品名",
-                        textAlign: TextAlign.end,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8.0,
-                    ),
-                    Expanded(
-                      flex: 8,
-                      child: TextField(
-                        onChanged: (name) => bloc.changeDrinkName.add(name),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: StreamBuilder(
-                        stream: bloc?.isLoading,
-                        builder: (context, snapshot) {
-                          return IconButton(
-                            icon: Icon(Icons.send),
-                            color: Theme.of(context).accentColor,
-                            disabledColor: Colors.grey,
-                            onPressed: snapshot.data == true
-                                ? null
-                                : () => bloc.submitOrder.add(null),
-                          );
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              ),
+            StreamBuilder(
+              stream: bloc?.isLoading,
+              builder: (context, snapshot) {
+                return snapshot.hasData && snapshot.data
+                    ? LoadingIndicator()
+                    : Container();
+              },
+            ),
+            StreamBuilder(
+              stream: bloc?.isDrinkOrdered,
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data) {
+                  Navigator.of(context, rootNavigator: true).pop();
+                }
+                return Container();
+              },
             )
           ],
         ),

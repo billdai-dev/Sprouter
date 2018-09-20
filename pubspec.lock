@@ -207,6 +207,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.6"
+  fluttie:
+    dependency: "direct main"
+    description:
+      name: fluttie
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.4"
   font_awesome_flutter:
     dependency: "direct main"
     description:

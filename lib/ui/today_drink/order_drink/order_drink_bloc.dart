@@ -50,6 +50,10 @@ class OrderDrinkBloc {
 
   Stream<bool> get isLoading => _isLoading.stream;
 
+  final StreamController<bool> _isDrinkOrdered = StreamController();
+
+  Stream<bool> get isDrinkOrdered => _isDrinkOrdered.stream;
+
   OrderDrinkBloc({@required this.threadTs, AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
     _addIngredient.stream
@@ -98,6 +102,7 @@ class OrderDrinkBloc {
     PostMessageResponse response =
         await repository.orderDrink(threadTs, _drink?.completeDrinkName);
     _isLoading.sink.add(false);
+    _isDrinkOrdered.sink.add(true);
   }
 
   void dispose() {
@@ -113,5 +118,6 @@ class OrderDrinkBloc {
     _currentDrink?.close();
     _submitOrder?.close();
     _isLoading?.close();
+    _isDrinkOrdered?.close();
   }
 }
