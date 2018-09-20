@@ -14,7 +14,7 @@ class TodayDrinkBloc {
 
   Stream<BuiltList<Message>> get drinkMessage => _drinkMessage.stream;
 
-  final BehaviorSubject<bool> _isOrdering = BehaviorSubject(seedValue: null);
+  final BehaviorSubject<bool> _isOrdering = BehaviorSubject(seedValue: false);
 
   Stream<bool> get isOrdering => _isOrdering.stream;
 

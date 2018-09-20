@@ -69,7 +69,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               onRefresh: () => _createRefreshCallback(context),
             ),
       floatingActionButton: _AddDrinkFab(
-        animation: _slackIconAnimation,
         onPressed: () {
           Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
             builder: (context) => OrderDrinkBlocProvider(
@@ -227,21 +226,64 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   }
 }
 
-class _AddDrinkFab extends AnimatedWidget {
+class _AddDrinkFab extends StatefulWidget {
   final VoidCallback onPressed;
 
-  _AddDrinkFab({Key key, Animation<double> animation, @required this.onPressed})
-      : super(key: key, listenable: animation);
+  _AddDrinkFab({Key key, @required this.onPressed}) : super(key: key);
+
+  @override
+  __AddDrinkFabState createState() => __AddDrinkFabState();
+}
+
+class __AddDrinkFabState extends State<_AddDrinkFab>
+    with SingleTickerProviderStateMixin {
+  Animation<double> anim;
+  AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+    });
+    anim = Tween(begin: 24.0, end: 30.0).animate(controller);
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return FloatingActionButton(
-      child: Icon(
-        FontAwesomeIcons.plus,
-        size: animation?.value ?? 24.0,
-      ),
-      onPressed: onPressed,
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    return StreamBuilder(
+      stream: bloc?.isOrdering,
+      builder: (context, snapshot) {
+        snapshot.data ? controller?.forward() : controller?.stop();
+        return Offstage(
+          offstage: !snapshot.data,
+          child: AnimatedBuilder(
+            animation: anim,
+            builder: (context, child) {
+              return FloatingActionButton(
+                child: Icon(
+                  FontAwesomeIcons.plus,
+                  size: anim?.value ?? 24.0,
+                ),
+                onPressed: snapshot.data ? widget.onPressed : null,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
