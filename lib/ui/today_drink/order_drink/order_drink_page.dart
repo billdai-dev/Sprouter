@@ -216,7 +216,15 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                                 disabledColor: Colors.grey,
                                 onPressed: snapshot.data == true
                                     ? null
-                                    : () => bloc.submitOrder.add(null),
+                                    : () async {
+                                        bool success =
+                                            await bloc?.submitOrder();
+                                        if (success) {
+                                          Navigator.of(context,
+                                                  rootNavigator: true)
+                                              .pop(true);
+                                        }
+                                      },
                               );
                             },
                           ),
@@ -235,15 +243,6 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                     : Container();
               },
             ),
-            StreamBuilder(
-              stream: bloc?.isDrinkOrdered,
-              builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data) {
-                  Navigator.of(context, rootNavigator: true).pop();
-                }
-                return Container();
-              },
-            )
           ],
         ),
       ),

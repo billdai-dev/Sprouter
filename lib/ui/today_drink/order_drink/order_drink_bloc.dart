@@ -42,17 +42,9 @@ class OrderDrinkBloc {
 
   Stream<Drink> get currentDrink => _currentDrink.stream;
 
-  final StreamController<void> _submitOrder = StreamController();
-
-  Sink<void> get submitOrder => _submitOrder.sink;
-
   final BehaviorSubject<bool> _isLoading = BehaviorSubject(seedValue: false);
 
   Stream<bool> get isLoading => _isLoading.stream;
-
-  final StreamController<bool> _isDrinkOrdered = StreamController();
-
-  Stream<bool> get isDrinkOrdered => _isDrinkOrdered.stream;
 
   OrderDrinkBloc({@required this.threadTs, AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
@@ -62,7 +54,6 @@ class OrderDrinkBloc {
         .listen((ingredient) => _handleIngredientChange(ingredient, false));
     _changePrice.stream.listen(_handlePriceChange);
     _changeDrinkName.stream.listen(_handleDrinkNameChange);
-    _submitOrder.stream.listen(_handleOrderSubmission);
   }
 
   void _handleIngredientChange(Ingredient ingredient, bool isAdding) {
@@ -97,12 +88,12 @@ class OrderDrinkBloc {
     _currentDrink.sink.add(_drink);
   }
 
-  void _handleOrderSubmission(void event) async {
+  Future<bool> submitOrder() async {
     _isLoading.sink.add(true);
     PostMessageResponse response =
         await repository.orderDrink(threadTs, _drink?.completeDrinkName);
     _isLoading.sink.add(false);
-    _isDrinkOrdered.sink.add(true);
+    return response.ok;
   }
 
   void dispose() {
@@ -116,8 +107,6 @@ class OrderDrinkBloc {
     _changePrice?.close();
     _changeDrinkName?.close();
     _currentDrink?.close();
-    _submitOrder?.close();
     _isLoading?.close();
-    _isDrinkOrdered?.close();
   }
 }
