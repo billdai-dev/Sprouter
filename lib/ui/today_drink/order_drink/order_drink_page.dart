@@ -69,113 +69,119 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                         child: _buildCompleteDrinkName(context),
                       ),
                       Expanded(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                constraints: BoxConstraints.expand(),
-                                color: Colors.transparent,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              Expanded(
+                                child: Container(
+                                  constraints: BoxConstraints.expand(),
+                                  color: Colors.transparent,
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: DragTarget<Ingredient>(
-                                      key: _handmadeDrinkKey,
-                                      builder: (context, candidateData,
-                                          rejectedData) {
-                                        Widget handmadeDrink = Image.asset(
-                                          "assets/images/handmade_drink.png",
-                                        );
-                                        return controller.isAnimating ||
-                                                candidateData.isEmpty
-                                            ? handmadeDrink
-                                            : Opacity(
-                                                opacity: 0.5,
-                                                child: handmadeDrink,
-                                              );
-                                      },
-                                      onWillAccept: (data) =>
-                                          !controller.isAnimating,
-                                      onAccept: (data) {
-                                        overlayEntry = OverlayEntry(
-                                          builder: (context) =>
-                                              _DropIngredientAnimation(
-                                                  ingredientType:
-                                                      data.runtimeType,
-                                                  handmadeDrinkRenderBox:
-                                                      _handmadeDrinkKey
-                                                          .currentContext
-                                                          .findRenderObject(),
-                                                  controller: controller),
-                                        );
-                                        Overlay.of(context)
-                                            .insert(overlayEntry);
-                                        controller?.reset();
-                                        controller?.forward();
-                                        bloc?.addIngredient?.add(data);
-                                      },
+                              Expanded(
+                                child: Column(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: DragTarget<Ingredient>(
+                                        key: _handmadeDrinkKey,
+                                        builder: (context, candidateData,
+                                            rejectedData) {
+                                          Widget handmadeDrink = Image.asset(
+                                            "assets/images/handmade_drink.png",
+                                          );
+                                          return controller.isAnimating ||
+                                                  candidateData.isEmpty
+                                              ? handmadeDrink
+                                              : Opacity(
+                                                  opacity: 0.5,
+                                                  child: handmadeDrink,
+                                                );
+                                        },
+                                        onWillAccept: (data) =>
+                                            !controller.isAnimating,
+                                        onAccept: (data) {
+                                          overlayEntry = OverlayEntry(
+                                            builder: (context) =>
+                                                _DropIngredientAnimation(
+                                                    ingredientType:
+                                                        data.runtimeType,
+                                                    handmadeDrinkRenderBox:
+                                                        _handmadeDrinkKey
+                                                            .currentContext
+                                                            .findRenderObject(),
+                                                    controller: controller),
+                                          );
+                                          Overlay.of(context)
+                                              .insert(overlayEntry);
+                                          controller?.reset();
+                                          controller?.forward();
+                                          bloc?.addIngredient?.add(data);
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  FractionallySizedBox(
-                                    widthFactor: 0.7,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.monetization_on,
-                                          color: Theme.of(context).accentColor,
-                                        ),
-                                        SizedBox(
-                                          width: 3.0,
-                                        ),
-                                        Expanded(
-                                          child: TextField(
-                                            inputFormatters: [
-                                              LengthLimitingTextInputFormatter(
-                                                  3)
-                                            ],
-                                            keyboardType: TextInputType.number,
-                                            onChanged: (price) =>
-                                                bloc.changePrice.add(price),
+                                    FractionallySizedBox(
+                                      widthFactor: 0.7,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.monetization_on,
+                                            color:
+                                                Theme.of(context).accentColor,
                                           ),
-                                        ),
-                                        SizedBox(
-                                          width: 15.0,
-                                        )
-                                      ],
+                                          SizedBox(
+                                            width: 3.0,
+                                          ),
+                                          Expanded(
+                                            child: TextField(
+                                              inputFormatters: [
+                                                LengthLimitingTextInputFormatter(
+                                                    3)
+                                              ],
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              onChanged: (price) =>
+                                                  bloc.changePrice.add(price),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 15.0,
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Stack(
-                                overflow: Overflow.visible,
-                                fit: StackFit.passthrough,
-                                children: <Widget>[
-                                  FractionallySizedBox(
-                                    heightFactor: 0.9,
-                                    child: GridView.count(
-                                      physics: ClampingScrollPhysics(),
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 0.8,
-                                      children: [
-                                        _DraggableIngredientGrid(Ice),
-                                        _DraggableIngredientGrid(Sugar),
-                                        _DraggableIngredientGrid(Pearl),
-                                        _DraggableIngredientGrid(CoconutJelly),
-                                        _DraggableIngredientGrid(DrinkSize),
-                                        _DraggableIngredientGrid(
-                                            OtherIngredient),
-                                      ],
+                              Expanded(
+                                child: Stack(
+                                  overflow: Overflow.visible,
+                                  fit: StackFit.passthrough,
+                                  children: <Widget>[
+                                    FractionallySizedBox(
+                                      heightFactor: 0.9,
+                                      child: GridView.count(
+                                        physics: ClampingScrollPhysics(),
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 0.8,
+                                        children: [
+                                          _DraggableIngredientGrid(Ice),
+                                          _DraggableIngredientGrid(Sugar),
+                                          _DraggableIngredientGrid(Pearl),
+                                          _DraggableIngredientGrid(
+                                              CoconutJelly),
+                                          _DraggableIngredientGrid(DrinkSize),
+                                          _DraggableIngredientGrid(
+                                              OtherIngredient),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ],

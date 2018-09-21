@@ -13,8 +13,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1455656-8e1f-4cfb-960e-3d9918fb16ff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -38,11 +37,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="31" column="43" lean-forward="true" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+            <state relative-caret-position="126">
+              <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -89,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order_drink_page.dart" pinned="false" current-in-tab="false">
+      <file leaf-file-name="order_drink_page.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="220" column="70" selection-start-line="220" selection-start-column="70" selection-end-line="220" selection-end-column="70" />
+            <state relative-caret-position="148">
+              <caret line="72" column="55" lean-forward="true" selection-start-line="72" selection-start-column="55" selection-end-line="72" selection-end-column="55" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -209,9 +208,9 @@
         <option value="$PROJECT_DIR$/lib/ui/loading_screen.dart" />
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_bloc.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart" />
       </list>
     </option>
   </component>
@@ -296,7 +295,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DART_PUB_BUILD_MODE" value="debug" />
-    <property name="SearchEverywhereHistoryKey" value="throttle&#9;FILE&#9;file:///Users/bill/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.18.1/lib/src/transformers/throttle.dart&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;orderblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;publoc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;loadin&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/loading_screen.dart&#10;ordrbloc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;pubsp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;todayblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todaydrip&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;slack&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;se&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/serializers.dart&#10;seri&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/serializers.dart&#10;ser&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/serializers.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;todaydri&#9;null&#9;null&#10;blocpr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc_provider.dart&#10;ordrinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;re&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;posme&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/post_message.dart&#10;conver&#9;null&#9;null&#10;remotere&#9;null&#9;null&#10;staggered&#9;FILE&#9;file:///Users/bill/Library/Android/sdk/sources/android-25/com/android/ex/widget/StaggeredGridView.java&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;order&#9;null&#9;null&#10;floa&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/floating_action_button.dart&#10;the&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/theme_data.dart&#10;floatingac&#9;null&#9;null&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;orderbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;ingre&#9;null&#9;null&#10;p&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;pubspec.ya&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;animationcon&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/animation/animation_controller.dart&#10;transit&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/transitions.dart&#10;todaydrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;animationcont&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/animation/animation_controller.dart&#10;renderbo&#9;null&#9;null&#10;slidetr&#9;null&#9;null&#10;offset&#9;null&#9;null&#10;bloc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;showgen&#9;null&#9;null&#10;boxcon&#9;null&#9;null&#10;slidertheme&#9;null&#9;null&#10;sugar&#9;null&#9;null&#10;widgetbuil&#9;null&#9;null&#10;widgetbuilder&#9;null&#9;null&#10;drinda&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/model/drink_data.dart&#10;tab&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/tab_navigator.dart" />
+    <property name="SearchEverywhereHistoryKey" value="order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;throttle&#9;FILE&#9;file:///Users/bill/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.18.1/lib/src/transformers/throttle.dart&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;orderblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;publoc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;loadin&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/loading_screen.dart&#10;ordrbloc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;pubsp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;todayblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todaydrip&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;slack&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;se&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/serializers.dart&#10;seri&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/serializers.dart&#10;ser&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/serializers.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;todaydri&#9;null&#9;null&#10;blocpr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc_provider.dart&#10;ordrinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;re&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;posme&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/post_message.dart&#10;conver&#9;null&#9;null&#10;remotere&#9;null&#9;null&#10;staggered&#9;FILE&#9;file:///Users/bill/Library/Android/sdk/sources/android-25/com/android/ex/widget/StaggeredGridView.java&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;floa&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/floating_action_button.dart&#10;the&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/theme_data.dart&#10;floatingac&#9;null&#9;null&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;orderbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;ingre&#9;null&#9;null&#10;p&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;pubspec.ya&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;animationcon&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/animation/animation_controller.dart&#10;transit&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/transitions.dart&#10;todaydrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;animationcont&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/animation/animation_controller.dart&#10;renderbo&#9;null&#9;null&#10;slidetr&#9;null&#9;null&#10;offset&#9;null&#9;null&#10;bloc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;showgen&#9;null&#9;null&#10;boxcon&#9;null&#9;null&#10;slidertheme&#9;null&#9;null&#10;sugar&#9;null&#9;null&#10;widgetbuil&#9;null&#9;null&#10;widgetbuilder&#9;null&#9;null&#10;drinda&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/model/drink_data.dart&#10;tab&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/tab_navigator.dart" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -639,7 +638,7 @@
       <window_info id="Build Variants" order="2" side_tool="true" weight="0.3297568" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5064378" side_tool="true" weight="0.41142857" />
       <window_info anchor="bottom" id="Dart Analysis" order="9" weight="0.32857144" />
-      <window_info anchor="right" id="Flutter Outline" order="3" />
+      <window_info active="true" anchor="right" id="Flutter Outline" order="3" visible="true" weight="0.3297568" />
       <window_info anchor="bottom" id="Logcat" order="10" sideWeight="0.49356222" weight="0.41142857" />
       <window_info id="Capture Tool" order="7" />
       <window_info id="Designer" order="3" />
@@ -650,7 +649,7 @@
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.32857144" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.32857144" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32857144" />
       <window_info anchor="bottom" id="Terminal" order="13" weight="0.32907802" />
       <window_info id="Captures" order="5" weight="0.32960597" />
@@ -659,7 +658,7 @@
       <window_info anchor="right" id="Fabric" order="6" />
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="right" id="Flutter Inspector" order="8" weight="0.28647497" />
+      <window_info anchor="right" id="Flutter Inspector" order="8" weight="0.28612304" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32714286" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -1116,16 +1115,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="220" column="70" selection-start-line="220" selection-start-column="70" selection-end-line="220" selection-end-column="70" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/widgets/scroll_position.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
@@ -1191,8 +1180,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="31" column="43" lean-forward="true" selection-start-line="31" selection-start-column="43" selection-end-line="31" selection-end-column="43" />
+        <state relative-caret-position="126">
+          <caret line="23" column="8" lean-forward="true" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="72" column="55" lean-forward="true" selection-start-line="72" selection-start-column="55" selection-end-line="72" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
