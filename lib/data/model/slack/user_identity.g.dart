@@ -15,6 +15,9 @@ part of 'user_identity.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<UserIdentity> _$userIdentitySerializer =
     new _$UserIdentitySerializer();
@@ -176,7 +179,9 @@ class _$UserIdentity extends UserIdentity {
       (new UserIdentityBuilder()..update(updates)).build();
 
   _$UserIdentity._({this.ok, this.user, this.team}) : super._() {
-    if (ok == null) throw new BuiltValueNullFieldError('UserIdentity', 'ok');
+    if (ok == null) {
+      throw new BuiltValueNullFieldError('UserIdentity', 'ok');
+    }
   }
 
   @override
@@ -187,10 +192,12 @@ class _$UserIdentity extends UserIdentity {
   UserIdentityBuilder toBuilder() => new UserIdentityBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! UserIdentity) return false;
-    return ok == other.ok && user == other.user && team == other.team;
+    return other is UserIdentity &&
+        ok == other.ok &&
+        user == other.user &&
+        team == other.team;
   }
 
   @override
@@ -238,7 +245,9 @@ class UserIdentityBuilder
 
   @override
   void replace(UserIdentity other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$UserIdentity;
   }
 
@@ -282,8 +291,12 @@ class _$User extends User {
       (new UserBuilder()..update(updates)).build();
 
   _$User._({this.name, this.id}) : super._() {
-    if (name == null) throw new BuiltValueNullFieldError('User', 'name');
-    if (id == null) throw new BuiltValueNullFieldError('User', 'id');
+    if (name == null) {
+      throw new BuiltValueNullFieldError('User', 'name');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('User', 'id');
+    }
   }
 
   @override
@@ -294,10 +307,9 @@ class _$User extends User {
   UserBuilder toBuilder() => new UserBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! User) return false;
-    return name == other.name && id == other.id;
+    return other is User && name == other.name && id == other.id;
   }
 
   @override
@@ -338,7 +350,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
 
   @override
   void replace(User other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$User;
   }
 
@@ -363,7 +377,9 @@ class _$Team extends Team {
       (new TeamBuilder()..update(updates)).build();
 
   _$Team._({this.id}) : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('Team', 'id');
+    if (id == null) {
+      throw new BuiltValueNullFieldError('Team', 'id');
+    }
   }
 
   @override
@@ -374,10 +390,9 @@ class _$Team extends Team {
   TeamBuilder toBuilder() => new TeamBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Team) return false;
-    return id == other.id;
+    return other is Team && id == other.id;
   }
 
   @override
@@ -410,7 +425,9 @@ class TeamBuilder implements Builder<Team, TeamBuilder> {
 
   @override
   void replace(Team other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Team;
   }
 

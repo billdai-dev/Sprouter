@@ -15,6 +15,9 @@ part of 'slack_token.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<SlackToken> _$slackTokenSerializer = new _$SlackTokenSerializer();
 
@@ -103,8 +106,9 @@ class _$SlackToken extends SlackToken {
 
   _$SlackToken._({this.accessToken, this.scope, this.teamName, this.teamId})
       : super._() {
-    if (accessToken == null)
+    if (accessToken == null) {
       throw new BuiltValueNullFieldError('SlackToken', 'accessToken');
+    }
   }
 
   @override
@@ -115,10 +119,10 @@ class _$SlackToken extends SlackToken {
   SlackTokenBuilder toBuilder() => new SlackTokenBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! SlackToken) return false;
-    return accessToken == other.accessToken &&
+    return other is SlackToken &&
+        accessToken == other.accessToken &&
         scope == other.scope &&
         teamName == other.teamName &&
         teamId == other.teamId;
@@ -177,7 +181,9 @@ class SlackTokenBuilder implements Builder<SlackToken, SlackTokenBuilder> {
 
   @override
   void replace(SlackToken other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$SlackToken;
   }
 

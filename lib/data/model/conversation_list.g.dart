@@ -15,6 +15,9 @@ part of 'conversation_list.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<ConversationList> _$conversationListSerializer =
     new _$ConversationListSerializer();
@@ -106,10 +109,10 @@ class _$ConversationList extends ConversationList {
       new ConversationListBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! ConversationList) return false;
-    return messages == other.messages &&
+    return other is ConversationList &&
+        messages == other.messages &&
         hasMore == other.hasMore &&
         ok == other.ok;
   }
@@ -161,7 +164,9 @@ class ConversationListBuilder
 
   @override
   void replace(ConversationList other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$ConversationList;
   }
 

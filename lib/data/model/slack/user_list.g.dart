@@ -15,6 +15,9 @@ part of 'user_list.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<UserList> _$userListSerializer = new _$UserListSerializer();
 Serializer<Members> _$membersSerializer = new _$MembersSerializer();
@@ -352,7 +355,9 @@ class _$UserList extends UserList {
       (new UserListBuilder()..update(updates)).build();
 
   _$UserList._({this.ok, this.members}) : super._() {
-    if (ok == null) throw new BuiltValueNullFieldError('UserList', 'ok');
+    if (ok == null) {
+      throw new BuiltValueNullFieldError('UserList', 'ok');
+    }
   }
 
   @override
@@ -363,10 +368,9 @@ class _$UserList extends UserList {
   UserListBuilder toBuilder() => new UserListBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! UserList) return false;
-    return ok == other.ok && members == other.members;
+    return other is UserList && ok == other.ok && members == other.members;
   }
 
   @override
@@ -408,7 +412,9 @@ class UserListBuilder implements Builder<UserList, UserListBuilder> {
 
   @override
   void replace(UserList other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$UserList;
   }
 
@@ -458,7 +464,9 @@ class _$Members extends Members {
   _$Members._(
       {this.id, this.teamId, this.name, this.deleted, this.profile, this.isBot})
       : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('Members', 'id');
+    if (id == null) {
+      throw new BuiltValueNullFieldError('Members', 'id');
+    }
   }
 
   @override
@@ -469,10 +477,10 @@ class _$Members extends Members {
   MembersBuilder toBuilder() => new MembersBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Members) return false;
-    return id == other.id &&
+    return other is Members &&
+        id == other.id &&
         teamId == other.teamId &&
         name == other.name &&
         deleted == other.deleted &&
@@ -547,7 +555,9 @@ class MembersBuilder implements Builder<Members, MembersBuilder> {
 
   @override
   void replace(Members other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Members;
   }
 
@@ -645,10 +655,10 @@ class _$Profile extends Profile {
   ProfileBuilder toBuilder() => new ProfileBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Profile) return false;
-    return avatarHash == other.avatarHash &&
+    return other is Profile &&
+        avatarHash == other.avatarHash &&
         statusText == other.statusText &&
         statusEmoji == other.statusEmoji &&
         realName == other.realName &&
@@ -815,7 +825,9 @@ class ProfileBuilder implements Builder<Profile, ProfileBuilder> {
 
   @override
   void replace(Profile other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Profile;
   }
 

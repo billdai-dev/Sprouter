@@ -15,6 +15,9 @@ part of 'message.dart';
 // ignore_for_file: omit_local_variable_types
 // ignore_for_file: prefer_expression_function_bodies
 // ignore_for_file: sort_constructors_first
+// ignore_for_file: unnecessary_const
+// ignore_for_file: unnecessary_new
+// ignore_for_file: test_types_in_equals
 
 Serializer<Message> _$messageSerializer = new _$MessageSerializer();
 Serializer<Reply> _$replySerializer = new _$ReplySerializer();
@@ -582,10 +585,10 @@ class _$Message extends Message {
   MessageBuilder toBuilder() => new MessageBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Message) return false;
-    return type == other.type &&
+    return other is Message &&
+        type == other.type &&
         user == other.user &&
         text == other.text &&
         clientMsgId == other.clientMsgId &&
@@ -719,7 +722,9 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
 
   @override
   void replace(Message other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Message;
   }
 
@@ -775,8 +780,12 @@ class _$Reply extends Reply {
       (new ReplyBuilder()..update(updates)).build();
 
   _$Reply._({this.user, this.ts}) : super._() {
-    if (user == null) throw new BuiltValueNullFieldError('Reply', 'user');
-    if (ts == null) throw new BuiltValueNullFieldError('Reply', 'ts');
+    if (user == null) {
+      throw new BuiltValueNullFieldError('Reply', 'user');
+    }
+    if (ts == null) {
+      throw new BuiltValueNullFieldError('Reply', 'ts');
+    }
   }
 
   @override
@@ -787,10 +796,9 @@ class _$Reply extends Reply {
   ReplyBuilder toBuilder() => new ReplyBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! Reply) return false;
-    return user == other.user && ts == other.ts;
+    return other is Reply && user == other.user && ts == other.ts;
   }
 
   @override
@@ -831,7 +839,9 @@ class ReplyBuilder implements Builder<Reply, ReplyBuilder> {
 
   @override
   void replace(Reply other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$Reply;
   }
 
@@ -975,77 +985,126 @@ class _$File extends File {
       this.permalink,
       this.permalinkPublic})
       : super._() {
-    if (id == null) throw new BuiltValueNullFieldError('File', 'id');
-    if (created == null) throw new BuiltValueNullFieldError('File', 'created');
-    if (timestamp == null)
+    if (id == null) {
+      throw new BuiltValueNullFieldError('File', 'id');
+    }
+    if (created == null) {
+      throw new BuiltValueNullFieldError('File', 'created');
+    }
+    if (timestamp == null) {
       throw new BuiltValueNullFieldError('File', 'timestamp');
-    if (name == null) throw new BuiltValueNullFieldError('File', 'name');
-    if (title == null) throw new BuiltValueNullFieldError('File', 'title');
-    if (mimetype == null)
+    }
+    if (name == null) {
+      throw new BuiltValueNullFieldError('File', 'name');
+    }
+    if (title == null) {
+      throw new BuiltValueNullFieldError('File', 'title');
+    }
+    if (mimetype == null) {
       throw new BuiltValueNullFieldError('File', 'mimetype');
-    if (filetype == null)
+    }
+    if (filetype == null) {
       throw new BuiltValueNullFieldError('File', 'filetype');
-    if (prettyType == null)
+    }
+    if (prettyType == null) {
       throw new BuiltValueNullFieldError('File', 'prettyType');
-    if (user == null) throw new BuiltValueNullFieldError('File', 'user');
-    if (editable == null)
+    }
+    if (user == null) {
+      throw new BuiltValueNullFieldError('File', 'user');
+    }
+    if (editable == null) {
       throw new BuiltValueNullFieldError('File', 'editable');
-    if (size == null) throw new BuiltValueNullFieldError('File', 'size');
-    if (mode == null) throw new BuiltValueNullFieldError('File', 'mode');
-    if (isExternal == null)
+    }
+    if (size == null) {
+      throw new BuiltValueNullFieldError('File', 'size');
+    }
+    if (mode == null) {
+      throw new BuiltValueNullFieldError('File', 'mode');
+    }
+    if (isExternal == null) {
       throw new BuiltValueNullFieldError('File', 'isExternal');
-    if (externalType == null)
+    }
+    if (externalType == null) {
       throw new BuiltValueNullFieldError('File', 'externalType');
-    if (isPublic == null)
+    }
+    if (isPublic == null) {
       throw new BuiltValueNullFieldError('File', 'isPublic');
-    if (publicUrlShared == null)
+    }
+    if (publicUrlShared == null) {
       throw new BuiltValueNullFieldError('File', 'publicUrlShared');
-    if (displayAsBot == null)
+    }
+    if (displayAsBot == null) {
       throw new BuiltValueNullFieldError('File', 'displayAsBot');
-    if (username == null)
+    }
+    if (username == null) {
       throw new BuiltValueNullFieldError('File', 'username');
-    if (urlPrivate == null)
+    }
+    if (urlPrivate == null) {
       throw new BuiltValueNullFieldError('File', 'urlPrivate');
-    if (urlPrivateDownload == null)
+    }
+    if (urlPrivateDownload == null) {
       throw new BuiltValueNullFieldError('File', 'urlPrivateDownload');
-    if (thumb64 == null) throw new BuiltValueNullFieldError('File', 'thumb64');
-    if (thumb80 == null) throw new BuiltValueNullFieldError('File', 'thumb80');
-    if (thumb360 == null)
+    }
+    if (thumb64 == null) {
+      throw new BuiltValueNullFieldError('File', 'thumb64');
+    }
+    if (thumb80 == null) {
+      throw new BuiltValueNullFieldError('File', 'thumb80');
+    }
+    if (thumb360 == null) {
       throw new BuiltValueNullFieldError('File', 'thumb360');
-    if (thumb360W == null)
+    }
+    if (thumb360W == null) {
       throw new BuiltValueNullFieldError('File', 'thumb360W');
-    if (thumb360H == null)
+    }
+    if (thumb360H == null) {
       throw new BuiltValueNullFieldError('File', 'thumb360H');
-    if (thumb480 == null)
+    }
+    if (thumb480 == null) {
       throw new BuiltValueNullFieldError('File', 'thumb480');
-    if (thumb480W == null)
+    }
+    if (thumb480W == null) {
       throw new BuiltValueNullFieldError('File', 'thumb480W');
-    if (thumb480H == null)
+    }
+    if (thumb480H == null) {
       throw new BuiltValueNullFieldError('File', 'thumb480H');
-    if (thumb160 == null)
+    }
+    if (thumb160 == null) {
       throw new BuiltValueNullFieldError('File', 'thumb160');
-    if (thumb720 == null)
+    }
+    if (thumb720 == null) {
       throw new BuiltValueNullFieldError('File', 'thumb720');
-    if (thumb720W == null)
+    }
+    if (thumb720W == null) {
       throw new BuiltValueNullFieldError('File', 'thumb720W');
-    if (thumb720H == null)
+    }
+    if (thumb720H == null) {
       throw new BuiltValueNullFieldError('File', 'thumb720H');
-    if (thumb800 == null)
+    }
+    if (thumb800 == null) {
       throw new BuiltValueNullFieldError('File', 'thumb800');
-    if (thumb800W == null)
+    }
+    if (thumb800W == null) {
       throw new BuiltValueNullFieldError('File', 'thumb800W');
-    if (thumb800H == null)
+    }
+    if (thumb800H == null) {
       throw new BuiltValueNullFieldError('File', 'thumb800H');
-    if (imageExifRotation == null)
+    }
+    if (imageExifRotation == null) {
       throw new BuiltValueNullFieldError('File', 'imageExifRotation');
-    if (originalW == null)
+    }
+    if (originalW == null) {
       throw new BuiltValueNullFieldError('File', 'originalW');
-    if (originalH == null)
+    }
+    if (originalH == null) {
       throw new BuiltValueNullFieldError('File', 'originalH');
-    if (permalink == null)
+    }
+    if (permalink == null) {
       throw new BuiltValueNullFieldError('File', 'permalink');
-    if (permalinkPublic == null)
+    }
+    if (permalinkPublic == null) {
       throw new BuiltValueNullFieldError('File', 'permalinkPublic');
+    }
   }
 
   @override
@@ -1056,10 +1115,10 @@ class _$File extends File {
   FileBuilder toBuilder() => new FileBuilder()..replace(this);
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    if (other is! File) return false;
-    return id == other.id &&
+    return other is File &&
+        id == other.id &&
         created == other.created &&
         timestamp == other.timestamp &&
         name == other.name &&
@@ -1408,7 +1467,9 @@ class FileBuilder implements Builder<File, FileBuilder> {
 
   @override
   void replace(File other) {
-    if (other == null) throw new ArgumentError.notNull('other');
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
     _$v = other as _$File;
   }
 
