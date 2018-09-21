@@ -35,6 +35,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   bool _isInited = false;
   AnimationController _slackIconController;
   Animation<double> _slackIconAnimation;
+  ScrollController scrollController;
 
   @override
   void initState() {
@@ -50,6 +51,14 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         _slackIconController.reverse();
       } else if (status == AnimationStatus.dismissed) {
         _slackIconController.forward();
+      }
+    });
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+        bloc?.fetchMessage?.add(null);
       }
     });
   }
@@ -70,13 +79,18 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               onRefresh: () => _createRefreshCallback(context),
             ),
       floatingActionButton: _AddDrinkFab(
-        onPressed: () {
-          Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+        onPressed: () async {
+          bool isDrinkOrdered = await Navigator.of(context, rootNavigator: true)
+              .push(MaterialPageRoute(
             builder: (context) => OrderDrinkBlocProvider(
                   threadTs: bloc?.threadTs,
                   child: OrderDrinkPage(),
                 ),
           ));
+          isDrinkOrdered ??= false;
+          if (isDrinkOrdered) {
+            bloc?.fetchMessage?.add(null);
+          }
         },
       ),
     );
@@ -85,6 +99,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   @override
   void dispose() {
     _slackIconController?.dispose();
+    scrollController?.dispose();
     super.dispose();
   }
 
@@ -92,6 +107,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     TodayDrinkBloc todayDrinkBloc = TodayDrinkBlocProvider.of(context);
     SlackLoginBloc slackLoginBloc = SlackLoginBlocProvider.of(context);
     return CustomScrollView(
+      controller: scrollController,
       slivers: <Widget>[
         StreamBuilder<Map<String, dynamic>>(
           stream: Observable.combineLatest2(
@@ -199,7 +215,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   Widget _createImage(
       BuildContext context, String token, List<Message> messages) {
-    print("token:$token");
     if (messages == null || messages.isEmpty) {
       return Container(
           color: Colors.grey,
@@ -228,6 +243,11 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       ),
     );
   }
+
+/*Future _refreshData() async {
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    bloc?.fetchMessage?.add(null);
+  }*/
 }
 
 class _AddDrinkFab extends StatefulWidget {
@@ -272,8 +292,9 @@ class __AddDrinkFabState extends State<_AddDrinkFab>
       stream: bloc?.isOrdering,
       builder: (context, snapshot) {
         snapshot.hasData ? controller?.forward() : controller?.stop();
+        bool isVisible = snapshot.hasData && snapshot.data;
         return Offstage(
-          offstage: !snapshot.data ?? true,
+          offstage: !isVisible,
           child: AnimatedBuilder(
             animation: anim,
             builder: (context, child) {

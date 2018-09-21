@@ -28,7 +28,9 @@ class TodayDrinkBloc {
 
   TodayDrinkBloc({AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
-    _fetchMessage.stream.listen((_) async {
+    _fetchMessage.stream
+        .transform(ThrottleStreamTransformer(Duration(seconds: 3)))
+        .listen((_) async {
       BuiltList<Message> drinkThread =
           await this.repository.fetchLatestDrinkMessages();
       threadTs = drinkThread == null || drinkThread.isEmpty
