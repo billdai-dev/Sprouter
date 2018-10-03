@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:sprouter/data/model/message.dart';
@@ -68,12 +67,8 @@ abstract class PostMessageResponse
   }
 
   static PostMessageResponse fromJson(String jsonString) {
-    try {
-      return serializers.deserializeWith(
-          PostMessageResponse.serializer, json.decode(jsonString));
-    } catch (e) {
-      print(e);
-    }
+    return serializers.deserializeWith(
+        PostMessageResponse.serializer, json.decode(jsonString));
   }
 
   static Serializer<PostMessageResponse> get serializer =>

@@ -101,7 +101,7 @@ class AppRemoteRepo implements RemoteRepo {
 
   @override
   Future<ConversationList> fetchLunchMessages(
-      {String oldest, String latest, int limit = 100}) {
+      {String oldest, String latest, int limit = 200}) {
     var query = {
       "channel": _LUNCH_CHANNEL,
     };

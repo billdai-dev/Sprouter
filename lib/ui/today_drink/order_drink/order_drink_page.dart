@@ -1,12 +1,19 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sprouter/ui/loading_screen.dart';
+import 'package:sprouter/ui/slack_login/slack_login_bloc.dart';
+import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
+import 'package:sprouter/ui/today_drink/detail_photo/detail_photo_page.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc_provider.dart';
+import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
+import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
 class OrderDrinkPage extends StatefulWidget {
   @override
@@ -16,7 +23,9 @@ class OrderDrinkPage extends StatefulWidget {
 class _OrderDrinkPageState extends State<OrderDrinkPage>
     with SingleTickerProviderStateMixin {
   OverlayEntry overlayEntry;
+  OverlayEntry drinkMenuOverlayEntry;
   GlobalKey _handmadeDrinkKey = GlobalKey();
+  GlobalKey _drinkMenuKey = GlobalKey();
   AnimationController controller;
 
   @override
@@ -36,6 +45,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
   @override
   void dispose() {
     overlayEntry?.remove();
+    drinkMenuOverlayEntry?.remove();
     controller?.dispose();
     super.dispose();
   }
@@ -46,6 +56,42 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
     return Scaffold(
       appBar: AppBar(
         title: Text("點杯飲料"),
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                FontAwesomeIcons.fileImage,
+                key: _drinkMenuKey,
+              ),
+              onPressed: () {
+                TodayDrinkBloc todayDrinkBloc =
+                    TodayDrinkBlocProvider.of(context);
+                SlackLoginBloc slackLoginBloc =
+                    SlackLoginBlocProvider.of(context);
+                String token = slackLoginBloc?.token;
+                String photoUrl = todayDrinkBloc?.photoUrl;
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => DetailPhotoPage(photoUrl, token)));
+                /*drinkMenuOverlayEntry ??= OverlayEntry(builder: (context) {
+                  RenderBox box =
+                      _drinkMenuKey?.currentContext?.findRenderObject();
+                  Offset pos = box?.localToGlobal(Offset.zero);
+                  double horizontalMargin =
+                      MediaQuery.of(context).size.width - pos.dx;
+                  return Positioned(
+                    left: horizontalMargin,
+                    right: horizontalMargin,
+                    top: pos.dy + box.size.height,
+                    child: _DrinkMenuImage(
+                      token: token,
+                      imageUrl: photoUrl,
+                      onTap: () => drinkMenuOverlayEntry?.remove(),
+                    ),
+                  );
+                });
+                //drinkMenuOverlayEntry.remove();
+                Overlay.of(context).insert(drinkMenuOverlayEntry);*/
+              }),
+        ],
       ),
       body: Container(
         child: Stack(
@@ -65,7 +111,8 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                   child: Column(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(left: 8.0, right: 8.0),
+                        margin:
+                            EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                         child: _buildCompleteDrinkName(context),
                       ),
                       Expanded(
@@ -156,11 +203,10 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                               ),
                               Expanded(
                                 child: Stack(
-                                  overflow: Overflow.visible,
                                   fit: StackFit.passthrough,
                                   children: <Widget>[
-                                    FractionallySizedBox(
-                                      heightFactor: 0.9,
+                                    Container(
+                                      constraints: BoxConstraints.expand(),
                                       child: GridView.count(
                                         physics: ClampingScrollPhysics(),
                                         crossAxisCount: 2,
@@ -189,53 +235,51 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 30.0),
-                    alignment: Alignment(0.0, -0.7),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            "品名",
-                            textAlign: TextAlign.end,
+                  child: FractionallySizedBox(
+                    widthFactor: 0.48,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 15.0),
+                      alignment: Alignment(0.0, -0.7),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Flexible(
+                            flex: 5,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                labelText: "品名",
+                                isDense: true,
+                              ),
+                              onChanged: (name) =>
+                                  bloc.changeDrinkName.add(name),
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 8.0,
-                        ),
-                        Expanded(
-                          flex: 8,
-                          child: TextField(
-                            onChanged: (name) => bloc.changeDrinkName.add(name),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: StreamBuilder<bool>(
-                            stream: bloc?.isLoading,
-                            builder: (context, snapshot) {
-                              return IconButton(
-                                icon: Icon(Icons.send),
-                                color: Theme.of(context).accentColor,
-                                disabledColor: Colors.grey,
-                                onPressed: snapshot.data == true
-                                    ? null
-                                    : () async {
-                                        bool success =
-                                            await bloc?.submitOrder();
-                                        if (success) {
-                                          Navigator.of(context,
-                                                  rootNavigator: true)
-                                              .pop(true);
-                                        }
-                                      },
-                              );
-                            },
-                          ),
-                        )
-                      ],
+                          Expanded(
+                            flex: 1,
+                            child: StreamBuilder<bool>(
+                              stream: bloc?.isLoading,
+                              builder: (context, snapshot) {
+                                return IconButton(
+                                  icon: Icon(Icons.send),
+                                  color: Theme.of(context).accentColor,
+                                  disabledColor: Colors.grey,
+                                  onPressed: snapshot.data == true
+                                      ? null
+                                      : () async {
+                                          bool success =
+                                              await bloc?.submitOrder();
+                                          if (success) {
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop(true);
+                                          }
+                                        },
+                                );
+                              },
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )
@@ -734,23 +778,27 @@ class _DropIngredientAnimation extends StatelessWidget {
 
     return AnimatedBuilder(
       animation: dropAnim,
-      builder: (context, child) => Stack(children: <Widget>[child]),
-      child: Positioned(
-        left: animBeginX,
-        top: animBeginY,
-        height: iconWidthHeight,
-        child: FadeTransition(
-          opacity: opacityAnim,
-          child: SlideTransition(
-            position: dropAnim,
-            child: Image.asset(
-              _getImageFileName(ingredientType),
-              width: iconWidthHeight,
-              height: iconWidthHeight,
-              fit: BoxFit.contain,
+      builder: (context, child) => child,
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            left: animBeginX,
+            top: animBeginY,
+            height: iconWidthHeight,
+            child: FadeTransition(
+              opacity: opacityAnim,
+              child: SlideTransition(
+                position: dropAnim,
+                child: Image.asset(
+                  _getImageFileName(ingredientType),
+                  width: iconWidthHeight,
+                  height: iconWidthHeight,
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -778,5 +826,31 @@ class _DropIngredientAnimation extends StatelessWidget {
         break;
     }
     return "assets/images/$fileName";
+  }
+}
+
+class _DrinkMenuImage extends StatefulWidget {
+  final String imageUrl;
+  final String token;
+  final VoidCallback onTap;
+
+  _DrinkMenuImage({Key key, this.token, this.imageUrl, this.onTap})
+      : super(key: key);
+
+  @override
+  _DrinkMenuImageState createState() => _DrinkMenuImageState();
+}
+
+class _DrinkMenuImageState extends State<_DrinkMenuImage> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: CachedNetworkImage(
+        imageUrl: widget.imageUrl ?? "",
+        fit: BoxFit.contain,
+        httpHeaders: {"Authorization": "Bearer ${widget.token}"},
+      ),
+    );
   }
 }

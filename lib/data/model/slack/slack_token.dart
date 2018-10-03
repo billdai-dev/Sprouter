@@ -31,15 +31,8 @@ abstract class SlackToken implements Built<SlackToken, SlackTokenBuilder> {
   }
 
   static SlackToken fromJson(String jsonString) {
-    try {
-      return serializers.deserializeWith(
-          SlackToken.serializer, json.decode(jsonString));
-    } catch (e) {
-      print(e);
-      return null;
-    }
-    /*return serializers.deserializeWith(
-        SlackToken.serializer, json.decode(jsonString));*/
+    return serializers.deserializeWith(
+        SlackToken.serializer, json.decode(jsonString));
   }
 
   static Serializer<SlackToken> get serializer => _$slackTokenSerializer;

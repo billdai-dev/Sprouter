@@ -4,6 +4,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 
 class SlackLoginBloc {
+  String token;
+
   final StreamController<void> _initData = StreamController();
 
   final BehaviorSubject<String> _getTokenCache =
@@ -17,7 +19,6 @@ class SlackLoginBloc {
       : this.repository = repository ?? AppRepository.repo {
     _initData.stream.listen((_) async {
       String tokenCache = await this.repository.getTokenCache();
-      print("tokenCache:$tokenCache");
       _getTokenCache.sink.add(tokenCache);
     });
     _initData.add(null);
@@ -25,6 +26,7 @@ class SlackLoginBloc {
 
   Future<String> getSlackOauthToken(String code) async {
     String token = await repository.getSlackOAuthToken(code);
+    this.token = token;
     _getTokenCache.sink.add(token);
     return token;
   }

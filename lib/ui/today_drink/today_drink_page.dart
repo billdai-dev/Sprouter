@@ -17,9 +17,7 @@ import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
 class TodayDrinkPage extends StatefulWidget {
-  final GestureTapCallback onItemClick;
-
-  TodayDrinkPage(this.onItemClick, {Key key}) : super(key: key);
+  TodayDrinkPage({Key key}) : super(key: key);
 
   @override
   TodayDrinkPageState createState() {
@@ -90,6 +88,10 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           isDrinkOrdered ??= false;
           if (isDrinkOrdered) {
             bloc?.fetchMessage?.add(null);
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text("訂單已送出"),
+              duration: Duration(seconds: 3),
+            ));
           }
         },
       ),
@@ -189,7 +191,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                 children: <Widget>[
                   ListTile(
                     title: Text(replies[index].text),
-                    onTap: widget.onItemClick,
                   ),
                   Divider(height: 2.0)
                 ],
@@ -256,10 +257,10 @@ class _AddDrinkFab extends StatefulWidget {
   _AddDrinkFab({Key key, @required this.onPressed}) : super(key: key);
 
   @override
-  __AddDrinkFabState createState() => __AddDrinkFabState();
+  _AddDrinkFabState createState() => _AddDrinkFabState();
 }
 
-class __AddDrinkFabState extends State<_AddDrinkFab>
+class _AddDrinkFabState extends State<_AddDrinkFab>
     with SingleTickerProviderStateMixin {
   Animation<double> anim;
   AnimationController controller;

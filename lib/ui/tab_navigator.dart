@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink/today_drink_page.dart';
 
 class TabNavigatorRoutes {
@@ -10,31 +9,15 @@ class TabNavigatorRoutes {
 
 class TabNavigator extends StatelessWidget {
   final int _pageIndex;
+  final GlobalKey<NavigatorState> navigatorKey;
 
   TabNavigator(this._pageIndex, {this.navigatorKey});
 
-  final GlobalKey<NavigatorState> navigatorKey;
-
-  void _push(BuildContext context, int pageIndex) {
-    var routeBuilders = _routeBuilders(context, pageIndex);
-
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                routeBuilders[TabNavigatorRoutes.ORDER_DRINK](context)));
-  }
-
-  Map<String, WidgetBuilder> _routeBuilders(
-      BuildContext context, int pageIndex) {
+  Map<String, WidgetBuilder> _routeBuilders(int pageIndex) {
     switch (pageIndex) {
       case 0:
         return {
-          TabNavigatorRoutes.ROOT: (context) => TodayDrinkBlocProvider(
-                child: TodayDrinkPage(
-                  () => _push(context, pageIndex),
-                ),
-              ),
+          TabNavigatorRoutes.ROOT: (context) => TodayDrinkPage(),
           TabNavigatorRoutes.ORDER_DRINK: (context) => null
         };
       case 1:
@@ -46,14 +29,12 @@ class TabNavigator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, WidgetBuilder> routeBuilders =
-        _routeBuilders(context, _pageIndex);
+    Map<String, WidgetBuilder> routeBuilders = _routeBuilders(_pageIndex);
     return Navigator(
       key: navigatorKey,
       initialRoute: TabNavigatorRoutes.ROOT,
       onGenerateRoute: (routeSettings) {
-        return MaterialPageRoute(
-            builder: (context) => routeBuilders[routeSettings.name](context));
+        return MaterialPageRoute(builder: routeBuilders[routeSettings.name]);
       },
       observers: [HeroController()],
     );
