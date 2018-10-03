@@ -9,6 +9,7 @@ import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
 import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
+import 'package:sprouter/data/model/slack/user_profile.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 
 class AppRemoteRepo implements RemoteRepo {
@@ -23,9 +24,13 @@ class AppRemoteRepo implements RemoteRepo {
   static const String _OAUTH_ACCESS_PATH = "/api/oauth.access";
   static const String _USERS_LIST_PATH = "/api/users.list";
   static const String _USERS_IDENTITY_PATH = "/api/users.identity";
+  static const String _USERS_PROFILE_GET_PATH = "/api/users.profile.get";
   static const String _CONVERSATION_HISTORY_PATH = "/api/conversations.history";
   static const String _CONVERSATION_REPLIES_PATH = "/api/conversations.replies";
   static const String _CHAT_POST_MESSAGE_PATH = "/api/chat.postMessage";
+
+  static final ContentType X_WWW_FORM_URLENCODED =
+      ContentType.parse("application/x-www-form-urlencoded");
 
   static final AppRemoteRepo _repo = AppRemoteRepo.internal();
 
@@ -73,7 +78,7 @@ class AppRemoteRepo implements RemoteRepo {
         data: params,
         options: Options(
           headers: {"Authoriation": null},
-          contentType: ContentType.parse("application/x-www-form-urlencoded"),
+          contentType: X_WWW_FORM_URLENCODED,
         ));
     Future<SlackToken> slackToken = response.then((response) {
       return SlackToken.fromJson(jsonEncode(Map.from(response.data)));
@@ -138,5 +143,17 @@ class AppRemoteRepo implements RemoteRepo {
     return response.then((response) {
       return PostMessageResponse.fromJson(jsonEncode(response.data));
     });
+  }
+
+  @override
+  Future<UserProfileResponse> getUserProfile(String userId) {
+    var query = {"user": userId};
+    Future<Response> response = dio.get(
+      _USERS_PROFILE_GET_PATH,
+      data: query,
+      options: Options(contentType: X_WWW_FORM_URLENCODED),
+    );
+    return response.then(
+        (response) => UserProfileResponse.fromJson(jsonEncode(response.data)));
   }
 }

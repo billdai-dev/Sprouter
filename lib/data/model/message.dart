@@ -4,6 +4,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:sprouter/data/model/serializers.dart';
+import 'package:sprouter/data/model/slack/profile.dart';
 
 part 'message.g.dart';
 
@@ -59,6 +60,9 @@ abstract class Message implements Built<Message, MessageBuilder> {
   @nullable
   @BuiltValueField(wireName: 'files')
   BuiltList<File> get files;
+
+  @nullable
+  Profile userProfile;
 
   String toJson() {
     return json.encode(serializers.serializeWith(Message.serializer, this));
@@ -231,4 +235,3 @@ abstract class File implements Built<File, FileBuilder> {
 
   static Serializer<File> get serializer => _$fileSerializer;
 }
-

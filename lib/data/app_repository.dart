@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/message.dart';
@@ -61,30 +62,37 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<BuiltList<Message>> fetchLatestDrinkMessages() {
+  Future<List<Message>> fetchLatestDrinkMessages() {
     const String ORDER_BROADCAST_KEYWORD = "今天點的是";
 
-    return _remoteRepo
-        .fetchLunchMessages()
-        .then((conversationList) {
-          BuiltList<Message> messages = conversationList.messages;
-          Message orderBroadcastMessage = messages.firstWhere(
-              (message) => message.text.contains(ORDER_BROADCAST_KEYWORD));
-          String shopName = orderBroadcastMessage == null
-              ? ""
-              : (orderBroadcastMessage.text.split("："))[1];
+    return Observable.fromFuture(_remoteRepo
+            .fetchLunchMessages()
+            .then((conversationList) {
+              BuiltList<Message> messages = conversationList.messages;
+              Message orderBroadcastMessage = messages.firstWhere(
+                  (message) => message.text.contains(ORDER_BROADCAST_KEYWORD));
+              String shopName = orderBroadcastMessage == null
+                  ? ""
+                  : (orderBroadcastMessage.text.split("："))[1];
 
-          Message drinkMessage = messages.firstWhere((message) {
-            if (message.files == null) {
-              return false;
-            }
-            return message.files[0].title.contains(shopName);
-          });
-          return drinkMessage == null ? "" : drinkMessage.ts;
-        })
-        .then(
-            (drinkMessageTs) => _remoteRepo.fetchMessageReplies(drinkMessageTs))
-        .then((drinkThread) => drinkThread.messages);
+              Message drinkMessage = messages.firstWhere((message) {
+                if (message.files == null) {
+                  return false;
+                }
+                return message.files[0].title.contains(shopName);
+              });
+              return drinkMessage == null ? "" : drinkMessage.ts;
+            })
+            .then((drinkMessageTs) =>
+                _remoteRepo.fetchMessageReplies(drinkMessageTs))
+            .then((drinkThread) => drinkThread.messages.toList()))
+        .flatMapIterable((messages) => Observable.just(messages))
+        .asyncMap((message) async {
+      message.userProfile = await _remoteRepo
+          .getUserProfile(message.user)
+          .then((response) => response.profile);
+      return message;
+    }).toList();
   }
 
   @override

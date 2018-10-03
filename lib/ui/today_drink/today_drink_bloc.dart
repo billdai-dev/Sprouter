@@ -32,7 +32,7 @@ class TodayDrinkBloc {
     _fetchMessage.stream
         .transform(ThrottleStreamTransformer(Duration(seconds: 3)))
         .listen((_) async {
-      BuiltList<Message> drinkThread =
+      List<Message> drinkThread =
           await this.repository.fetchLatestDrinkMessages();
       threadTs = drinkThread == null || drinkThread.isEmpty
           ? null

@@ -5,6 +5,7 @@ import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
 import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
+import 'package:sprouter/data/model/slack/user_profile.dart';
 
 abstract class RemoteRepo {
   void setSlackTokenCache(String token);
@@ -21,4 +22,6 @@ abstract class RemoteRepo {
   Future<ConversationList> fetchMessageReplies(String ts);
 
   Future<PostMessageResponse> postMessage(String ts, String text);
+
+  Future<UserProfileResponse> getUserProfile(String userId);
 }

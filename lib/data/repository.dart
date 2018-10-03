@@ -13,7 +13,7 @@ abstract class Repository {
 
   Future<String> getSlackUserData({String token});
 
-  Future<BuiltList<Message>> fetchLatestDrinkMessages();
+  Future<List<Message>> fetchLatestDrinkMessages();
 
   Future<PostMessageResponse> orderDrink(String threadTs, String drink);
 }
