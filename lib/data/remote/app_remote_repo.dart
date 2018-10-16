@@ -9,7 +9,6 @@ import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
 import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
-import 'package:sprouter/data/model/slack/user_profile.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 
 class AppRemoteRepo implements RemoteRepo {
@@ -24,7 +23,6 @@ class AppRemoteRepo implements RemoteRepo {
   static const String _OAUTH_ACCESS_PATH = "/api/oauth.access";
   static const String _USERS_LIST_PATH = "/api/users.list";
   static const String _USERS_IDENTITY_PATH = "/api/users.identity";
-  static const String _USERS_PROFILE_GET_PATH = "/api/users.profile.get";
   static const String _CONVERSATION_HISTORY_PATH = "/api/conversations.history";
   static const String _CONVERSATION_REPLIES_PATH = "/api/conversations.replies";
   static const String _CHAT_POST_MESSAGE_PATH = "/api/chat.postMessage";
@@ -96,10 +94,10 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<UserList> getUsers({String accessToken}) async {
+  Future<UserListResponse> getUsers({String accessToken}) async {
     Future<Response> response = dio.get(_USERS_LIST_PATH);
-    Future<UserList> userList = response.then((response) {
-      return UserList.fromJson(jsonEncode(response.data));
+    Future<UserListResponse> userList = response.then((response) {
+      return UserListResponse.fromJson(jsonEncode(response.data));
     });
     return userList;
   }
@@ -146,14 +144,12 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<UserProfileResponse> getUserProfile(String userId) {
-    var query = {"user": userId};
+  Future<UserListResponse> getTeamMemberProfile() {
     Future<Response> response = dio.get(
-      _USERS_PROFILE_GET_PATH,
-      data: query,
+      _USERS_LIST_PATH,
       options: Options(contentType: X_WWW_FORM_URLENCODED),
     );
     return response.then(
-        (response) => UserProfileResponse.fromJson(jsonEncode(response.data)));
+        (response) => UserListResponse.fromJson(jsonEncode(response.data)));
   }
 }

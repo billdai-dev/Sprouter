@@ -32,8 +32,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(Team.serializer)
       ..add(User.serializer)
       ..add(UserIdentity.serializer)
-      ..add(UserList.serializer)
-      ..add(UserProfileResponse.serializer)
+      ..add(UserListResponse.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Members)]),
           () => new ListBuilder<Members>())

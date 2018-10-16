@@ -6,6 +6,8 @@ import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/model/post_message.dart';
+import 'package:sprouter/data/model/slack/profile.dart';
+import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/app_remote_repo.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/data/repository.dart';
@@ -20,6 +22,8 @@ class AppRepository implements Repository {
 
   RemoteRepo _remoteRepo;
   LocalRepo _localRepo;
+
+  List<Members> _members;
 
   AppRepository._internal() {
     _remoteRepo = AppRemoteRepo.repo;
@@ -62,8 +66,19 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<List<Message>> fetchLatestDrinkMessages() {
+  Future<List<Message>> fetchLatestDrinkMessages() async {
     const String ORDER_BROADCAST_KEYWORD = "今天點的是";
+
+    if (_members == null || _members.isEmpty) {
+      _members = await _remoteRepo
+          .getTeamMemberProfile()
+          .then((response) => response?.members?.where((member) {
+                if (member.isBot || member.deleted) {
+                  return false;
+                }
+                return true;
+              })?.toList());
+    }
 
     return Observable.fromFuture(_remoteRepo
             .fetchLunchMessages()
@@ -86,13 +101,19 @@ class AppRepository implements Repository {
             .then((drinkMessageTs) =>
                 _remoteRepo.fetchMessageReplies(drinkMessageTs))
             .then((drinkThread) => drinkThread.messages.toList()))
-        .flatMapIterable((messages) => Observable.just(messages))
-        .asyncMap((message) async {
-      message.userProfile = await _remoteRepo
-          .getUserProfile(message.user)
-          .then((response) => response.profile);
-      return message;
-    }).toList();
+        .zipWith(Observable.just(_members), (messages, List<Members> members) {
+      List<Message> zippedMessages = List();
+      for (Message message in messages) {
+        int index = members.indexWhere((member) => member.id == message.user);
+        Message zippedMessage = Message((b) {
+          b.replace(message);
+          b.userProfile = index == -1 ? null : ProfileBuilder()
+            ..replace(members[index].profile);
+        });
+        zippedMessages.add(zippedMessage);
+      }
+      return zippedMessages;
+    }).first;
   }
 
   @override

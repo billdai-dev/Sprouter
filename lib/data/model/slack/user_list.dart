@@ -8,11 +8,14 @@ import 'package:sprouter/data/model/slack/profile.dart';
 
 part 'user_list.g.dart';
 
-abstract class UserList implements Built<UserList, UserListBuilder> {
-  UserList._();
+abstract class UserListResponse
+    implements Built<UserListResponse, UserListResponseBuilder> {
+  UserListResponse._();
 
-  factory UserList([updates(UserListBuilder b)]) = _$UserList;
+  factory UserListResponse([updates(UserListResponseBuilder b)]) =
+      _$UserListResponse;
 
+  @nullable
   @BuiltValueField(wireName: 'ok')
   bool get ok;
 
@@ -21,15 +24,17 @@ abstract class UserList implements Built<UserList, UserListBuilder> {
   BuiltList<Members> get members;
 
   String toJson() {
-    return json.encode(serializers.serializeWith(UserList.serializer, this));
+    return json
+        .encode(serializers.serializeWith(UserListResponse.serializer, this));
   }
 
-  static UserList fromJson(String jsonString) {
+  static UserListResponse fromJson(String jsonString) {
     return serializers.deserializeWith(
-        UserList.serializer, json.decode(jsonString));
+        UserListResponse.serializer, json.decode(jsonString));
   }
 
-  static Serializer<UserList> get serializer => _$userListSerializer;
+  static Serializer<UserListResponse> get serializer =>
+      _$userListResponseSerializer;
 }
 
 abstract class Members implements Built<Members, MembersBuilder> {
@@ -37,6 +42,7 @@ abstract class Members implements Built<Members, MembersBuilder> {
 
   factory Members([updates(MembersBuilder b)]) = _$Members;
 
+  @nullable
   @BuiltValueField(wireName: 'id')
   String get id;
 

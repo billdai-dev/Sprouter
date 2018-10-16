@@ -15,6 +15,7 @@ import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc_provider.da
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_page.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
+import 'package:sprouter/util/utils.dart';
 
 class TodayDrinkPage extends StatefulWidget {
   TodayDrinkPage({Key key}) : super(key: key);
@@ -33,7 +34,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   bool _isInited = false;
   AnimationController _slackIconController;
   Animation<double> _slackIconAnimation;
-  ScrollController scrollController;
+  ScrollController _scrollController;
 
   @override
   void initState() {
@@ -51,10 +52,10 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         _slackIconController.forward();
       }
     });
-    scrollController = ScrollController();
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
         bloc?.fetchMessage?.add(null);
       }
@@ -101,7 +102,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   @override
   void dispose() {
     _slackIconController?.dispose();
-    scrollController?.dispose();
+    _scrollController?.dispose();
     super.dispose();
   }
 
@@ -109,7 +110,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     TodayDrinkBloc todayDrinkBloc = TodayDrinkBlocProvider.of(context);
     SlackLoginBloc slackLoginBloc = SlackLoginBlocProvider.of(context);
     return CustomScrollView(
-      controller: scrollController,
+      //controller: _scrollController,
       slivers: <Widget>[
         StreamBuilder<Map<String, dynamic>>(
           stream: Observable.combineLatest2(
@@ -126,27 +127,28 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               _slackIconController.stop();
             }
             return SliverAppBar(
-                expandedHeight: 250.0,
-                pinned: true,
-                floating: false,
-                title: _createTitle(messages),
-                actions: <Widget>[
-                  _SlackLoginAction(
-                    animation: _slackIconAnimation,
-                    onPressed: () async {
-                      bool success = await Navigator.of(context)
-                          .push(MaterialPageRoute<bool>(
-                        builder: (BuildContext context) =>
-                            SlackLoginWebViewPage(),
-                      ));
-                      if (success) {
-                        todayDrinkBloc.fetchMessage.add(null);
-                      }
-                    },
-                  ),
-                ],
-                flexibleSpace: FlexibleSpaceBar(
-                    background: _createImage(context, token, messages)));
+              expandedHeight: 250.0,
+              pinned: true,
+              floating: false,
+              title: _createTitle(messages),
+              actions: <Widget>[
+                _SlackLoginAction(
+                  animation: _slackIconAnimation,
+                  onPressed: () async {
+                    bool success = await Navigator.of(context)
+                        .push(MaterialPageRoute<bool>(
+                      builder: (BuildContext context) =>
+                          SlackLoginWebViewPage(),
+                    ));
+                    if (success) {
+                      todayDrinkBloc.fetchMessage.add(null);
+                    }
+                  },
+                ),
+              ],
+              flexibleSpace: FlexibleSpaceBar(
+                  background: _createImage(context, token, messages)),
+            );
           },
         ),
         CupertinoSliverRefreshControl(
@@ -172,6 +174,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   }
 
   Widget _createReplyListView(BuildContext context, List<Message> drinkThread) {
+    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
     List<Message> replies;
     if (drinkThread == null ||
         (replies = drinkThread?.skip(1)?.toList(growable: false)) == null ||
@@ -186,16 +189,46 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       return SliverFillRemaining(child: Center(child: Text("Closed")));
     }
     return SliverList(
-      delegate: SliverChildBuilderDelegate(
-          (context, index) => Column(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        String userName = replies[index]?.userProfile?.displayName;
+        userName = Utils.isStringNullOrEmpty(userName)
+            ? replies[index]?.userProfile?.realName
+            : userName;
+        return Column(
+          children: <Widget>[
+            ListTile(
+              key: ValueKey(replies[index]?.ts),
+              leading: StreamBuilder(
+                stream: bloc?.slackToken,
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            replies[index]?.userProfile?.image48,
+                            headers: {
+                              "Authorization": "Bearer ${snapshot.data}"
+                            },
+                          ),
+                        )
+                      : SizedBox(
+                          width: 0.0,
+                          height: 0.0,
+                        );
+                },
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  ListTile(
-                    title: Text(replies[index].text),
-                  ),
-                  Divider(height: 2.0)
+                  Text(userName),
+                  SizedBox(height: 3.0),
+                  Text(replies[index].text),
                 ],
               ),
-          childCount: replies.length),
+            ),
+            Divider(height: 2.0)
+          ],
+        );
+      }, childCount: replies.length),
     );
   }
 
@@ -244,11 +277,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       ),
     );
   }
-
-/*Future _refreshData() async {
-    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
-    bloc?.fetchMessage?.add(null);
-  }*/
 }
 
 class _AddDrinkFab extends StatefulWidget {

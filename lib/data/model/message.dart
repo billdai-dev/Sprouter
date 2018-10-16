@@ -62,7 +62,8 @@ abstract class Message implements Built<Message, MessageBuilder> {
   BuiltList<File> get files;
 
   @nullable
-  Profile userProfile;
+  @BuiltValueField(compare: false, serialize: false)
+  Profile get userProfile;
 
   String toJson() {
     return json.encode(serializers.serializeWith(Message.serializer, this));

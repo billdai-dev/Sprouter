@@ -19,22 +19,27 @@ part of 'user_list.dart';
 // ignore_for_file: unnecessary_new
 // ignore_for_file: test_types_in_equals
 
-Serializer<UserList> _$userListSerializer = new _$UserListSerializer();
+Serializer<UserListResponse> _$userListResponseSerializer =
+    new _$UserListResponseSerializer();
 Serializer<Members> _$membersSerializer = new _$MembersSerializer();
 
-class _$UserListSerializer implements StructuredSerializer<UserList> {
+class _$UserListResponseSerializer
+    implements StructuredSerializer<UserListResponse> {
   @override
-  final Iterable<Type> types = const [UserList, _$UserList];
+  final Iterable<Type> types = const [UserListResponse, _$UserListResponse];
   @override
-  final String wireName = 'UserList';
+  final String wireName = 'UserListResponse';
 
   @override
-  Iterable serialize(Serializers serializers, UserList object,
+  Iterable serialize(Serializers serializers, UserListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'ok',
-      serializers.serialize(object.ok, specifiedType: const FullType(bool)),
-    ];
+    final result = <Object>[];
+    if (object.ok != null) {
+      result
+        ..add('ok')
+        ..add(serializers.serialize(object.ok,
+            specifiedType: const FullType(bool)));
+    }
     if (object.members != null) {
       result
         ..add('members')
@@ -47,9 +52,9 @@ class _$UserListSerializer implements StructuredSerializer<UserList> {
   }
 
   @override
-  UserList deserialize(Serializers serializers, Iterable serialized,
+  UserListResponse deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserListBuilder();
+    final result = new UserListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -82,10 +87,13 @@ class _$MembersSerializer implements StructuredSerializer<Members> {
   @override
   Iterable serialize(Serializers serializers, Members object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
     if (object.teamId != null) {
       result
         ..add('team_id')
@@ -162,32 +170,31 @@ class _$MembersSerializer implements StructuredSerializer<Members> {
   }
 }
 
-class _$UserList extends UserList {
+class _$UserListResponse extends UserListResponse {
   @override
   final bool ok;
   @override
   final BuiltList<Members> members;
 
-  factory _$UserList([void updates(UserListBuilder b)]) =>
-      (new UserListBuilder()..update(updates)).build();
+  factory _$UserListResponse([void updates(UserListResponseBuilder b)]) =>
+      (new UserListResponseBuilder()..update(updates)).build();
 
-  _$UserList._({this.ok, this.members}) : super._() {
-    if (ok == null) {
-      throw new BuiltValueNullFieldError('UserList', 'ok');
-    }
-  }
+  _$UserListResponse._({this.ok, this.members}) : super._();
 
   @override
-  UserList rebuild(void updates(UserListBuilder b)) =>
+  UserListResponse rebuild(void updates(UserListResponseBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UserListBuilder toBuilder() => new UserListBuilder()..replace(this);
+  UserListResponseBuilder toBuilder() =>
+      new UserListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is UserList && ok == other.ok && members == other.members;
+    return other is UserListResponse &&
+        ok == other.ok &&
+        members == other.members;
   }
 
   @override
@@ -197,15 +204,16 @@ class _$UserList extends UserList {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserList')
+    return (newBuiltValueToStringHelper('UserListResponse')
           ..add('ok', ok)
           ..add('members', members))
         .toString();
   }
 }
 
-class UserListBuilder implements Builder<UserList, UserListBuilder> {
-  _$UserList _$v;
+class UserListResponseBuilder
+    implements Builder<UserListResponse, UserListResponseBuilder> {
+  _$UserListResponse _$v;
 
   bool _ok;
   bool get ok => _$this._ok;
@@ -216,9 +224,9 @@ class UserListBuilder implements Builder<UserList, UserListBuilder> {
       _$this._members ??= new ListBuilder<Members>();
   set members(ListBuilder<Members> members) => _$this._members = members;
 
-  UserListBuilder();
+  UserListResponseBuilder();
 
-  UserListBuilder get _$this {
+  UserListResponseBuilder get _$this {
     if (_$v != null) {
       _ok = _$v.ok;
       _members = _$v.members?.toBuilder();
@@ -228,23 +236,24 @@ class UserListBuilder implements Builder<UserList, UserListBuilder> {
   }
 
   @override
-  void replace(UserList other) {
+  void replace(UserListResponse other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$UserList;
+    _$v = other as _$UserListResponse;
   }
 
   @override
-  void update(void updates(UserListBuilder b)) {
+  void update(void updates(UserListResponseBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$UserList build() {
-    _$UserList _$result;
+  _$UserListResponse build() {
+    _$UserListResponse _$result;
     try {
-      _$result = _$v ?? new _$UserList._(ok: ok, members: _members?.build());
+      _$result =
+          _$v ?? new _$UserListResponse._(ok: ok, members: _members?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -252,7 +261,7 @@ class UserListBuilder implements Builder<UserList, UserListBuilder> {
         _members?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserList', _$failedField, e.toString());
+            'UserListResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -280,11 +289,7 @@ class _$Members extends Members {
 
   _$Members._(
       {this.id, this.teamId, this.name, this.deleted, this.profile, this.isBot})
-      : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('Members', 'id');
-    }
-  }
+      : super._();
 
   @override
   Members rebuild(void updates(MembersBuilder b)) =>

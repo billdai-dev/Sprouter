@@ -558,6 +558,8 @@ class _$Message extends Message {
   final String ts;
   @override
   final BuiltList<File> files;
+  @override
+  final Profile userProfile;
 
   factory _$Message([void updates(MessageBuilder b)]) =>
       (new MessageBuilder()..update(updates)).build();
@@ -574,7 +576,8 @@ class _$Message extends Message {
       this.lastRead,
       this.unreadCount,
       this.ts,
-      this.files})
+      this.files,
+      this.userProfile})
       : super._();
 
   @override
@@ -642,7 +645,8 @@ class _$Message extends Message {
           ..add('lastRead', lastRead)
           ..add('unreadCount', unreadCount)
           ..add('ts', ts)
-          ..add('files', files))
+          ..add('files', files)
+          ..add('userProfile', userProfile))
         .toString();
   }
 }
@@ -699,6 +703,12 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
   ListBuilder<File> get files => _$this._files ??= new ListBuilder<File>();
   set files(ListBuilder<File> files) => _$this._files = files;
 
+  ProfileBuilder _userProfile;
+  ProfileBuilder get userProfile =>
+      _$this._userProfile ??= new ProfileBuilder();
+  set userProfile(ProfileBuilder userProfile) =>
+      _$this._userProfile = userProfile;
+
   MessageBuilder();
 
   MessageBuilder get _$this {
@@ -715,6 +725,7 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
       _unreadCount = _$v.unreadCount;
       _ts = _$v.ts;
       _files = _$v.files?.toBuilder();
+      _userProfile = _$v.userProfile?.toBuilder();
       _$v = null;
     }
     return this;
@@ -750,7 +761,8 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
               lastRead: lastRead,
               unreadCount: unreadCount,
               ts: ts,
-              files: _files?.build());
+              files: _files?.build(),
+              userProfile: _userProfile?.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -759,6 +771,8 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
 
         _$failedField = 'files';
         _files?.build();
+        _$failedField = 'userProfile';
+        _userProfile?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'Message', _$failedField, e.toString());

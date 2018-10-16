@@ -46,13 +46,11 @@ class _MainPageState extends State<MainPage> {
             : AppBar(
                 title: Text("Sprouter"),
               ),
-        body: SafeArea(
-          child: Stack(
-            children: <Widget>[
-              _buildOffstageNavigator(0),
-              _buildOffstageNavigator(1),
-            ],
-          ),
+        body: Stack(
+          children: <Widget>[
+            _buildOffstageNavigator(0),
+            _buildOffstageNavigator(1),
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentPage,
