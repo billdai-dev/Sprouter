@@ -30,6 +30,8 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     with SingleTickerProviderStateMixin {
   static const String _ARG_TOKEN = "token";
   static const String _ARG_MESSAGES = "messages";
+  TodayDrinkBloc todayDrinkBloc;
+  SlackLoginBloc slackLoginBloc;
 
   bool _isInited = false;
   AnimationController _slackIconController;
@@ -64,9 +66,10 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   @override
   Widget build(BuildContext context) {
-    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
+    todayDrinkBloc = TodayDrinkBlocProvider.of(context);
+    slackLoginBloc = SlackLoginBlocProvider.of(context);
     if (!_isInited) {
-      bloc?.fetchMessage?.add(null);
+      todayDrinkBloc?.fetchMessage?.add(null);
       _isInited = true;
     }
 
@@ -88,7 +91,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           ));
           isDrinkOrdered ??= false;
           if (isDrinkOrdered) {
-            bloc?.fetchMessage?.add(null);
+            todayDrinkBloc?.fetchMessage?.add(null);
             Scaffold.of(context).showSnackBar(SnackBar(
               content: Text("訂單已送出"),
               duration: Duration(seconds: 3),
@@ -107,8 +110,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   }
 
   Widget _createScrollView(BuildContext context) {
-    TodayDrinkBloc todayDrinkBloc = TodayDrinkBlocProvider.of(context);
-    SlackLoginBloc slackLoginBloc = SlackLoginBlocProvider.of(context);
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
@@ -141,13 +142,13 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                           SlackLoginWebViewPage(),
                     ));
                     if (success) {
-                      todayDrinkBloc.fetchMessage.add(null);
+                      todayDrinkBloc?.fetchMessage?.add(null);
                     }
                   },
                 ),
               ],
               flexibleSpace: FlexibleSpaceBar(
-                  background: _createImage(context, token, messages)),
+                  background: _createShopImage(context, token, messages)),
             );
           },
         ),
@@ -165,16 +166,14 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   }
 
   Future<void> _createRefreshCallback(BuildContext context) async {
-    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
-    bloc?.fetchMessage?.add(null);
-    await bloc.drinkMessage
+    todayDrinkBloc?.fetchMessage?.add(null);
+    await todayDrinkBloc.drinkMessage
         .timeout(Duration(seconds: 3), onTimeout: (sink) => sink.close())
         .forEach((messages) {});
     return null;
   }
 
   Widget _createReplyListView(BuildContext context, List<Message> drinkThread) {
-    TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
     List<Message> replies;
     if (drinkThread == null ||
         (replies = drinkThread?.skip(1)?.toList(growable: false)) == null ||
@@ -182,6 +181,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       return SliverFillRemaining(
           child: Center(child: CircularProgressIndicator()));
     }
+
     Message lastOrderKeywords = drinkThread.lastWhere((message) {
       return message.text == "點單" || message.text == "收單";
     }, orElse: () => null);
@@ -190,45 +190,47 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     }
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        String userName = replies[index]?.userProfile?.displayName;
-        userName = Utils.isStringNullOrEmpty(userName)
-            ? replies[index]?.userProfile?.realName
-            : userName;
         return Column(
           children: <Widget>[
-            ListTile(
-              key: ValueKey(replies[index]?.ts),
-              leading: StreamBuilder(
-                stream: bloc?.slackToken,
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            replies[index]?.userProfile?.image48,
-                            headers: {
-                              "Authorization": "Bearer ${snapshot.data}"
-                            },
-                          ),
-                        )
-                      : SizedBox(
-                          width: 0.0,
-                          height: 0.0,
-                        );
-                },
-              ),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(userName),
-                  SizedBox(height: 3.0),
-                  Text(replies[index].text),
-                ],
-              ),
-            ),
+            _createMessageTile(replies[index]),
             Divider(height: 2.0)
           ],
         );
       }, childCount: replies.length),
+    );
+  }
+
+  Widget _createMessageTile(Message reply) {
+    String userName = reply?.userProfile?.displayName;
+    userName = Utils.isStringNullOrEmpty(userName)
+        ? reply?.userProfile?.realName
+        : userName;
+    return ListTile(
+      key: ValueKey(reply?.ts),
+      leading: StreamBuilder(
+        stream: todayDrinkBloc?.slackToken,
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    reply?.userProfile?.image48,
+                    headers: {"Authorization": "Bearer ${snapshot.data}"},
+                  ),
+                )
+              : SizedBox(
+                  width: 0.0,
+                  height: 0.0,
+                );
+        },
+      ),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(userName),
+          SizedBox(height: 3.0),
+          Text(reply?.text),
+        ],
+      ),
     );
   }
 
@@ -247,7 +249,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createImage(
+  Widget _createShopImage(
       BuildContext context, String token, List<Message> messages) {
     if (messages == null || messages.isEmpty) {
       return Container(
