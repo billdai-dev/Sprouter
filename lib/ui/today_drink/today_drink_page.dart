@@ -110,7 +110,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     TodayDrinkBloc todayDrinkBloc = TodayDrinkBlocProvider.of(context);
     SlackLoginBloc slackLoginBloc = SlackLoginBlocProvider.of(context);
     return CustomScrollView(
-      //controller: _scrollController,
+      controller: _scrollController,
       slivers: <Widget>[
         StreamBuilder<Map<String, dynamic>>(
           stream: Observable.combineLatest2(

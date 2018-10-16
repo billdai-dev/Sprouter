@@ -12,22 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1455656-8e1f-4cfb-960e-3d9918fb16ff" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/util/utils.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/app_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/app_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/message.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/message.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/message.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/message.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/serializers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/serializers.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/serializers.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/serializers.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/slack/user_list.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_list.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/slack/user_list.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_profile.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_profile.g.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
@@ -55,8 +39,8 @@
       <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="211" column="25" lean-forward="true" selection-start-line="211" selection-start-column="25" selection-end-line="211" selection-end-column="25" />
+            <state relative-caret-position="148">
+              <caret line="112" column="6" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -1119,8 +1103,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="211" column="25" lean-forward="true" selection-start-line="211" selection-start-column="25" selection-end-line="211" selection-end-column="25" />
+        <state relative-caret-position="148">
+          <caret line="112" column="6" selection-start-line="112" selection-start-column="6" selection-end-line="112" selection-end-column="6" />
         </state>
       </provider>
     </entry>
