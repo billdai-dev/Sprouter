@@ -416,6 +416,7 @@ class _IngredientChipState extends State<_IngredientChip> {
         if (newIngredient == null) {
           return;
         }
+        _ingredient = newIngredient;
         bloc?.addIngredient?.add(newIngredient);
       },
     );
@@ -600,27 +601,30 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
   @override
   void initState() {
     super.initState();
-    ingredient = widget.ingredient;
     switch (widget.ingredient.runtimeType) {
       case Ice:
         ingredientName = "冰塊";
         sliderValue = (widget.ingredient as Ice).level.index.toDouble();
         sliderMaxValue = IceLevel.values.length.toDouble() - 1;
+        ingredient = Ice(level: IceLevel.values[sliderValue.toInt()]);
         break;
       case Sugar:
         ingredientName = "甜度";
         sliderValue = (widget.ingredient as Sugar).level.index.toDouble();
         sliderMaxValue = SugarLevel.values.length.toDouble() - 1;
+        ingredient = Sugar(level: SugarLevel.values[sliderValue.toInt()]);
         break;
       case Pearl:
         ingredientName = "珍珠";
         sliderValue = (widget.ingredient as Pearl).type.index.toDouble();
         sliderMaxValue = PearlType.values.length.toDouble() - 1;
+        ingredient = Pearl(type: PearlType.values[sliderValue.toInt()]);
         break;
       case DrinkSize:
         ingredientName = "容量";
         sliderValue = (widget.ingredient as DrinkSize).cup.index.toDouble();
         sliderMaxValue = Cup.values.length.toDouble() - 1;
+        ingredient = DrinkSize(cup: Cup.values[sliderValue.toInt()]);
         break;
       case OtherIngredient:
         ingredientName = "其他配料";
@@ -648,7 +652,7 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
               ? null
               : () {
                   Ingredient newIngredient;
-                  switch (widget.ingredient.runtimeType) {
+                  switch (ingredient.runtimeType) {
                     case Ice:
                       newIngredient =
                           Ice(level: IceLevel.values[sliderValue.toInt()]);

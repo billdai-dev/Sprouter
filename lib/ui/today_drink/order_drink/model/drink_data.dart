@@ -57,7 +57,7 @@ class OtherIngredient extends Ingredient {
   String ingredientName;
 }
 
-enum IceLevel { no, low, less, normal }
+enum IceLevel { warm, no, low, less, normal }
 
 enum SugarLevel { no, low, half, less, standard }
 
@@ -71,6 +71,9 @@ String getIngredientMapping(Ingredient ingredient) {
     case Ice:
       IceLevel level = (ingredient as Ice).level;
       switch (level) {
+        case IceLevel.warm:
+          name = "溫";
+          break;
         case IceLevel.no:
           name = "去冰";
           break;
