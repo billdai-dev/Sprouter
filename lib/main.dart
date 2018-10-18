@@ -13,8 +13,10 @@ void main() {
           ),
         ),
     theme: ThemeData(
-      primarySwatch: Colors.green,
-      accentColor: Colors.orangeAccent,
+      primaryColor: Color(0xFF93bf37),
+      accentColor: Color(0xcc8a4422),
+      accentColorBrightness: Brightness.dark,
+      primaryColorBrightness: Brightness.light,
       accentIconTheme: IconThemeData(color: Colors.white),
     ),
     home: MainPage(),

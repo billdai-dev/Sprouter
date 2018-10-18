@@ -56,6 +56,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
   Widget build(BuildContext context) {
     bloc = OrderDrinkBlocProvider.of(context);
     return Scaffold(
+      backgroundColor: Colors.green.shade50,
       appBar: AppBar(
         title: Text("點杯飲料"),
         actions: <Widget>[
@@ -104,7 +105,10 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                 Flexible(
                   child: _buildIngredientChips(context),
                 ),
-                Divider(height: 1.0),
+                Divider(
+                  height: 1.0,
+                  color: Theme.of(context).accentColor,
+                ),
                 Flexible(
                   flex: 3,
                   child: Column(
@@ -172,6 +176,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                   }).toList(growable: false)
                 : [
                     InputChip(
+                        disabledColor: Colors.grey.shade300,
                         avatar: Image.asset("assets/images/bulb.png"),
                         label: Text("試著將配料丟進杯子..")),
                   ];
@@ -244,31 +249,42 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
             },
           ),
         ),
-        FractionallySizedBox(
-          widthFactor: 0.7,
-          child: Row(
-            children: <Widget>[
-              Icon(
-                Icons.monetization_on,
-                color: Theme.of(context).accentColor,
-              ),
-              SizedBox(
-                width: 3.0,
-              ),
-              Expanded(
-                child: TextField(
-                  inputFormatters: [LengthLimitingTextInputFormatter(3)],
-                  keyboardType: TextInputType.number,
-                  onChanged: (price) => bloc.changePrice.add(price),
+        _buildPriceTag(),
+      ],
+    );
+  }
+
+  Widget _buildPriceTag() {
+    return FractionallySizedBox(
+      widthFactor: 0.9,
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.monetization_on,
+            color: Theme.of(context).accentColor,
+          ),
+          SizedBox(
+            width: 3.0,
+          ),
+          Expanded(
+            child: TextField(
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(4.0),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).accentColor, width: 2.0),
                 ),
               ),
-              SizedBox(
-                width: 15.0,
-              )
-            ],
+              inputFormatters: [LengthLimitingTextInputFormatter(3)],
+              keyboardType: TextInputType.number,
+              onChanged: (price) => bloc.changePrice.add(price),
+            ),
           ),
-        ),
-      ],
+          SizedBox(
+            width: 20.0,
+          )
+        ],
+      ),
     );
   }
 
@@ -310,7 +326,13 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
               child: TextField(
                 decoration: InputDecoration(
                   labelText: "品名",
+                  labelStyle: TextStyle(color: Theme.of(context).accentColor),
                   isDense: true,
+                  contentPadding: EdgeInsets.all(4.0),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).accentColor, width: 2.0),
+                  ),
                 ),
                 onChanged: (name) => bloc.changeDrinkName.add(name),
               ),
