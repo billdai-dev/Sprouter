@@ -46,7 +46,7 @@ abstract class User implements Built<User, UserBuilder> {
   String get name;
 
   @BuiltValueField(wireName: 'id')
-  int get id;
+  String get id;
 
   String toJson() {
     return json.encode(serializers.serializeWith(User.serializer, this));
@@ -66,7 +66,7 @@ abstract class Team implements Built<Team, TeamBuilder> {
   factory Team([updates(TeamBuilder b)]) = _$Team;
 
   @BuiltValueField(wireName: 'id')
-  int get id;
+  String get id;
 
   String toJson() {
     return json.encode(serializers.serializeWith(Team.serializer, this));

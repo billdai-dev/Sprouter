@@ -7,6 +7,7 @@ import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/profile.dart';
+import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/app_remote_repo.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
@@ -24,15 +25,11 @@ class AppRepository implements Repository {
   LocalRepo _localRepo;
 
   List<Members> _members;
+  User currentUser;
 
   AppRepository._internal() {
     _remoteRepo = AppRemoteRepo.repo;
     _localRepo = AppLocalRepo.repo;
-  }
-
-  @override
-  void setTokenCache(String token) {
-    _remoteRepo.setSlackTokenCache(token);
   }
 
   @override
@@ -41,28 +38,15 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<String> getSlackOAuthToken(String code) {
-    Future<String> tokenFuture =
-        _remoteRepo.getSlackOauthToken(code).then((slackToken) async {
-      String token = slackToken?.accessToken;
-      await _localRepo.saveSlackToken(token);
-      return token;
-    });
-    return tokenFuture;
-  }
-
-  @override
-  Future<String> getSlackUserData({String token}) {
-    Future<String> tokenFuture =
-        token == null ? _localRepo.loadSlackToken() : getFuture(token);
-    return tokenFuture.then((token) {
-      _remoteRepo.setSlackTokenCache(token);
-      return _remoteRepo.getUserIdentity(accessToken: token);
-    }).then((user) => user?.user?.name);
-  }
-
-  Future<String> getFuture(String str) async {
-    return str;
+  Future<String> fetchSlackToken(String code) async {
+    String token = (await _remoteRepo.getSlackOauthToken(code))?.accessToken;
+    _remoteRepo.setSlackTokenCache(token);
+    await _localRepo.saveSlackToken(token);
+    currentUser = (await _remoteRepo.getUserIdentity(accessToken: token))?.user;
+    if (currentUser != null) {
+      await _localRepo.saveUserData(currentUser.id, currentUser.name, token);
+    }
+    return token;
   }
 
   @override

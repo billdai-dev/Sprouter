@@ -96,7 +96,7 @@ class _$UserSerializer implements StructuredSerializer<User> {
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -119,7 +119,7 @@ class _$UserSerializer implements StructuredSerializer<User> {
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -139,7 +139,7 @@ class _$TeamSerializer implements StructuredSerializer<Team> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -158,7 +158,7 @@ class _$TeamSerializer implements StructuredSerializer<Team> {
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -285,7 +285,7 @@ class _$User extends User {
   @override
   final String name;
   @override
-  final int id;
+  final String id;
 
   factory _$User([void updates(UserBuilder b)]) =>
       (new UserBuilder()..update(updates)).build();
@@ -333,9 +333,9 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   UserBuilder();
 
@@ -371,7 +371,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
 
 class _$Team extends Team {
   @override
-  final int id;
+  final String id;
 
   factory _$Team([void updates(TeamBuilder b)]) =>
       (new TeamBuilder()..update(updates)).build();
@@ -409,9 +409,9 @@ class _$Team extends Team {
 class TeamBuilder implements Builder<Team, TeamBuilder> {
   _$Team _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   TeamBuilder();
 

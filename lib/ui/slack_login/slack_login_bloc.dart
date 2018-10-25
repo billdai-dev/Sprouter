@@ -25,7 +25,7 @@ class SlackLoginBloc {
   }
 
   Future<String> getSlackOauthToken(String code) async {
-    String token = await repository.getSlackOAuthToken(code);
+    String token = await repository.fetchSlackToken(code);
     this.token = token;
     _getTokenCache.sink.add(token);
     return token;
