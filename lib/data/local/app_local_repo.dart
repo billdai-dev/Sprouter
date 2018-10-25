@@ -18,15 +18,6 @@ class AppLocalRepo implements LocalRepo {
   AppLocalRepo.internal();
 
   @override
-  Future<Database> openDB() async {
-    if (_db != null) {
-      return _db;
-    }
-    _db = await _initDB();
-    return _db;
-  }
-
-  @override
   Future<void> saveSlackToken(String token) async {
     return SharedPreferences.getInstance().then((sharedPreferences) =>
         sharedPreferences.setString(_KEY_SLACK_ACCESS_TOKEN, token));
@@ -48,6 +39,28 @@ class AppLocalRepo implements LocalRepo {
         conflictAlgorithm: ConflictAlgorithm.ignore);
     await db.update("User", {"name": name, "token": token},
         where: "user_id = ?", whereArgs: [id]);
+  }
+
+  @override
+  Future<Database> openDB() async {
+    if (_db != null) {
+      return _db;
+    }
+    _db = await _initDB();
+    return _db;
+  }
+
+  @override
+  Future<void> addShopToDB(String shopName, String threadTs) async {
+    if (shopName == null ||
+        shopName.isEmpty ||
+        threadTs == null ||
+        threadTs.isEmpty) {
+      return;
+    }
+    Database db = await openDB();
+    await db.insert("Shop", {"shop_name": shopName, "thread_ts": threadTs},
+        conflictAlgorithm: ConflictAlgorithm.ignore);
   }
 
   Future<Database> _initDB() async {

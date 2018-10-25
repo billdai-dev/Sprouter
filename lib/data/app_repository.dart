@@ -62,7 +62,7 @@ class AppRepository implements Repository {
 
     Future<List<Message>> getOrderRepliesFuture = _remoteRepo
         .fetchLunchMessages() //1. 抓出 Lunch channel 前 N 筆 message
-        .then((conversationList) {
+        .then((conversationList) async {
           BuiltList<Message> messages = conversationList.messages;
           //2. 用關鍵字 parse 出"最新"廣播訊息的 message
           Message orderBroadcastMessage = messages.firstWhere(
@@ -78,6 +78,7 @@ class AppRepository implements Repository {
             }
             return message.files[0].title.contains(shopName);
           });
+          await _localRepo.addShopToDB(shopName, drinkMessage.ts); //保存店家資料到DB
           return drinkMessage == null ? "" : drinkMessage.ts;
         })
         //5. 用 點單 thread 的 ts 抓出其底下所有 reply
