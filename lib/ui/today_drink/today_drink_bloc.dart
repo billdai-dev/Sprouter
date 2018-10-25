@@ -7,8 +7,10 @@ import 'package:sprouter/data/model/message.dart';
 class TodayDrinkBloc {
   AppRepository repository;
   Message _drinkShopMessage;
-  String threadTs;
-  String photoUrl;
+
+  Message get drinkShopMessage => _drinkShopMessage;
+
+  String get photoUrl => _drinkShopMessage?.files[0]?.urlPrivate;
 
   final BehaviorSubject<List<Message>> _drinkMessage =
       BehaviorSubject(seedValue: null);
@@ -36,10 +38,6 @@ class TodayDrinkBloc {
           await this.repository.fetchLatestDrinkMessages();
       _drinkShopMessage =
           drinkThread == null || drinkThread.isEmpty ? null : drinkThread[0];
-      threadTs = drinkThread == null || drinkThread.isEmpty
-          ? null
-          : drinkThread[0].threadTs;
-      photoUrl = drinkThread[0]?.files[0]?.urlPrivate;
 
       List<Message> orderKeywords = drinkThread.where((message) {
         return message.text == "點單" || message.text == "收單";

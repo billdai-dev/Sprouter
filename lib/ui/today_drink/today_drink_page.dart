@@ -85,7 +85,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           bool isDrinkOrdered = await Navigator.of(context, rootNavigator: true)
               .push(MaterialPageRoute(
             builder: (context) => OrderDrinkBlocProvider(
-                  threadTs: todayDrinkBloc?.threadTs,
+                  drinkShopMessage: todayDrinkBloc?.drinkShopMessage,
                   child: OrderDrinkPage(),
                 ),
           ));

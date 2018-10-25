@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc.dart';
 
 class OrderDrinkBlocProvider extends StatefulWidget {
   final Widget child;
-  final String threadTs;
+  final Message drinkShopMessage;
 
-  OrderDrinkBlocProvider({Key key, @required this.threadTs, this.child})
+  OrderDrinkBlocProvider({Key key, @required this.drinkShopMessage, this.child})
       : super(key: key);
 
   @override
@@ -22,7 +23,7 @@ class _OrderDrinkBlocProviderState extends State<OrderDrinkBlocProvider> {
 
   @override
   void initState() {
-    _bloc = OrderDrinkBloc(threadTs: widget.threadTs);
+    _bloc = OrderDrinkBloc(drinkShopMessage: widget.drinkShopMessage);
     super.initState();
   }
 
