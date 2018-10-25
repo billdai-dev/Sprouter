@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
 
 class TodayDrinkBloc {
   AppRepository repository;
+  Message _drinkShopMessage;
   String threadTs;
   String photoUrl;
 
@@ -34,6 +34,8 @@ class TodayDrinkBloc {
         .listen((_) async {
       List<Message> drinkThread =
           await this.repository.fetchLatestDrinkMessages();
+      _drinkShopMessage =
+          drinkThread == null || drinkThread.isEmpty ? null : drinkThread[0];
       threadTs = drinkThread == null || drinkThread.isEmpty
           ? null
           : drinkThread[0].threadTs;
