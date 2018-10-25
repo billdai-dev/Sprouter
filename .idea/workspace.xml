@@ -13,17 +13,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1455656-8e1f-4cfb-960e-3d9918fb16ff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/app_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/app_repository.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/local/local_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/local/local_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_identity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/slack/user_identity.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_identity.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/slack/user_identity.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprouter.iml" beforeDir="false" afterPath="$PROJECT_DIR$/sprouter.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -41,8 +31,8 @@
       <file leaf-file-name="app_repository.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="79" column="17" lean-forward="true" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="17" />
+            <state relative-caret-position="375">
+              <caret line="78" column="29" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -68,8 +58,8 @@
       <file leaf-file-name="slack_login_bloc.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="18" column="60" lean-forward="true" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
+            <state relative-caret-position="576">
+              <caret line="35" column="59" lean-forward="true" selection-start-line="35" selection-start-column="59" selection-end-line="35" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -107,8 +97,8 @@
       <file leaf-file-name="app_local_repo.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/data/local/app_local_repo.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="652">
-              <caret line="92" column="134" selection-start-line="92" selection-start-column="134" selection-end-line="92" selection-end-column="134" />
+            <state relative-caret-position="313">
+              <caret line="67" column="69" lean-forward="true" selection-start-line="67" selection-start-column="69" selection-end-line="67" selection-end-column="69" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -224,9 +214,9 @@
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/model/drink_data.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/slack/user_identity.dart" />
         <option value="$PROJECT_DIR$/lib/data/local/local_repo.dart" />
-        <option value="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" />
         <option value="$PROJECT_DIR$/lib/data/app_repository.dart" />
         <option value="$PROJECT_DIR$/lib/data/repository.dart" />
+        <option value="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" />
       </list>
     </option>
   </component>
@@ -1049,13 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/local/local_repo.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1084,20 +1067,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="18" column="60" lean-forward="true" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="79" column="17" lean-forward="true" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/data/repository.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -1108,10 +1077,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="78" column="29" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="35" column="59" lean-forward="true" selection-start-line="35" selection-start-column="59" selection-end-line="35" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/local/local_repo.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="3" column="38" selection-start-line="3" selection-start-column="38" selection-end-line="3" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/data/local/app_local_repo.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="92" column="134" selection-start-line="92" selection-start-column="134" selection-end-line="92" selection-end-column="134" />
+        <state relative-caret-position="313">
+          <caret line="67" column="69" lean-forward="true" selection-start-line="67" selection-start-column="69" selection-end-line="67" selection-end-column="69" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

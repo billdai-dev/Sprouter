@@ -90,7 +90,7 @@ class AppLocalRepo implements LocalRepo {
         """);
 
     await db.execute("""
-        CREATE TABLE DrinkOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, shop_name TEXT, thread_ts TEXT, drink_id INTEGER, created_date TEXT DEFAULT (datetime('now')), updated_date TEXT DEFAULT (datetime('now')), FOREIGN KEY (user_id) REFERENCES User (user_id), FOREIGN KEY (shop_name, thread_ts) REFERENCES Shop (shop_name, thread_ts), FOREIGN KEY (drink_id) REFERENCES Drink (drink_id))
+        CREATE TABLE DrinkOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, shop_name TEXT, thread_ts TEXT, drink_id INTEGER, order_ts TEXT, created_date TEXT DEFAULT (datetime('now')), updated_date TEXT DEFAULT (datetime('now')), FOREIGN KEY (user_id) REFERENCES User (user_id), FOREIGN KEY (shop_name, thread_ts) REFERENCES Shop (shop_name, thread_ts), FOREIGN KEY (drink_id) REFERENCES Drink (drink_id))
         """);
 
     await db.execute("""
