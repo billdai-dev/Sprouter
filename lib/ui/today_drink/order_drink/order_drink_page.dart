@@ -14,6 +14,7 @@ import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
+import 'package:sprouter/util/utils.dart';
 
 class OrderDrinkPage extends StatefulWidget {
   @override
@@ -163,23 +164,23 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
     return StreamBuilder<Drink>(
       stream: bloc.currentDrink,
       builder: (context, snapshot) {
-        List<Widget> chips =
-            snapshot.hasData && snapshot.data.ingredients.isNotEmpty
-                ? snapshot.data.ingredients.map((ingredient) {
-                    ValueKey key = ValueKey(ingredient is OtherIngredient
-                        ? ingredient.ingredientName
-                        : getIngredientMapping(ingredient));
-                    return _IngredientChip(
-                      key: key,
-                      ingredient: ingredient,
-                    );
-                  }).toList(growable: false)
-                : [
-                    InputChip(
-                        disabledColor: Colors.grey.shade300,
-                        avatar: Image.asset("assets/images/bulb.png"),
-                        label: Text("試著將配料丟進杯子..")),
-                  ];
+        List<Widget> chips = snapshot.hasData &&
+                !Utils.isListNullOrEmpty(snapshot.data.ingredients)
+            ? snapshot.data.ingredients.map((ingredient) {
+                ValueKey key = ValueKey(ingredient is OtherIngredient
+                    ? ingredient.ingredientName
+                    : getIngredientMapping(ingredient));
+                return _IngredientChip(
+                  key: key,
+                  ingredient: ingredient,
+                );
+              }).toList(growable: false)
+            : [
+                InputChip(
+                    disabledColor: Colors.grey.shade300,
+                    avatar: Image.asset("assets/images/bulb.png"),
+                    label: Text("試著將配料丟進杯子..")),
+              ];
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView.builder(
@@ -438,6 +439,7 @@ class _IngredientChipState extends State<_IngredientChip> {
         if (newIngredient == null) {
           return;
         }
+        bloc.removeIngredient.add(_ingredient);
         _ingredient = newIngredient;
         bloc?.addIngredient?.add(newIngredient);
       },
@@ -583,7 +585,6 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
   }
 
   Stream<dynamic> _getIngredientChangeStream() {
-    OrderDrinkBloc bloc = OrderDrinkBlocProvider.of(context);
     switch (widget.ingredientType) {
       case Ice:
         return bloc?.configIce?.stream;
@@ -652,6 +653,7 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
         ingredientName = "其他配料";
         otherIngredient = (widget.ingredient as OtherIngredient).ingredientName;
         textEditingController = TextEditingController(text: otherIngredient);
+        ingredient = OtherIngredient(ingredientName: ingredientName);
         break;
     }
     if (sliderMaxValue != null) {
