@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:built_collection/built_collection.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/message.dart';
@@ -53,51 +52,61 @@ class AppRepository implements Repository {
   Future<List<Message>> fetchLatestDrinkMessages() async {
     const String ORDER_BROADCAST_KEYWORD = "今天點的是";
 
-    if (_members == null || _members.isEmpty) {
-      _members = await _remoteRepo
-          .getTeamMemberProfile()
-          .then((response) => response?.members?.where((member) {
-                if (member.isBot || member.deleted) {
-                  return false;
-                }
-                return true;
-              })?.toList());
-    }
+    Future<List<Members>> getMembersFuture =
+        _members == null || _members.isEmpty
+            ? _remoteRepo.getTeamMemberProfile().then((response) => response
+                ?.members
+                ?.where((member) => !member.isBot && !member.deleted)
+                ?.toList())
+            : Future.value(_members);
 
-    return Observable.fromFuture(_remoteRepo
-            .fetchLunchMessages()
-            .then((conversationList) {
-              BuiltList<Message> messages = conversationList.messages;
-              Message orderBroadcastMessage = messages.firstWhere(
-                  (message) => message.text.contains(ORDER_BROADCAST_KEYWORD));
-              String shopName = orderBroadcastMessage == null
-                  ? ""
-                  : (orderBroadcastMessage.text.split("："))[1];
+    Future<List<Message>> getOrderRepliesFuture = _remoteRepo
+        .fetchLunchMessages() //1. 抓出 Lunch channel 前 N 筆 message
+        .then((conversationList) {
+          BuiltList<Message> messages = conversationList.messages;
+          //2. 用關鍵字 parse 出"最新"廣播訊息的 message
+          Message orderBroadcastMessage = messages.firstWhere(
+              (message) => message.text.contains(ORDER_BROADCAST_KEYWORD));
+          //3. 找出店家名稱
+          String shopName = orderBroadcastMessage == null
+              ? ""
+              : (orderBroadcastMessage.text.split("："))[1];
+          //4. 用店家名稱 parse 出"最新"點單 thread 的 message
+          Message drinkMessage = messages.firstWhere((message) {
+            if (message.files == null) {
+              return false; //點單 thread 必定有 file (菜單圖片)，先過濾一層
+            }
+            return message.files[0].title.contains(shopName);
+          });
+          return drinkMessage == null ? "" : drinkMessage.ts;
+        })
+        //5. 用 點單 thread 的 ts 抓出其底下所有 reply
+        .then(
+            (drinkMessageTs) => _remoteRepo.fetchMessageReplies(drinkMessageTs))
+        .then((drinkThread) => drinkThread.messages.toList());
 
-              Message drinkMessage = messages.firstWhere((message) {
-                if (message.files == null) {
-                  return false;
-                }
-                return message.files[0].title.contains(shopName);
-              });
-              return drinkMessage == null ? "" : drinkMessage.ts;
-            })
-            .then((drinkMessageTs) =>
-                _remoteRepo.fetchMessageReplies(drinkMessageTs))
-            .then((drinkThread) => drinkThread.messages.toList()))
-        .zipWith(Observable.just(_members), (messages, List<Members> members) {
+    //6. 結合會員列表和 reply 資料, 最後回傳加上會員資料的 reply[]
+    return Future.wait([getMembersFuture, getOrderRepliesFuture])
+        .then((results) {
+      if (results[0] is List<Members>) {
+        _members ??= results[0];
+      }
+      if (!(results[1] is List<Message>)) {
+        return [];
+      }
+      List<Message> drinkMessages = results[1];
       List<Message> zippedMessages = List();
-      for (Message message in messages) {
-        int index = members.indexWhere((member) => member.id == message.user);
+      for (Message message in drinkMessages) {
+        int index = _members?.indexWhere((member) => member.id == message.user);
         Message zippedMessage = Message((b) {
           b.replace(message);
           b.userProfile = index == -1 ? null : ProfileBuilder()
-            ..replace(members[index].profile);
+            ..replace(_members[index].profile);
         });
         zippedMessages.add(zippedMessage);
       }
       return zippedMessages;
-    }).first;
+    });
   }
 
   @override
