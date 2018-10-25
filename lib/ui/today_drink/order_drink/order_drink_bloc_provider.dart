@@ -4,9 +4,11 @@ import 'package:sprouter/ui/today_drink/order_drink/order_drink_bloc.dart';
 
 class OrderDrinkBlocProvider extends StatefulWidget {
   final Widget child;
-  final Message drinkShopMessage;
+  final Message drinkShop;
+  final Message selectedOrder;
 
-  OrderDrinkBlocProvider({Key key, @required this.drinkShopMessage, this.child})
+  OrderDrinkBlocProvider(
+      {Key key, @required this.drinkShop, this.selectedOrder, this.child})
       : super(key: key);
 
   @override
@@ -23,8 +25,9 @@ class _OrderDrinkBlocProviderState extends State<OrderDrinkBlocProvider> {
 
   @override
   void initState() {
-    _bloc = OrderDrinkBloc(drinkShopMessage: widget.drinkShopMessage);
     super.initState();
+    _bloc = OrderDrinkBloc(
+        drinkShop: widget.drinkShop, selectedOrder: widget.selectedOrder);
   }
 
   @override

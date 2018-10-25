@@ -12,6 +12,47 @@ class Drink {
     _completeDrinkName = "${name ?? ""}${ingredientString.toString()}$_price";
     return _completeDrinkName;
   }
+
+  Map<String, String> toMap() {
+    Map<String, String> map = Map();
+    StringBuffer otherIngredients = StringBuffer();
+    map.putIfAbsent("name", () => name);
+    map.putIfAbsent("price", () => price);
+    for (var ingredient in ingredients) {
+      switch (ingredient.runtimeType) {
+        case Ice:
+          String ice = (ingredient as Ice).level.toString().split(".")[1];
+          map.putIfAbsent("ice", () => ice);
+          break;
+        case Sugar:
+          String sugar = (ingredient as Sugar).level.toString().split(".")[1];
+          map.putIfAbsent("sugar", () => sugar);
+          break;
+        case Pearl:
+          String pearl = (ingredient as Pearl).type.toString().split(".")[1];
+          map.putIfAbsent("pearl", () => pearl);
+          break;
+        case CoconutJelly:
+          map.putIfAbsent("coconut", () => "Y");
+          break;
+        case DrinkSize:
+          String cup = (ingredient as DrinkSize).cup.toString().split(".")[1];
+          map.putIfAbsent("cup_size", () => cup);
+          break;
+        case OtherIngredient:
+          String otherIngredient =
+              (ingredient as OtherIngredient).ingredientName;
+          otherIngredients.write(otherIngredients.isEmpty
+              ? "$otherIngredient"
+              : ",$otherIngredient");
+          break;
+      }
+    }
+    if (otherIngredients.isNotEmpty) {
+      map.putIfAbsent("other_ingredient", () => otherIngredients.toString());
+    }
+    return map;
+  }
 }
 
 const List<Type> ingredientWeights = [

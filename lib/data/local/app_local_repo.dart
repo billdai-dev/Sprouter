@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sprouter/data/local/local_repo.dart';
+import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
+import 'package:sprouter/util/utils.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppLocalRepo implements LocalRepo {
@@ -52,15 +54,36 @@ class AppLocalRepo implements LocalRepo {
 
   @override
   Future<void> addShopToDB(String shopName, String threadTs) async {
-    if (shopName == null ||
-        shopName.isEmpty ||
-        threadTs == null ||
-        threadTs.isEmpty) {
+    if (Utils.isStringNullOrEmpty(shopName) ||
+        Utils.isStringNullOrEmpty(threadTs)) {
       return;
     }
     Database db = await openDB();
     await db.insert("Shop", {"shop_name": shopName, "thread_ts": threadTs},
         conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  @override
+  Future<void> addDrinkToDB(Drink drink,
+      {String threadTs, String orderTs}) async {
+    Database db = await openDB();
+    Map<String, int> drinkIds;
+    if (!Utils.isStringNullOrEmpty(threadTs) &&
+        !Utils.isStringNullOrEmpty(orderTs)) {
+      drinkIds = await db.execute("""
+    SELECT Drink.drink_id FROM Drink JOIN DrinkOrder 
+    ON Drink.drink_id = DrinkOrder.drink_id WHERE DrinkOrder.thread_ts = $threadTs AND Drink.order_ts = $orderTs;
+    """);
+    }
+    int drinkId =
+        Utils.isMapNullOrEmpty(drinkIds) ? null : drinkIds["drink_id"];
+    if (drinkId == null) {
+      await db.insert("Drink", drink.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.ignore);
+    } else {
+      await db.update("Drink", drink.toMap(),
+          where: "drink_id = ?", whereArgs: [drinkId]);
+    }
   }
 
   Future<Database> _initDB() async {

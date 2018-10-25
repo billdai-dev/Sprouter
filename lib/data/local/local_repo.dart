@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class LocalRepo {
@@ -12,4 +13,6 @@ abstract class LocalRepo {
   Future<Database> openDB();
 
   Future<void> addShopToDB(String shopName, String threadTs);
+
+  Future<void> addDrinkToDB(Drink drink, {String threadTs, String orderTs});
 }

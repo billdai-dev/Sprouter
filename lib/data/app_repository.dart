@@ -11,6 +11,7 @@ import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/app_remote_repo.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/data/repository.dart';
+import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 
 class AppRepository implements Repository {
   static const String CLIENT_ID = AppRemoteRepo.SLACK_CLIENT_ID;
@@ -111,7 +112,10 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<PostMessageResponse> orderDrink(String threadTs, String drink) {
-    return _remoteRepo.postMessage(threadTs, drink);
+  Future<PostMessageResponse> orderDrink(String threadTs, Drink drink,
+      {String orderTs}) async {
+    await _localRepo.addDrinkToDB(drink, threadTs: threadTs, orderTs: orderTs);
+    String completeDrinkName = drink?.completeDrinkName;
+    return _remoteRepo.postMessage(threadTs, completeDrinkName);
   }
 }

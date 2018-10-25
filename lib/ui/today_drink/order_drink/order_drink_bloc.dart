@@ -10,7 +10,8 @@ import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 class OrderDrinkBloc {
   AppRepository repository;
 
-  final Message drinkShopMessage;
+  final Message drinkShop;
+  final Message selectedOrder;
   final Drink _drink = Drink();
 
   final StreamController<Ingredient> _addIngredient = StreamController();
@@ -47,7 +48,8 @@ class OrderDrinkBloc {
 
   Stream<bool> get isLoading => _isLoading.stream;
 
-  OrderDrinkBloc({@required this.drinkShopMessage, AppRepository repository})
+  OrderDrinkBloc(
+      {@required this.drinkShop, this.selectedOrder, AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
     _addIngredient.stream
         .listen((ingredient) => _handleIngredientChange(ingredient, true));
@@ -91,8 +93,8 @@ class OrderDrinkBloc {
 
   Future<bool> submitOrder() async {
     _isLoading.sink.add(true);
-    PostMessageResponse response = await repository.orderDrink(
-        drinkShopMessage?.threadTs, _drink?.completeDrinkName);
+    PostMessageResponse response =
+        await repository.orderDrink(drinkShop?.threadTs, _drink);
     _isLoading.sink.add(false);
     return response.ok;
   }
