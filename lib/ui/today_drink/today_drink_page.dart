@@ -366,8 +366,8 @@ class _AddDrinkFabState extends State<_AddDrinkFab>
       builder: (context, snapshot) {
         snapshot.hasData ? controller?.forward() : controller?.stop();
         bool isVisible = snapshot.hasData && snapshot.data;
-        return Offstage(
-          offstage: !isVisible,
+        return Visibility(
+          visible: isVisible,
           child: AnimatedBuilder(
             animation: anim,
             builder: (context, child) {

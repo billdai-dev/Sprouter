@@ -80,8 +80,9 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _buildOffstageNavigator(int pageIndex) {
-    return Offstage(
-      offstage: _currentPage != pageIndex,
+    return Visibility(
+      visible: _currentPage == pageIndex,
+      maintainState: true,
       child: TabNavigator(
         pageIndex,
         navigatorKey: navigatorKeys[pageIndex],
