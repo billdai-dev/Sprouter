@@ -61,6 +61,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           _scrollController.position.maxScrollExtent) {
         TodayDrinkBloc bloc = TodayDrinkBlocProvider.of(context);
         bloc?.fetchMessage?.add(null);
+        bloc?.showMoreContentIndicator?.add(false);
       }
     });
   }
@@ -126,6 +127,9 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         stream: todayDrinkBloc?.showMoreContentIndicator?.stream,
         initialData: false,
         builder: (context, snapshot) {
+          /*var scrollPosition = _scrollController.position;
+          bool isInViewport =
+              scrollPosition.pixels - scrollPosition.maxScrollExtent == 0;*/
           return Visibility(
             child: RaisedButton.icon(
               label: Text("查看最新內容"),
@@ -137,7 +141,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               onPressed: () {
                 //Hard-coded due to unknown bug with maxScrollExtent
                 _scrollController?.animateTo(
-                  10000.0,
+                  100000.0,
                   duration: Duration(milliseconds: 500),
                   curve: Curves.easeInOut,
                 );
@@ -183,7 +187,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                       builder: (BuildContext context) =>
                           SlackLoginWebViewPage(),
                     ));
-                    if (success) {
+                    if (success != null && success) {
                       todayDrinkBloc?.fetchMessage?.add(null);
                     }
                   },
@@ -298,7 +302,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           color: Colors.grey,
           child: Center(child: CircularProgressIndicator()));
     }
-    String imageUrl = messages[0].files[0].urlPrivate;
+    String imageUrl = messages[0].files[0].thumb800;
     return Container(
       color: Colors.grey,
       child: GestureDetector(
@@ -313,7 +317,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           tag: "photo",
           child: CachedNetworkImage(
             placeholder: Center(child: CircularProgressIndicator()),
-            imageUrl: messages[0].files[0].urlPrivate,
+            imageUrl: imageUrl,
             fit: BoxFit.contain,
             httpHeaders: {"Authorization": "Bearer $token"},
           ),

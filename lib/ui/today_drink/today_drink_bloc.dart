@@ -12,7 +12,7 @@ class TodayDrinkBloc {
 
   Message get drinkShopMessage => _drinkShopMessage;
 
-  String get photoUrl => _drinkShopMessage?.files[0]?.urlPrivate;
+  String get photoUrl => _drinkShopMessage?.files[0]?.thumb800;
 
   final BehaviorSubject<List<Message>> _drinkMessage =
       BehaviorSubject(seedValue: null);
