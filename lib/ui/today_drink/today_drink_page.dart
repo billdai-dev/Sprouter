@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/model/message.dart';
@@ -74,12 +75,20 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     }
 
     return Scaffold(
-      body: Platform.isIOS
-          ? _createScrollView(context)
-          : RefreshIndicator(
-              child: _createScrollView(context),
-              onRefresh: () => _createRefreshCallback(context),
-            ),
+      body: Stack(
+        children: <Widget>[
+          Platform.isIOS
+              ? _createScrollView(context)
+              : RefreshIndicator(
+                  child: _createScrollView(context),
+                  onRefresh: () => _createRefreshCallback(context),
+                ),
+          Positioned(
+            child: _buildShowMoreContentButton(),
+            bottom: 20.0,
+          )
+        ],
+      ),
       floatingActionButton: _AddDrinkFab(
         onPressed: () async {
           bool isDrinkOrdered = await Navigator.of(context, rootNavigator: true)
@@ -107,6 +116,39 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     _slackIconController?.dispose();
     _scrollController?.dispose();
     super.dispose();
+  }
+
+  Widget _buildShowMoreContentButton() {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      alignment: Alignment.center,
+      child: StreamBuilder<bool>(
+        stream: todayDrinkBloc?.showMoreContentIndicator?.stream,
+        initialData: false,
+        builder: (context, snapshot) {
+          return Visibility(
+            child: RaisedButton.icon(
+              label: Text("查看最新內容"),
+              icon: Icon(Icons.arrow_downward),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              color: Colors.greenAccent,
+              onPressed: () {
+                //Hard-coded due to unknown bug with maxScrollExtent
+                _scrollController?.animateTo(
+                  10000.0,
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.easeInOut,
+                );
+                todayDrinkBloc?.showMoreContentIndicator?.add(false);
+              },
+            ),
+            visible: snapshot.hasData && snapshot.data,
+          );
+        },
+      ),
+    );
   }
 
   Widget _createScrollView(BuildContext context) {

@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/util/utils.dart';
 
 class TodayDrinkBloc {
   AppRepository repository;
   Message _drinkShopMessage;
+  List<Message> _drinkMessages;
 
   Message get drinkShopMessage => _drinkShopMessage;
 
@@ -29,25 +31,37 @@ class TodayDrinkBloc {
 
   Sink<Null> get fetchMessage => _fetchMessage.sink;
 
+  final PublishSubject<bool> _showMoreContentIndicator = PublishSubject();
+
+  StreamController<bool> get showMoreContentIndicator =>
+      _showMoreContentIndicator;
+
   TodayDrinkBloc({AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
     _fetchMessage.stream
         .transform(ThrottleStreamTransformer(Duration(seconds: 3)))
         .listen((_) async {
-      List<Message> drinkThread =
+      List<Message> newDrinkMessages =
           await this.repository.fetchLatestDrinkMessages();
-      _drinkShopMessage =
-          drinkThread == null || drinkThread.isEmpty ? null : drinkThread[0];
+      bool showNewContentIndicator =
+          !Utils.isListNullOrEmpty(newDrinkMessages) &&
+              !Utils.isListNullOrEmpty(_drinkMessages) &&
+              newDrinkMessages.length > _drinkMessages.length;
+      _drinkMessages = newDrinkMessages;
+      _drinkShopMessage = _drinkMessages == null || _drinkMessages.isEmpty
+          ? null
+          : _drinkMessages[0];
 
-      List<Message> orderKeywords = drinkThread.where((message) {
+      List<Message> orderKeywords = _drinkMessages.where((message) {
         return message.text == "點單" || message.text == "收單";
       }).toList(growable: false);
 
       _isOrdering.sink.add(orderKeywords.length.isOdd);
-      _drinkMessage.sink.add(drinkThread.toList());
+      _drinkMessage.sink.add(_drinkMessages);
 
       String token = await this.repository.getTokenCache();
       _slackToken.sink.add(token);
+      _showMoreContentIndicator.add(showNewContentIndicator);
     });
   }
 
@@ -56,5 +70,6 @@ class TodayDrinkBloc {
     _slackToken?.close();
     _drinkMessage?.close();
     _fetchMessage?.close();
+    _showMoreContentIndicator?.close();
   }
 }
