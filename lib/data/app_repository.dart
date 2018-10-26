@@ -25,7 +25,8 @@ class AppRepository implements Repository {
   LocalRepo _localRepo;
 
   List<Members> _members;
-  User currentUser;
+  User _currentUser;
+  String _userId;
 
   AppRepository._internal() {
     _remoteRepo = AppRemoteRepo.repo;
@@ -42,9 +43,10 @@ class AppRepository implements Repository {
     String token = (await _remoteRepo.getSlackOauthToken(code))?.accessToken;
     _remoteRepo.setSlackTokenCache(token);
     await _localRepo.saveSlackToken(token);
-    currentUser = (await _remoteRepo.getUserIdentity(accessToken: token))?.user;
-    if (currentUser != null) {
-      await _localRepo.saveUserData(currentUser.id, currentUser.name, token);
+    _currentUser =
+        (await _remoteRepo.getUserIdentity(accessToken: token))?.user;
+    if (_currentUser != null) {
+      await _localRepo.saveUserData(_currentUser.id, _currentUser.name, token);
     }
     return token;
   }
@@ -112,10 +114,18 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<PostMessageResponse> orderDrink(String threadTs, Drink drink,
+  Future<PostMessageResponse> orderDrink(
+      String shopName, String threadTs, Drink drink,
       {String orderTs}) async {
-    await _localRepo.addDrinkToDB(drink, threadTs: threadTs, orderTs: orderTs);
     String completeDrinkName = drink?.completeDrinkName;
-    return _remoteRepo.postMessage(threadTs, completeDrinkName);
+    PostMessageResponse response =
+        await _remoteRepo.postMessage(threadTs, completeDrinkName);
+    if (response != null && response.ok) {
+      int drinkId = await _localRepo.addDrinkToDB(drink,
+          threadTs: threadTs, orderTs: orderTs);
+      _userId ??= await _localRepo.loadUserId();
+      await _localRepo.addDrinkOrderToDB(_userId, shopName, threadTs, drinkId);
+    }
+    return response;
   }
 }

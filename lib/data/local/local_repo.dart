@@ -10,9 +10,16 @@ abstract class LocalRepo {
 
   Future<String> loadSlackToken();
 
+  Future<String> loadUserId();
+
+  Future<String> loadUserName();
+
   Future<Database> openDB();
 
   Future<void> addShopToDB(String shopName, String threadTs);
 
-  Future<void> addDrinkToDB(Drink drink, {String threadTs, String orderTs});
+  Future<int> addDrinkToDB(Drink drink, {String threadTs, String orderTs});
+
+  Future<void> addDrinkOrderToDB(
+      String userId, String shopName, String threadTs, int drinkId);
 }

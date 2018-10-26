@@ -14,6 +14,8 @@ class OrderDrinkBloc {
   final Message selectedOrder;
   final Drink _drink = Drink();
 
+  String get shopName => drinkShop?.files[0]?.title?.split(" ")[1];
+
   final StreamController<Ingredient> _addIngredient = StreamController();
 
   Sink<Ingredient> get addIngredient => _addIngredient.sink;
@@ -94,7 +96,7 @@ class OrderDrinkBloc {
   Future<bool> submitOrder() async {
     _isLoading.sink.add(true);
     PostMessageResponse response =
-        await repository.orderDrink(drinkShop?.threadTs, _drink);
+        await repository.orderDrink(shopName, drinkShop?.ts, _drink);
     _isLoading.sink.add(false);
     return response.ok;
   }

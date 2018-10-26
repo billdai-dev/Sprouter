@@ -11,6 +11,7 @@ abstract class Repository {
 
   Future<List<Message>> fetchLatestDrinkMessages();
 
-  Future<PostMessageResponse> orderDrink(String threadTs, Drink drink,
+  Future<PostMessageResponse> orderDrink(
+      String shopName, String threadTs, Drink drink,
       {String orderTs});
 }

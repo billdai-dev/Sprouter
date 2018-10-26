@@ -9,7 +9,9 @@ import 'package:sqflite/sqflite.dart';
 
 class AppLocalRepo implements LocalRepo {
   static const String _DbName = "sprouter.db";
-  static const String _KEY_SLACK_ACCESS_TOKEN = "slack_access_token";
+  static const String _keySlackAccessToken = "slackAccessToken";
+  static const String _keyUserId = "keyUserId";
+  static const String _keyUserName = "keyUserName";
 
   static final AppLocalRepo _repo = new AppLocalRepo.internal();
 
@@ -20,22 +22,38 @@ class AppLocalRepo implements LocalRepo {
   AppLocalRepo.internal();
 
   @override
-  Future<void> saveSlackToken(String token) async {
+  Future<void> saveSlackToken(String token) {
     return SharedPreferences.getInstance().then((sharedPreferences) =>
-        sharedPreferences.setString(_KEY_SLACK_ACCESS_TOKEN, token));
+        sharedPreferences.setString(_keySlackAccessToken, token));
   }
 
   @override
-  Future<String> loadSlackToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString(_KEY_SLACK_ACCESS_TOKEN);
-    return accessToken;
+  Future<String> loadSlackToken() {
+    return SharedPreferences.getInstance()
+        .then((sp) => sp.getString(_keySlackAccessToken));
+  }
+
+  @override
+  Future<String> loadUserId() {
+    return SharedPreferences.getInstance()
+        .then((sp) => sp.getString(_keyUserId));
+  }
+
+  @override
+  Future<String> loadUserName() {
+    return SharedPreferences.getInstance()
+        .then((sp) => sp.getString(_keyUserName));
   }
 
   @override
   Future<void> saveUserData(String id, String name, String token) async {
-    await SharedPreferences.getInstance().then((sharedPreferences) =>
-        sharedPreferences.setString(_KEY_SLACK_ACCESS_TOKEN, token));
+    await SharedPreferences.getInstance().then((sharedPreferences) {
+      return Future.wait([
+        sharedPreferences.setString(_keySlackAccessToken, token),
+        sharedPreferences.setString(_keyUserName, name),
+        sharedPreferences.setString(_keyUserId, id)
+      ]);
+    });
     Database db = await openDB();
     await db?.insert("User", {"user_id": id, "name": name, "token": token},
         conflictAlgorithm: ConflictAlgorithm.ignore);
@@ -64,7 +82,7 @@ class AppLocalRepo implements LocalRepo {
   }
 
   @override
-  Future<void> addDrinkToDB(Drink drink,
+  Future<int> addDrinkToDB(Drink drink,
       {String threadTs, String orderTs}) async {
     Database db = await openDB();
     Map<String, int> drinkIds;
@@ -78,12 +96,31 @@ class AppLocalRepo implements LocalRepo {
     int drinkId =
         Utils.isMapNullOrEmpty(drinkIds) ? null : drinkIds["drink_id"];
     if (drinkId == null) {
-      await db.insert("Drink", drink.toMap(),
+      drinkId = await db.insert("Drink", drink.toMap(),
           conflictAlgorithm: ConflictAlgorithm.ignore);
     } else {
       await db.update("Drink", drink.toMap(),
           where: "drink_id = ?", whereArgs: [drinkId]);
     }
+    return drinkId;
+  }
+
+  @override
+  Future<void> addDrinkOrderToDB(
+      String userId, String shopName, String threadTs, int drinkId) async {
+    Database db = await openDB();
+    await db.insert(
+      "DrinkOrder",
+      {
+        "user_id": userId,
+        "shop_name": shopName,
+        "thread_ts": threadTs,
+        "drink_id": drinkId
+      },
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
+    await db.update("DrinkOrder", {"updated_date": "datetime('now')"},
+        where: "drink_id = ?", whereArgs: [drinkId]);
   }
 
   Future<Database> _initDB() async {
