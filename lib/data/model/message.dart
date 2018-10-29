@@ -65,6 +65,10 @@ abstract class Message implements Built<Message, MessageBuilder> {
   @BuiltValueField(compare: false, serialize: false)
   Profile get userProfile;
 
+  @nullable
+  @BuiltValueField(compare: false, serialize: false)
+  bool get isAddedBySprouter;
+
   String toJson() {
     return json.encode(serializers.serializeWith(Message.serializer, this));
   }

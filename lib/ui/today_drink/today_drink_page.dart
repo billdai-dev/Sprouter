@@ -277,6 +277,12 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           Text(reply?.text),
         ],
       ),
+      trailing: reply.isAddedBySprouter != null && reply.isAddedBySprouter
+          ? Icon(
+              Icons.grade,
+              color: Theme.of(context).primaryColor,
+            )
+          : null,
     );
   }
 

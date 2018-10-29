@@ -560,6 +560,8 @@ class _$Message extends Message {
   final BuiltList<File> files;
   @override
   final Profile userProfile;
+  @override
+  final bool isAddedBySprouter;
 
   factory _$Message([void updates(MessageBuilder b)]) =>
       (new MessageBuilder()..update(updates)).build();
@@ -577,7 +579,8 @@ class _$Message extends Message {
       this.unreadCount,
       this.ts,
       this.files,
-      this.userProfile})
+      this.userProfile,
+      this.isAddedBySprouter})
       : super._();
 
   @override
@@ -646,7 +649,8 @@ class _$Message extends Message {
           ..add('unreadCount', unreadCount)
           ..add('ts', ts)
           ..add('files', files)
-          ..add('userProfile', userProfile))
+          ..add('userProfile', userProfile)
+          ..add('isAddedBySprouter', isAddedBySprouter))
         .toString();
   }
 }
@@ -709,6 +713,11 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
   set userProfile(ProfileBuilder userProfile) =>
       _$this._userProfile = userProfile;
 
+  bool _isAddedBySprouter;
+  bool get isAddedBySprouter => _$this._isAddedBySprouter;
+  set isAddedBySprouter(bool isAddedBySprouter) =>
+      _$this._isAddedBySprouter = isAddedBySprouter;
+
   MessageBuilder();
 
   MessageBuilder get _$this {
@@ -726,6 +735,7 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
       _ts = _$v.ts;
       _files = _$v.files?.toBuilder();
       _userProfile = _$v.userProfile?.toBuilder();
+      _isAddedBySprouter = _$v.isAddedBySprouter;
       _$v = null;
     }
     return this;
@@ -762,7 +772,8 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
               unreadCount: unreadCount,
               ts: ts,
               files: _files?.build(),
-              userProfile: _userProfile?.build());
+              userProfile: _userProfile?.build(),
+              isAddedBySprouter: isAddedBySprouter);
     } catch (_) {
       String _$failedField;
       try {

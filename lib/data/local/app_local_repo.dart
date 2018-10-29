@@ -90,7 +90,7 @@ class AppLocalRepo implements LocalRepo {
         !Utils.isStringNullOrEmpty(orderTs)) {
       drinkIds = await db.execute("""
     SELECT Drink.drink_id FROM Drink JOIN DrinkOrder 
-    ON Drink.drink_id = DrinkOrder.drink_id WHERE DrinkOrder.thread_ts = $threadTs AND Drink.order_ts = $orderTs;
+    ON Drink.drink_id = DrinkOrder.drink_id WHERE DrinkOrder.thread_ts = $threadTs AND DrinkOrder.order_ts = $orderTs;
     """);
     }
     int drinkId =
@@ -106,8 +106,8 @@ class AppLocalRepo implements LocalRepo {
   }
 
   @override
-  Future<void> addDrinkOrderToDB(
-      String userId, String shopName, String threadTs, int drinkId) async {
+  Future<void> addDrinkOrderToDB(String userId, String shopName,
+      String threadTs, int drinkId, String orderTs) async {
     Database db = await openDB();
     await db.insert(
       "DrinkOrder",
@@ -115,12 +115,25 @@ class AppLocalRepo implements LocalRepo {
         "user_id": userId,
         "shop_name": shopName,
         "thread_ts": threadTs,
-        "drink_id": drinkId
+        "drink_id": drinkId,
+        "order_ts": orderTs,
       },
       conflictAlgorithm: ConflictAlgorithm.ignore,
     );
     await db.update("DrinkOrder", {"updated_date": "datetime('now')"},
         where: "drink_id = ?", whereArgs: [drinkId]);
+  }
+
+  @override
+  Future<List<String>> getOrderTsList(String shopName, String threadTs,
+      {String orderTs}) async {
+    Database db = await openDB();
+    List<Map<String, dynamic>> results = await db.query("DrinkOrder",
+        columns: ["order_ts"],
+        where: "shop_name = ? AND thread_ts = ?",
+        whereArgs: [shopName, threadTs]);
+    List<String> orderTsList = List.from(results.expand((map) => map.values));
+    return orderTsList;
   }
 
   Future<Database> _initDB() async {

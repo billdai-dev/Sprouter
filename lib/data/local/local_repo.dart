@@ -20,6 +20,9 @@ abstract class LocalRepo {
 
   Future<int> addDrinkToDB(Drink drink, {String threadTs, String orderTs});
 
-  Future<void> addDrinkOrderToDB(
-      String userId, String shopName, String threadTs, int drinkId);
+  Future<void> addDrinkOrderToDB(String userId, String shopName,
+      String threadTs, int drinkId, String orderTs);
+
+  Future<List<String>> getOrderTsList(String shopName, String threadTs,
+      {String orderTs});
 }
