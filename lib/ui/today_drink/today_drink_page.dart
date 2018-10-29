@@ -91,23 +91,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         ],
       ),
       floatingActionButton: _AddDrinkFab(
-        onPressed: () async {
-          bool isDrinkOrdered = await Navigator.of(context, rootNavigator: true)
-              .push(MaterialPageRoute(
-            builder: (context) => OrderDrinkBlocProvider(
-                  drinkShop: todayDrinkBloc?.drinkShopMessage,
-                  child: OrderDrinkPage(),
-                ),
-          ));
-          isDrinkOrdered ??= false;
-          if (isDrinkOrdered) {
-            todayDrinkBloc?.fetchMessage?.add(null);
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text("訂單已送出"),
-              duration: Duration(seconds: 3),
-            ));
-          }
-        },
+        onPressed: () => _showOrderDrinkPage(),
       ),
     );
   }
@@ -117,6 +101,26 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     _slackIconController?.dispose();
     _scrollController?.dispose();
     super.dispose();
+  }
+
+  void _showOrderDrinkPage({Message message}) async {
+    bool isDrinkOrdered =
+        await Navigator.of(context, rootNavigator: true).push(MaterialPageRoute(
+      builder: (context) => OrderDrinkBlocProvider(
+            drinkShop: todayDrinkBloc?.drinkShopMessage,
+            selectedOrder: message,
+            child: OrderDrinkPage(),
+          ),
+    ));
+    isDrinkOrdered ??= false;
+    if (!isDrinkOrdered) {
+      return;
+    }
+    todayDrinkBloc?.fetchMessage?.add(null);
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(message == null ? "訂單已送出" : "訂單已編輯"),
+      duration: Duration(seconds: 2),
+    ));
   }
 
   Widget _buildShowMoreContentButton() {
@@ -282,6 +286,9 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               Icons.grade,
               color: Theme.of(context).primaryColor,
             )
+          : null,
+      onTap: reply.isAddedBySprouter != null && reply.isAddedBySprouter
+          ? () => _showOrderDrinkPage(message: reply)
           : null,
     );
   }
