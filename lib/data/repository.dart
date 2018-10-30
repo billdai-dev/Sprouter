@@ -17,4 +17,7 @@ abstract class Repository {
 
   Future<Drink> getLocalDrinkData(
       {int drinkId, String shopName, String threadTs, String orderTs});
+
+  Future<PostMessageResponse> deleteDrinkOrder(
+      String shopName, String threadTs, String orderTs);
 }

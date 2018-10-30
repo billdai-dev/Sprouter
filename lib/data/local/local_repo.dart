@@ -21,9 +21,15 @@ abstract class LocalRepo {
   Future<void> addDrinkOrderToDB(String userId, String shopName,
       String threadTs, String orderTs, Drink drink);
 
+  Future<int> queryDrinkId(String shopName, String threadTs, String orderTs,
+      {String userId});
+
   Future<List<String>> getOrderTsList(String shopName, String threadTs,
       {String orderTs});
 
   Future<Map<String, dynamic>> getLocalDrinkData(
       {int drinkId, String shopName, String threadTs, String orderTs});
+
+  Future<int> deleteDrinkOrderInDB(
+      String userId, String shopName, String threadTs, String orderTs);
 }

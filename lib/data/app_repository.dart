@@ -99,7 +99,7 @@ class AppRepository implements Repository {
     //7. 結合會員列表、reply 資料和 database 資料, 最後回傳加料過的 reply[]
     return Future.wait(
             [getMembersFuture, getOrderTsListFuture, getOrderRepliesFuture])
-        .then((results) {
+        .then((results) async {
       if (results[0] is List<Members>) {
         _members ??= results[0];
       }
@@ -111,6 +111,8 @@ class AppRepository implements Repository {
       if (!(results[2] is List<Message>)) {
         return [];
       }
+      _userId ??= await _localRepo.loadUserId();
+
       List<Message> drinkMessages = results[2];
       List<Message> zippedMessages = List();
       for (Message message in drinkMessages) {
@@ -122,7 +124,7 @@ class AppRepository implements Repository {
           b.replace(message);
           b.userProfile = memberIndex == -1 ? null : ProfileBuilder()
             ..replace(_members[memberIndex]?.profile);
-          b.isAddedBySprouter = orderTsIndex != -1;
+          b.isAddedBySprouter = orderTsIndex != -1 && _userId == message.user;
         });
         zippedMessages.add(zippedMessage);
       }
@@ -155,5 +157,17 @@ class AppRepository implements Repository {
         threadTs: threadTs,
         orderTs: orderTs);
     return Drink.fromMap(data);
+  }
+
+  @override
+  Future<PostMessageResponse> deleteDrinkOrder(
+      String shopName, String threadTs, String orderTs) async {
+    PostMessageResponse response = await _remoteRepo.deleteMessage(orderTs);
+    if (response != null && response.ok) {
+      _userId ??= await _localRepo.loadUserId();
+      await _localRepo.deleteDrinkOrderInDB(
+          _userId, shopName, threadTs, orderTs);
+    }
+    return response;
   }
 }

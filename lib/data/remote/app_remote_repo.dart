@@ -27,6 +27,7 @@ class AppRemoteRepo implements RemoteRepo {
   static const String _conversationRepliesPath = "/api/conversations.replies";
   static const String _chatPostMessagePath = "/api/chat.postMessage";
   static const String _chatUpdatePath = "/api/chat.update";
+  static const String _chatDeletePath = "/api/chat.delete";
 
   static final ContentType x_www_form_urlencoded =
       ContentType.parse("application/x-www-form-urlencoded");
@@ -162,6 +163,20 @@ class AppRemoteRepo implements RemoteRepo {
     });
     Future<Response> response =
         dio.post(_chatUpdatePath, data: json.decode(request.toJson()));
+    return response.then((response) {
+      return PostMessageResponse.fromJson(jsonEncode(response.data));
+    });
+  }
+
+  @override
+  Future<PostMessageResponse> deleteMessage(String ts) {
+    PostMessageRequest request = PostMessageRequest((builder) {
+      builder.channel = _lunchChannel;
+      builder.ts = ts;
+      builder.asUser = true;
+    });
+    Future<Response> response =
+        dio.post(_chatDeletePath, data: json.decode(request.toJson()));
     return response.then((response) {
       return PostMessageResponse.fromJson(jsonEncode(response.data));
     });

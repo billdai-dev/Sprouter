@@ -242,7 +242,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       delegate: SliverChildBuilderDelegate((context, index) {
         return Column(
           children: <Widget>[
-            _createMessageTile(replies[index]),
+            _createMessageTile(index, replies[index]),
             Divider(height: 2.0)
           ],
         );
@@ -250,46 +250,57 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createMessageTile(Message reply) {
+  Widget _createMessageTile(int index, Message reply) {
     String userName = reply?.userProfile?.displayName;
     userName = Utils.isStringNullOrEmpty(userName)
         ? reply?.userProfile?.realName
         : userName;
-    return ListTile(
+    return Dismissible(
       key: ValueKey(reply?.ts),
-      leading: StreamBuilder(
-        stream: todayDrinkBloc?.slackToken,
-        builder: (context, snapshot) {
-          return snapshot.hasData
-              ? CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    reply?.userProfile?.image48,
-                    headers: {"Authorization": "Bearer ${snapshot.data}"},
-                  ),
-                )
-              : SizedBox(
-                  width: 0.0,
-                  height: 0.0,
-                );
-        },
+      background: Container(
+        color: Colors.redAccent,
       ),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(userName),
-          SizedBox(height: 3.0),
-          Text(reply?.text),
-        ],
+      direction: DismissDirection.endToStart,
+      dismissThresholds: {
+        DismissDirection.endToStart: reply.isAddedBySprouter ? 0.4 : 2.0
+      },
+      onDismissed: ((direction) => todayDrinkBloc?.deleteMessage?.add(index)),
+      child: ListTile(
+        key: ValueKey(reply?.ts),
+        leading: StreamBuilder(
+          stream: todayDrinkBloc?.slackToken,
+          builder: (context, snapshot) {
+            return snapshot.hasData
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      reply?.userProfile?.image48,
+                      headers: {"Authorization": "Bearer ${snapshot.data}"},
+                    ),
+                  )
+                : SizedBox(
+                    width: 0.0,
+                    height: 0.0,
+                  );
+          },
+        ),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(userName),
+            SizedBox(height: 3.0),
+            Text(reply?.text),
+          ],
+        ),
+        trailing: reply.isAddedBySprouter != null && reply.isAddedBySprouter
+            ? Icon(
+                Icons.grade,
+                color: Theme.of(context).primaryColor,
+              )
+            : null,
+        onTap: reply.isAddedBySprouter != null && reply.isAddedBySprouter
+            ? () => _showOrderDrinkPage(message: reply)
+            : null,
       ),
-      trailing: reply.isAddedBySprouter != null && reply.isAddedBySprouter
-          ? Icon(
-              Icons.grade,
-              color: Theme.of(context).primaryColor,
-            )
-          : null,
-      onTap: reply.isAddedBySprouter != null && reply.isAddedBySprouter
-          ? () => _showOrderDrinkPage(message: reply)
-          : null,
     );
   }
 

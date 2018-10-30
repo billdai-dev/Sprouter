@@ -14,12 +14,15 @@ abstract class PostMessageRequest
   factory PostMessageRequest([updates(PostMessageRequestBuilder b)]) =
       _$PostMessageRequest;
 
+  @nullable
   @BuiltValueField(wireName: 'channel')
   String get channel;
 
+  @nullable
   @BuiltValueField(wireName: 'text')
   String get text;
 
+  @nullable
   @BuiltValueField(wireName: 'as_user')
   bool get asUser;
 

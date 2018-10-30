@@ -25,4 +25,6 @@ abstract class RemoteRepo {
   Future<UserListResponse> getTeamMemberProfile();
 
   Future<PostMessageResponse> updateMessage(String ts, String text);
+
+  Future<PostMessageResponse> deleteMessage(String ts);
 }

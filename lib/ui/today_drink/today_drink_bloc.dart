@@ -19,6 +19,10 @@ class TodayDrinkBloc {
 
   Stream<List<Message>> get drinkMessage => _drinkMessage.stream;
 
+  final PublishSubject<int> _deleteMessage = PublishSubject();
+
+  Sink<int> get deleteMessage => _deleteMessage.sink;
+
   final BehaviorSubject<bool> _isOrdering = BehaviorSubject(seedValue: false);
 
   Stream<bool> get isOrdering => _isOrdering.stream;
@@ -63,12 +67,27 @@ class TodayDrinkBloc {
       _slackToken.sink.add(token);
       _showMoreContentIndicator.add(showNewContentIndicator);
     });
+    _deleteMessage.stream.listen((index) {
+      this
+          .repository
+          .deleteDrinkOrder(
+            _drinkShopMessage?.getShopName,
+            _drinkShopMessage?.threadTs,
+            _drinkMessages?.skip(1)?.elementAt(index)?.ts,
+          )
+          .then((response) {
+        //index+1 because we exclude first item when displaying message list
+        _drinkMessages?.removeAt(index + 1);
+        _drinkMessage.sink.add(_drinkMessages);
+      });
+    });
   }
 
   void dispose() {
     _isOrdering?.close();
     _slackToken?.close();
     _drinkMessage?.close();
+    _deleteMessage?.close();
     _fetchMessage?.close();
     _showMoreContentIndicator?.close();
   }

@@ -85,18 +85,9 @@ class AppLocalRepo implements LocalRepo {
   Future<void> addDrinkOrderToDB(String userId, String shopName,
       String threadTs, String orderTs, Drink drink) async {
     Database db = await openDB();
-
+    int drinkId =
+        await queryDrinkId(shopName, threadTs, orderTs, userId: userId);
     await db.transaction((txn) async {
-      Map<String, dynamic> drinkIds;
-      if (!Utils.isStringNullOrEmpty(threadTs) &&
-          !Utils.isStringNullOrEmpty(orderTs)) {
-        drinkIds = (await txn.rawQuery("""
-    SELECT Drink.drink_id FROM Drink JOIN DrinkOrder ON Drink.drink_id = DrinkOrder.drink_id 
-    WHERE DrinkOrder.thread_ts = ? AND DrinkOrder.order_ts = ?;
-    """, [threadTs, orderTs]))?.first;
-      }
-      int drinkId =
-          Utils.isMapNullOrEmpty(drinkIds) ? null : drinkIds["drink_id"];
       if (drinkId == null) {
         drinkId = await txn.insert("Drink", drink.toMap(),
             conflictAlgorithm: ConflictAlgorithm.ignore);
@@ -119,6 +110,26 @@ class AppLocalRepo implements LocalRepo {
       await txn.update("DrinkOrder", {"updated_date": "datetime('now')"},
           where: "drink_id = ?", whereArgs: [drinkId]);
     });
+  }
+
+  @override
+  Future<int> queryDrinkId(String shopName, String threadTs, String orderTs,
+      {String userId}) async {
+    Database db = await openDB();
+    userId ??= await loadUserId();
+
+    Map<String, dynamic> drinkId;
+    if (Utils.isStringNullOrEmpty(threadTs) ||
+        Utils.isStringNullOrEmpty(orderTs)) {
+      return null;
+    }
+
+    var drinkIds = await db.rawQuery("""
+    SELECT Drink.drink_id FROM Drink JOIN DrinkOrder ON Drink.drink_id = DrinkOrder.drink_id
+    WHERE DrinkOrder.user_id = ? AND DrinkOrder.shop_name = ? AND DrinkOrder.thread_ts = ? AND DrinkOrder.order_ts = ?;
+    """, [userId, shopName, threadTs, orderTs]);
+    drinkId = Utils.isListNullOrEmpty(drinkIds) ? null : drinkIds.first;
+    return Utils.isMapNullOrEmpty(drinkId) ? null : drinkId["drink_id"];
   }
 
   @override
@@ -166,6 +177,27 @@ class AppLocalRepo implements LocalRepo {
     }
     result = Utils.isListNullOrEmpty(results) ? null : results.first;
     return result;
+  }
+
+  @override
+  Future<int> deleteDrinkOrderInDB(
+      String userId, String shopName, String threadTs, String orderTs) async {
+    int drinkId =
+        await queryDrinkId(shopName, threadTs, orderTs, userId: userId);
+
+    if (drinkId == null) {
+      return null;
+    }
+    Database db = await openDB();
+
+    int count = await db.transaction((txn) async {
+      int count1 = await txn
+          .delete("DrinkOrder", where: "drink_id = ?", whereArgs: [drinkId]);
+      int count2 = await txn
+          .delete("Drink", where: "drink_id = ?", whereArgs: [drinkId]);
+      return count1 | count2;
+    });
+    return count;
   }
 
   Future<Database> _initDB() async {

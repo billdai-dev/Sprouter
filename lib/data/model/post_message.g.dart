@@ -34,15 +34,25 @@ class _$PostMessageRequestSerializer
   @override
   Iterable serialize(Serializers serializers, PostMessageRequest object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'channel',
-      serializers.serialize(object.channel,
-          specifiedType: const FullType(String)),
-      'text',
-      serializers.serialize(object.text, specifiedType: const FullType(String)),
-      'as_user',
-      serializers.serialize(object.asUser, specifiedType: const FullType(bool)),
-    ];
+    final result = <Object>[];
+    if (object.channel != null) {
+      result
+        ..add('channel')
+        ..add(serializers.serialize(object.channel,
+            specifiedType: const FullType(String)));
+    }
+    if (object.text != null) {
+      result
+        ..add('text')
+        ..add(serializers.serialize(object.text,
+            specifiedType: const FullType(String)));
+    }
+    if (object.asUser != null) {
+      result
+        ..add('as_user')
+        ..add(serializers.serialize(object.asUser,
+            specifiedType: const FullType(bool)));
+    }
     if (object.threadTs != null) {
       result
         ..add('thread_ts')
@@ -184,17 +194,7 @@ class _$PostMessageRequest extends PostMessageRequest {
 
   _$PostMessageRequest._(
       {this.channel, this.text, this.asUser, this.threadTs, this.ts})
-      : super._() {
-    if (channel == null) {
-      throw new BuiltValueNullFieldError('PostMessageRequest', 'channel');
-    }
-    if (text == null) {
-      throw new BuiltValueNullFieldError('PostMessageRequest', 'text');
-    }
-    if (asUser == null) {
-      throw new BuiltValueNullFieldError('PostMessageRequest', 'asUser');
-    }
-  }
+      : super._();
 
   @override
   PostMessageRequest rebuild(void updates(PostMessageRequestBuilder b)) =>
