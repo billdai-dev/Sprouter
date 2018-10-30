@@ -82,46 +82,43 @@ class AppLocalRepo implements LocalRepo {
   }
 
   @override
-  Future<int> addDrinkToDB(Drink drink,
-      {String threadTs, String orderTs}) async {
+  Future<void> addDrinkOrderToDB(String userId, String shopName,
+      String threadTs, String orderTs, Drink drink) async {
     Database db = await openDB();
-    Map<String, dynamic> drinkIds;
-    if (!Utils.isStringNullOrEmpty(threadTs) &&
-        !Utils.isStringNullOrEmpty(orderTs)) {
-      drinkIds = (await db.rawQuery("""
+
+    await db.transaction((txn) async {
+      Map<String, dynamic> drinkIds;
+      if (!Utils.isStringNullOrEmpty(threadTs) &&
+          !Utils.isStringNullOrEmpty(orderTs)) {
+        drinkIds = (await txn.rawQuery("""
     SELECT Drink.drink_id FROM Drink JOIN DrinkOrder ON Drink.drink_id = DrinkOrder.drink_id 
     WHERE DrinkOrder.thread_ts = ? AND DrinkOrder.order_ts = ?;
     """, [threadTs, orderTs]))?.first;
-    }
-    int drinkId =
-        Utils.isMapNullOrEmpty(drinkIds) ? null : drinkIds["drink_id"];
-    if (drinkId == null) {
-      drinkId = await db.insert("Drink", drink.toMap(),
-          conflictAlgorithm: ConflictAlgorithm.ignore);
-    } else {
-      await db.update("Drink", drink.toMap(),
-          where: "drink_id = ?", whereArgs: [drinkId]);
-    }
-    return drinkId;
-  }
+      }
+      int drinkId =
+          Utils.isMapNullOrEmpty(drinkIds) ? null : drinkIds["drink_id"];
+      if (drinkId == null) {
+        drinkId = await txn.insert("Drink", drink.toMap(),
+            conflictAlgorithm: ConflictAlgorithm.ignore);
+      } else {
+        await txn.update("Drink", drink.toMap(),
+            where: "drink_id = ?", whereArgs: [drinkId]);
+      }
 
-  @override
-  Future<void> addDrinkOrderToDB(String userId, String shopName,
-      String threadTs, int drinkId, String orderTs) async {
-    Database db = await openDB();
-    await db.insert(
-      "DrinkOrder",
-      {
-        "user_id": userId,
-        "shop_name": shopName,
-        "thread_ts": threadTs,
-        "drink_id": drinkId,
-        "order_ts": orderTs,
-      },
-      conflictAlgorithm: ConflictAlgorithm.ignore,
-    );
-    await db.update("DrinkOrder", {"updated_date": "datetime('now')"},
-        where: "drink_id = ?", whereArgs: [drinkId]);
+      await txn.insert(
+        "DrinkOrder",
+        {
+          "user_id": userId,
+          "shop_name": shopName,
+          "thread_ts": threadTs,
+          "drink_id": drinkId,
+          "order_ts": orderTs,
+        },
+        conflictAlgorithm: ConflictAlgorithm.rollback,
+      );
+      await txn.update("DrinkOrder", {"updated_date": "datetime('now')"},
+          where: "drink_id = ?", whereArgs: [drinkId]);
+    });
   }
 
   @override

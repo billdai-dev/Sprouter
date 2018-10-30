@@ -55,6 +55,7 @@ abstract class PostMessageResponse
   @BuiltValueField(wireName: 'ok')
   bool get ok;
 
+  @nullable
   @BuiltValueField(wireName: 'channel')
   String get channel;
 

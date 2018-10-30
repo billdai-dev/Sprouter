@@ -139,11 +139,9 @@ class AppRepository implements Repository {
         ? await _remoteRepo.postMessage(threadTs, completeDrinkName)
         : await _remoteRepo.updateMessage(orderTs, completeDrinkName);
     if (response != null && response.ok) {
-      int drinkId = await _localRepo.addDrinkToDB(drink,
-          threadTs: threadTs, orderTs: orderTs ?? response.ts);
       _userId ??= await _localRepo.loadUserId();
       await _localRepo.addDrinkOrderToDB(
-          _userId, shopName, threadTs, drinkId, orderTs ?? response.ts);
+          _userId, shopName, threadTs, orderTs ?? response.ts, drink);
     }
     return response;
   }

@@ -113,13 +113,16 @@ class _$PostMessageResponseSerializer
     final result = <Object>[
       'ok',
       serializers.serialize(object.ok, specifiedType: const FullType(bool)),
-      'channel',
-      serializers.serialize(object.channel,
-          specifiedType: const FullType(String)),
       'message',
       serializers.serialize(object.message,
           specifiedType: const FullType(Message)),
     ];
+    if (object.channel != null) {
+      result
+        ..add('channel')
+        ..add(serializers.serialize(object.channel,
+            specifiedType: const FullType(String)));
+    }
     if (object.ts != null) {
       result
         ..add('ts')
@@ -314,9 +317,6 @@ class _$PostMessageResponse extends PostMessageResponse {
       : super._() {
     if (ok == null) {
       throw new BuiltValueNullFieldError('PostMessageResponse', 'ok');
-    }
-    if (channel == null) {
-      throw new BuiltValueNullFieldError('PostMessageResponse', 'channel');
     }
     if (message == null) {
       throw new BuiltValueNullFieldError('PostMessageResponse', 'message');
