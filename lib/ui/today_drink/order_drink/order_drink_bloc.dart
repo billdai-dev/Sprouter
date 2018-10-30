@@ -12,7 +12,7 @@ class OrderDrinkBloc {
 
   final Message drinkShop;
   final Message selectedOrder;
-  final Drink _drink = Drink();
+  Drink _drink = Drink();
 
   String get shopName => drinkShop?.files[0]?.title?.split(" ")[1];
 
@@ -59,6 +59,19 @@ class OrderDrinkBloc {
         .listen((ingredient) => _handleIngredientChange(ingredient, false));
     _changePrice.stream.listen(_handlePriceChange);
     _changeDrinkName.stream.listen(_handleDrinkNameChange);
+    if (selectedOrder != null) {
+      _isLoading.sink.add(true);
+      _initSelectedOrder(selectedOrder.ts);
+    }
+  }
+
+  Future _initSelectedOrder(String orderTs) async {
+    _drink = await repository.getLocalDrinkData(
+        shopName: drinkShop?.getShopName,
+        threadTs: drinkShop?.threadTs,
+        orderTs: orderTs);
+    _currentDrink.sink.add(_drink);
+    _isLoading.sink.add(false);
   }
 
   void _handleIngredientChange(Ingredient ingredient, bool isAdding) {

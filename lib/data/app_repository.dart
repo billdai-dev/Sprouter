@@ -145,4 +145,15 @@ class AppRepository implements Repository {
     }
     return response;
   }
+
+  @override
+  Future<Drink> getLocalDrinkData(
+      {int drinkId, String shopName, String threadTs, String orderTs}) async {
+    Map<String, dynamic> data = await _localRepo.getLocalDrinkData(
+        drinkId: drinkId,
+        shopName: shopName,
+        threadTs: threadTs,
+        orderTs: orderTs);
+    return Drink.fromMap(data);
+  }
 }

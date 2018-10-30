@@ -2,15 +2,75 @@ class Drink {
   String name;
   String price;
   List<Ingredient> ingredients = [];
-  String _completeDrinkName;
 
   String get completeDrinkName {
     StringBuffer ingredientString = StringBuffer("");
     ingredients?.forEach((ingredient) =>
         ingredientString.write(" / ${getIngredientMapping(ingredient)}"));
     String _price = price == null ? "" : " / \$$price";
-    _completeDrinkName = "${name ?? ""}${ingredientString.toString()}$_price";
-    return _completeDrinkName;
+    return "${name ?? ""}${ingredientString.toString()}$_price";
+  }
+
+  Drink();
+
+  Drink.fromMap(Map<String, dynamic> map) {
+    if (map == null) {
+      return;
+    }
+    map.forEach((key, value) {
+      if (value == null) {
+        return;
+      }
+      switch (key) {
+        case "name":
+          this.name = value;
+          break;
+        case "price":
+          this.price = value.toString();
+          break;
+        case "ice":
+          for (var level in IceLevel.values) {
+            if (level.toString().contains(value.toString())) {
+              ingredients.add(Ice(level: level));
+              break;
+            }
+          }
+          break;
+        case "sugar":
+          for (var level in SugarLevel.values) {
+            if (level.toString().contains(value.toString())) {
+              ingredients.add(Sugar(level: level));
+              break;
+            }
+          }
+          break;
+        case "pearl":
+          for (var type in PearlType.values) {
+            if (type.toString().contains(value.toString())) {
+              ingredients.add(Pearl(type: type));
+              break;
+            }
+          }
+          break;
+        case "coconut":
+          if ("Y" == value) {
+            ingredients.add(CoconutJelly());
+          }
+          break;
+        case "cup_size":
+          for (var cup in Cup.values) {
+            if (cup.toString().contains(value.toString())) {
+              ingredients.add(DrinkSize(cup: cup));
+              break;
+            }
+          }
+          break;
+        case "other_ingredient":
+          ingredients.addAll(value.toString().split(",").map(
+              (ingredient) => OtherIngredient(ingredientName: ingredient)));
+          break;
+      }
+    });
   }
 
   Map<String, String> toMap() {

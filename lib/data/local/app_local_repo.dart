@@ -88,10 +88,10 @@ class AppLocalRepo implements LocalRepo {
     Map<String, int> drinkIds;
     if (!Utils.isStringNullOrEmpty(threadTs) &&
         !Utils.isStringNullOrEmpty(orderTs)) {
-      drinkIds = await db.execute("""
-    SELECT Drink.drink_id FROM Drink JOIN DrinkOrder 
-    ON Drink.drink_id = DrinkOrder.drink_id WHERE DrinkOrder.thread_ts = $threadTs AND DrinkOrder.order_ts = $orderTs;
-    """);
+      drinkIds = (await db.rawQuery("""
+    SELECT Drink.drink_id FROM Drink JOIN DrinkOrder ON Drink.drink_id = DrinkOrder.drink_id 
+    WHERE DrinkOrder.thread_ts = ? AND DrinkOrder.order_ts = ?;
+    """, [threadTs, orderTs]))?.first;
     }
     int drinkId =
         Utils.isMapNullOrEmpty(drinkIds) ? null : drinkIds["drink_id"];
@@ -134,6 +134,41 @@ class AppLocalRepo implements LocalRepo {
         whereArgs: [shopName, threadTs]);
     List<String> orderTsList = List.from(results.expand((map) => map.values));
     return orderTsList;
+  }
+
+  @override
+  Future<Map<String, dynamic>> getLocalDrinkData(
+      {int drinkId, String shopName, String threadTs, String orderTs}) async {
+    List<String> columns = [
+      "name",
+      "price",
+      "ice",
+      "sugar",
+      "pearl",
+      "coconut",
+      "cup_size",
+      "other_ingredient",
+    ];
+    Database db = await openDB();
+    Map<String, dynamic> result;
+    List<Map<String, dynamic>> results;
+    if (drinkId != null) {
+      results = await db.query(
+        "Drink",
+        columns: columns,
+        where: "drink_id = ?",
+        whereArgs: [drinkId],
+        limit: 1,
+      );
+    } else if (orderTs != null) {
+      results = await db.rawQuery("""
+    SELECT Drink.name, price, ice, sugar, pearl, coconut, cup_size, other_ingredient FROM Drink 
+    JOIN DrinkOrder ON Drink.drink_id = DrinkOrder.drink_id WHERE 
+    DrinkOrder.shop_name = ? AND DrinkOrder.thread_ts = ? AND DrinkOrder.order_ts = ?;
+    """, [shopName, threadTs, orderTs]);
+    }
+    result = Utils.isListNullOrEmpty(results) ? null : results.first;
+    return result;
   }
 
   Future<Database> _initDB() async {

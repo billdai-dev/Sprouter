@@ -73,6 +73,9 @@ abstract class Message implements Built<Message, MessageBuilder> {
     return json.encode(serializers.serializeWith(Message.serializer, this));
   }
 
+  String get getShopName =>
+      files?.elementAt(0)?.title?.split(" ")?.elementAt(1);
+
   static Message fromJson(String jsonString) {
     return serializers.deserializeWith(
         Message.serializer, json.decode(jsonString));

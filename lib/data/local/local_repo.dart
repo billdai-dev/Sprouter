@@ -25,4 +25,7 @@ abstract class LocalRepo {
 
   Future<List<String>> getOrderTsList(String shopName, String threadTs,
       {String orderTs});
+
+  Future<Map<String, dynamic>> getLocalDrinkData(
+      {int drinkId, String shopName, String threadTs, String orderTs});
 }

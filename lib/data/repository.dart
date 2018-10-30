@@ -14,4 +14,7 @@ abstract class Repository {
   Future<PostMessageResponse> orderDrink(
       String shopName, String threadTs, Drink drink,
       {String orderTs});
+
+  Future<Drink> getLocalDrinkData(
+      {int drinkId, String shopName, String threadTs, String orderTs});
 }

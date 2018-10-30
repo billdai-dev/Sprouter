@@ -29,27 +29,33 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
   OverlayEntry drinkMenuOverlayEntry;
   GlobalKey _handmadeDrinkKey = GlobalKey();
   GlobalKey _drinkMenuKey = GlobalKey();
-  AnimationController controller;
+  AnimationController dropIngredientAnimController;
+  TextEditingController priceController;
+  TextEditingController drinkNameController;
 
   @override
   void initState() {
     super.initState();
-    controller = AnimationController(
+    dropIngredientAnimController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 600),
     );
-    controller.addStatusListener((status) {
+    dropIngredientAnimController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         overlayEntry?.remove();
       }
     });
+    priceController = TextEditingController();
+    drinkNameController = TextEditingController();
   }
 
   @override
   void dispose() {
     overlayEntry?.remove();
     drinkMenuOverlayEntry?.remove();
-    controller?.dispose();
+    dropIngredientAnimController?.dispose();
+    priceController?.dispose();
+    drinkNameController?.dispose();
     super.dispose();
   }
 
@@ -227,25 +233,26 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
               Widget handmadeDrink = Image.asset(
                 "assets/images/handmade_drink.png",
               );
-              return controller.isAnimating || candidateData.isEmpty
+              return dropIngredientAnimController.isAnimating ||
+                      candidateData.isEmpty
                   ? handmadeDrink
                   : Opacity(
                       opacity: 0.5,
                       child: handmadeDrink,
                     );
             },
-            onWillAccept: (data) => !controller.isAnimating,
+            onWillAccept: (data) => !dropIngredientAnimController.isAnimating,
             onAccept: (data) {
               overlayEntry = OverlayEntry(
                 builder: (context) => _DropIngredientAnimation(
                     ingredientType: data.runtimeType,
                     handmadeDrinkRenderBox:
                         _handmadeDrinkKey.currentContext.findRenderObject(),
-                    controller: controller),
+                    controller: dropIngredientAnimController),
               );
               Overlay.of(context).insert(overlayEntry);
-              controller?.reset();
-              controller?.forward();
+              dropIngredientAnimController?.reset();
+              dropIngredientAnimController?.forward();
               bloc?.addIngredient?.add(data);
             },
           ),
@@ -268,17 +275,30 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
             width: 3.0,
           ),
           Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(4.0),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: Theme.of(context).accentColor, width: 2.0),
-                ),
-              ),
-              inputFormatters: [LengthLimitingTextInputFormatter(3)],
-              keyboardType: TextInputType.number,
-              onChanged: (price) => bloc.changePrice.add(price),
+            child: StreamBuilder<Drink>(
+              stream: bloc?.currentDrink
+                  ?.distinct((prev, current) => prev.price == current.price),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  String price = snapshot.data.price ?? "";
+                  priceController?.text = price;
+                  priceController?.selection = TextSelection(
+                      baseOffset: price.length, extentOffset: price.length);
+                }
+                return TextField(
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(4.0),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Theme.of(context).accentColor, width: 2.0),
+                    ),
+                  ),
+                  inputFormatters: [LengthLimitingTextInputFormatter(3)],
+                  keyboardType: TextInputType.number,
+                  onChanged: (price) => bloc.changePrice.add(price),
+                  controller: priceController,
+                );
+              },
             ),
           ),
           SizedBox(
@@ -324,18 +344,33 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           children: <Widget>[
             Flexible(
               flex: 5,
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: "品名",
-                  labelStyle: TextStyle(color: Theme.of(context).accentColor),
-                  isDense: true,
-                  contentPadding: EdgeInsets.all(4.0),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Theme.of(context).accentColor, width: 2.0),
-                  ),
-                ),
-                onChanged: (name) => bloc.changeDrinkName.add(name),
+              child: StreamBuilder<Drink>(
+                stream: bloc?.currentDrink
+                    ?.distinct((prev, current) => prev.name == current.name),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    String drinkName = snapshot.data.name ?? "";
+                    drinkNameController?.text = drinkName;
+                    drinkNameController?.selection = TextSelection(
+                        baseOffset: drinkName.length,
+                        extentOffset: drinkName.length);
+                  }
+                  return TextField(
+                    decoration: InputDecoration(
+                      labelText: "品名",
+                      labelStyle:
+                          TextStyle(color: Theme.of(context).accentColor),
+                      isDense: true,
+                      contentPadding: EdgeInsets.all(4.0),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Theme.of(context).accentColor, width: 2.0),
+                      ),
+                    ),
+                    onChanged: (name) => bloc.changeDrinkName.add(name),
+                    controller: drinkNameController,
+                  );
+                },
               ),
             ),
             Expanded(
