@@ -49,6 +49,12 @@ class _$PostMessageRequestSerializer
         ..add(serializers.serialize(object.threadTs,
             specifiedType: const FullType(String)));
     }
+    if (object.ts != null) {
+      result
+        ..add('ts')
+        ..add(serializers.serialize(object.ts,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -78,6 +84,10 @@ class _$PostMessageRequestSerializer
           break;
         case 'thread_ts':
           result.threadTs = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'ts':
+          result.ts = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -163,11 +173,14 @@ class _$PostMessageRequest extends PostMessageRequest {
   final bool asUser;
   @override
   final String threadTs;
+  @override
+  final String ts;
 
   factory _$PostMessageRequest([void updates(PostMessageRequestBuilder b)]) =>
       (new PostMessageRequestBuilder()..update(updates)).build();
 
-  _$PostMessageRequest._({this.channel, this.text, this.asUser, this.threadTs})
+  _$PostMessageRequest._(
+      {this.channel, this.text, this.asUser, this.threadTs, this.ts})
       : super._() {
     if (channel == null) {
       throw new BuiltValueNullFieldError('PostMessageRequest', 'channel');
@@ -195,14 +208,16 @@ class _$PostMessageRequest extends PostMessageRequest {
         channel == other.channel &&
         text == other.text &&
         asUser == other.asUser &&
-        threadTs == other.threadTs;
+        threadTs == other.threadTs &&
+        ts == other.ts;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, channel.hashCode), text.hashCode), asUser.hashCode),
-        threadTs.hashCode));
+        $jc($jc($jc($jc(0, channel.hashCode), text.hashCode), asUser.hashCode),
+            threadTs.hashCode),
+        ts.hashCode));
   }
 
   @override
@@ -211,7 +226,8 @@ class _$PostMessageRequest extends PostMessageRequest {
           ..add('channel', channel)
           ..add('text', text)
           ..add('asUser', asUser)
-          ..add('threadTs', threadTs))
+          ..add('threadTs', threadTs)
+          ..add('ts', ts))
         .toString();
   }
 }
@@ -236,6 +252,10 @@ class PostMessageRequestBuilder
   String get threadTs => _$this._threadTs;
   set threadTs(String threadTs) => _$this._threadTs = threadTs;
 
+  String _ts;
+  String get ts => _$this._ts;
+  set ts(String ts) => _$this._ts = ts;
+
   PostMessageRequestBuilder();
 
   PostMessageRequestBuilder get _$this {
@@ -244,6 +264,7 @@ class PostMessageRequestBuilder
       _text = _$v.text;
       _asUser = _$v.asUser;
       _threadTs = _$v.threadTs;
+      _ts = _$v.ts;
       _$v = null;
     }
     return this;
@@ -266,7 +287,11 @@ class PostMessageRequestBuilder
   _$PostMessageRequest build() {
     final _$result = _$v ??
         new _$PostMessageRequest._(
-            channel: channel, text: text, asUser: asUser, threadTs: threadTs);
+            channel: channel,
+            text: text,
+            asUser: asUser,
+            threadTs: threadTs,
+            ts: ts);
     replace(_$result);
     return _$result;
   }

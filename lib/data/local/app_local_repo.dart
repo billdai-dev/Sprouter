@@ -85,7 +85,7 @@ class AppLocalRepo implements LocalRepo {
   Future<int> addDrinkToDB(Drink drink,
       {String threadTs, String orderTs}) async {
     Database db = await openDB();
-    Map<String, int> drinkIds;
+    Map<String, dynamic> drinkIds;
     if (!Utils.isStringNullOrEmpty(threadTs) &&
         !Utils.isStringNullOrEmpty(orderTs)) {
       drinkIds = (await db.rawQuery("""

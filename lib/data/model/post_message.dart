@@ -27,6 +27,10 @@ abstract class PostMessageRequest
   @BuiltValueField(wireName: 'thread_ts')
   String get threadTs;
 
+  @nullable
+  @BuiltValueField(wireName: 'ts')
+  String get ts;
+
   String toJson() {
     return json
         .encode(serializers.serializeWith(PostMessageRequest.serializer, this));

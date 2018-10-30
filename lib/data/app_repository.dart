@@ -11,10 +11,11 @@ import 'package:sprouter/data/remote/app_remote_repo.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/data/repository.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
+import 'package:sprouter/util/utils.dart';
 
 class AppRepository implements Repository {
-  static const String CLIENT_ID = AppRemoteRepo.SLACK_CLIENT_ID;
-  static const String REDIRECT_URL = AppRemoteRepo.SLACK_REDIRECT_URL;
+  static const String CLIENT_ID = AppRemoteRepo.slackClientId;
+  static const String REDIRECT_URL = AppRemoteRepo.slackRedirectUrl;
 
   static final AppRepository _repo = AppRepository._internal();
 
@@ -134,11 +135,12 @@ class AppRepository implements Repository {
       String shopName, String threadTs, Drink drink,
       {String orderTs}) async {
     String completeDrinkName = drink?.completeDrinkName;
-    PostMessageResponse response =
-        await _remoteRepo.postMessage(threadTs, completeDrinkName);
+    PostMessageResponse response = Utils.isStringNullOrEmpty(orderTs)
+        ? await _remoteRepo.postMessage(threadTs, completeDrinkName)
+        : await _remoteRepo.updateMessage(orderTs, completeDrinkName);
     if (response != null && response.ok) {
       int drinkId = await _localRepo.addDrinkToDB(drink,
-          threadTs: threadTs, orderTs: orderTs);
+          threadTs: threadTs, orderTs: orderTs ?? response.ts);
       _userId ??= await _localRepo.loadUserId();
       await _localRepo.addDrinkOrderToDB(
           _userId, shopName, threadTs, drinkId, orderTs ?? response.ts);

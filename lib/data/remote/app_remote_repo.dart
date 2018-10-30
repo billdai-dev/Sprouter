@@ -12,22 +12,23 @@ import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 
 class AppRemoteRepo implements RemoteRepo {
-  static const String SLACK_CLIENT_ID = "373821001234.373821382898";
-  static const String SLACK_CLIENT_SECRET = "f0ce30315c4689da519c5281883c0667";
-  static const String SLACK_REDIRECT_URL =
+  static const String slackClientId = "373821001234.373821382898";
+  static const String slackClientSecret = "f0ce30315c4689da519c5281883c0667";
+  static const String slackRedirectUrl =
       "https://kunstmaan.github.io/flutter_slack_oauth/success.html";
-  static const String _LUNCH_CHANNEL = "CAZQ503L2";
+  static const String _lunchChannel = "CAZQ503L2";
 
-  static const String _SLACK_API_BASE_URL = "https://slack.com";
+  static const String _slackApiBaseUrl = "https://slack.com";
 
-  static const String _OAUTH_ACCESS_PATH = "/api/oauth.access";
-  static const String _USERS_LIST_PATH = "/api/users.list";
-  static const String _USERS_IDENTITY_PATH = "/api/users.identity";
-  static const String _CONVERSATION_HISTORY_PATH = "/api/conversations.history";
-  static const String _CONVERSATION_REPLIES_PATH = "/api/conversations.replies";
-  static const String _CHAT_POST_MESSAGE_PATH = "/api/chat.postMessage";
+  static const String _oauthAccessPath = "/api/oauth.access";
+  static const String _usersListPath = "/api/users.list";
+  static const String _usersIdentityPath = "/api/users.identity";
+  static const String _conversationHistoryPath = "/api/conversations.history";
+  static const String _conversationRepliesPath = "/api/conversations.replies";
+  static const String _chatPostMessagePath = "/api/chat.postMessage";
+  static const String _chatUpdatePath = "/api/chat.update";
 
-  static final ContentType X_WWW_FORM_URLENCODED =
+  static final ContentType x_www_form_urlencoded =
       ContentType.parse("application/x-www-form-urlencoded");
 
   static final AppRemoteRepo _repo = AppRemoteRepo.internal();
@@ -36,7 +37,7 @@ class AppRemoteRepo implements RemoteRepo {
 
   final Dio dio = Dio(
     Options(
-        baseUrl: _SLACK_API_BASE_URL,
+        baseUrl: _slackApiBaseUrl,
         connectTimeout: 60000,
         receiveTimeout: 60000),
   );
@@ -68,15 +69,15 @@ class AppRemoteRepo implements RemoteRepo {
   Future<SlackToken> getSlackOauthToken(String code) async {
     var params = {
       "code": code,
-      "client_id": SLACK_CLIENT_ID,
-      "client_secret": SLACK_CLIENT_SECRET,
-      "redirect_uri": SLACK_REDIRECT_URL,
+      "client_id": slackClientId,
+      "client_secret": slackClientSecret,
+      "redirect_uri": slackRedirectUrl,
     };
-    Future<Response> response = dio.post(_OAUTH_ACCESS_PATH,
+    Future<Response> response = dio.post(_oauthAccessPath,
         data: params,
         options: Options(
           headers: {"Authoriation": null},
-          contentType: X_WWW_FORM_URLENCODED,
+          contentType: x_www_form_urlencoded,
         ));
     Future<SlackToken> slackToken = response.then((response) {
       return SlackToken.fromJson(jsonEncode(Map.from(response.data)));
@@ -86,7 +87,7 @@ class AppRemoteRepo implements RemoteRepo {
 
   @override
   Future<UserIdentity> getUserIdentity({String accessToken}) async {
-    Future<Response> response = dio.get(_USERS_IDENTITY_PATH);
+    Future<Response> response = dio.get(_usersIdentityPath);
     Future<UserIdentity> userIdentity = response.then((response) {
       return UserIdentity.fromJson(jsonEncode(response.data));
     });
@@ -95,7 +96,7 @@ class AppRemoteRepo implements RemoteRepo {
 
   @override
   Future<UserListResponse> getUsers({String accessToken}) async {
-    Future<Response> response = dio.get(_USERS_LIST_PATH);
+    Future<Response> response = dio.get(_usersListPath);
     Future<UserListResponse> userList = response.then((response) {
       return UserListResponse.fromJson(jsonEncode(response.data));
     });
@@ -106,11 +107,10 @@ class AppRemoteRepo implements RemoteRepo {
   Future<ConversationList> fetchLunchMessages(
       {String oldest, String latest, int limit = 200}) {
     var query = {
-      "channel": _LUNCH_CHANNEL,
+      "channel": _lunchChannel,
     };
     query.removeWhere((key, value) => value == null);
-    Future<Response> response =
-        dio.get(_CONVERSATION_HISTORY_PATH, data: query);
+    Future<Response> response = dio.get(_conversationHistoryPath, data: query);
     Future<ConversationList> conversationList = response.then((response) {
       return ConversationList.fromJson(jsonEncode(response.data));
     });
@@ -119,25 +119,24 @@ class AppRemoteRepo implements RemoteRepo {
 
   @override
   Future<ConversationList> fetchMessageReplies(String ts) {
-    var query = {"channel": _LUNCH_CHANNEL, "ts": ts};
+    var query = {"channel": _lunchChannel, "ts": ts};
     query.removeWhere((key, value) => value == null);
-    Future<Response> response =
-        dio.get(_CONVERSATION_REPLIES_PATH, data: query);
+    Future<Response> response = dio.get(_conversationRepliesPath, data: query);
     return response.then((response) {
       return ConversationList.fromJson(jsonEncode(response.data));
     });
   }
 
   @override
-  Future<PostMessageResponse> postMessage(String ts, String drink) {
+  Future<PostMessageResponse> postMessage(String ts, String text) {
     PostMessageRequest request = PostMessageRequest((builder) {
-      builder.channel = _LUNCH_CHANNEL;
+      builder.channel = _lunchChannel;
       builder.threadTs = ts;
       builder.asUser = true;
-      builder.text = drink;
+      builder.text = text;
     });
     Future<Response> response =
-        dio.post(_CHAT_POST_MESSAGE_PATH, data: json.decode(request.toJson()));
+        dio.post(_chatPostMessagePath, data: json.decode(request.toJson()));
     return response.then((response) {
       return PostMessageResponse.fromJson(jsonEncode(response.data));
     });
@@ -146,10 +145,25 @@ class AppRemoteRepo implements RemoteRepo {
   @override
   Future<UserListResponse> getTeamMemberProfile() {
     Future<Response> response = dio.get(
-      _USERS_LIST_PATH,
-      options: Options(contentType: X_WWW_FORM_URLENCODED),
+      _usersListPath,
+      options: Options(contentType: x_www_form_urlencoded),
     );
     return response.then(
         (response) => UserListResponse.fromJson(jsonEncode(response.data)));
+  }
+
+  @override
+  Future<PostMessageResponse> updateMessage(String ts, String text) {
+    PostMessageRequest request = PostMessageRequest((builder) {
+      builder.channel = _lunchChannel;
+      builder.ts = ts;
+      builder.asUser = true;
+      builder.text = text;
+    });
+    Future<Response> response =
+        dio.post(_chatUpdatePath, data: json.decode(request.toJson()));
+    return response.then((response) {
+      return PostMessageResponse.fromJson(jsonEncode(response.data));
+    });
   }
 }

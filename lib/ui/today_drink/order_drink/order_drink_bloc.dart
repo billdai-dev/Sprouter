@@ -108,8 +108,9 @@ class OrderDrinkBloc {
 
   Future<bool> submitOrder() async {
     _isLoading.sink.add(true);
-    PostMessageResponse response =
-        await repository.orderDrink(shopName, drinkShop?.ts, _drink);
+    PostMessageResponse response = await repository.orderDrink(
+        shopName, drinkShop?.ts, _drink,
+        orderTs: selectedOrder?.ts);
     _isLoading.sink.add(false);
     return response.ok;
   }

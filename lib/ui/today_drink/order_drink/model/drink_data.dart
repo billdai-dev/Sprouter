@@ -102,14 +102,22 @@ class Drink {
         case OtherIngredient:
           String otherIngredient =
               (ingredient as OtherIngredient).ingredientName;
-          otherIngredients.write(otherIngredients.isEmpty
-              ? "$otherIngredient"
-              : ",$otherIngredient");
+          otherIngredients.write(
+              otherIngredients.isEmpty ? otherIngredient : ",$otherIngredient");
           break;
       }
     }
-    if (otherIngredients.isNotEmpty) {
-      map.putIfAbsent("other_ingredient", () => otherIngredients.toString());
+    map.putIfAbsent("other_ingredient",
+        () => otherIngredients.isEmpty ? null : otherIngredients.toString());
+    for (String key in [
+      "ice",
+      "sugar",
+      "pearl",
+      "coconut",
+      "cup_size",
+      "other_ingredient"
+    ]) {
+      map.putIfAbsent(key, () => null);
     }
     return map;
   }
