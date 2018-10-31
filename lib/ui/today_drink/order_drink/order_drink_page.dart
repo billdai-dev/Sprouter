@@ -257,6 +257,10 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
             },
           ),
         ),
+        _buildFavoriteIcon(),
+        SizedBox(
+          height: 8.0,
+        ),
         _buildPriceTag(),
       ],
     );
@@ -398,6 +402,45 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildFavoriteIcon() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 65,
+          child: Text(
+            "設為最愛",
+            textAlign: TextAlign.end,
+          ),
+        ),
+        Expanded(
+          flex: 35,
+          child: StreamBuilder<bool>(
+            stream: null,
+            builder: (context, snapshot) {
+              Widget icon = snapshot.hasData && snapshot.data
+                  ? Icon(
+                      FontAwesomeIcons.solidHeart,
+                      color: Colors.redAccent,
+                      size: 20.0,
+                    )
+                  : Icon(
+                      FontAwesomeIcons.heart,
+                      size: 20.0,
+                    );
+              return Container(
+                alignment: Alignment(-0.6, 0.5),
+                child: GestureDetector(
+                  child: icon,
+                  onTap: () => {},
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
