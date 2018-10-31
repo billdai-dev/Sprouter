@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -81,25 +82,6 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                 String photoUrl = todayDrinkBloc?.photoUrl;
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => DetailPhotoPage(photoUrl, token)));
-                /*drinkMenuOverlayEntry ??= OverlayEntry(builder: (context) {
-                  RenderBox box =
-                      _drinkMenuKey?.currentContext?.findRenderObject();
-                  Offset pos = box?.localToGlobal(Offset.zero);
-                  double horizontalMargin =
-                      MediaQuery.of(context).size.width - pos.dx;
-                  return Positioned(
-                    left: horizontalMargin,
-                    right: horizontalMargin,
-                    top: pos.dy + box.size.height,
-                    child: _DrinkMenuImage(
-                      token: token,
-                      imageUrl: photoUrl,
-                      onTap: () => drinkMenuOverlayEntry?.remove(),
-                    ),
-                  );
-                });
-                //drinkMenuOverlayEntry.remove();
-                Overlay.of(context).insert(drinkMenuOverlayEntry);*/
               }),
         ],
       ),
@@ -128,10 +110,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               Expanded(
-                                child: Container(
-                                  constraints: BoxConstraints.expand(),
-                                  color: Colors.transparent,
-                                ),
+                                child: _buildQuickDrinkSetting(),
                               ),
                               Expanded(
                                 child: _buildHandmadeDrinkImage(),
@@ -220,6 +199,83 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           );
         },
       ),
+    );
+  }
+
+  Widget _buildQuickDrinkSetting() {
+    bool isMale = Random().nextBool();
+    String imageFile = isMale ? "drinking_man.png" : "drinking_woman.png";
+
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Image.asset(
+            "assets/images/$imageFile",
+          ),
+        ),
+        FractionallySizedBox(
+          widthFactor: 0.8,
+          child: RaisedButton(
+            color: Theme.of(context).accentColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            padding: EdgeInsets.zero,
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "最愛喝的",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12.0,
+                  ),
+                ),
+                SizedBox(
+                  width: 2.0,
+                ),
+                Icon(
+                  FontAwesomeIcons.solidHeart,
+                  color: Colors.white,
+                  size: 16.0,
+                ),
+              ],
+            ),
+          ),
+        ),
+        FractionallySizedBox(
+          widthFactor: 0.8,
+          child: RaisedButton(
+            color: Theme.of(context).accentColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            padding: EdgeInsets.zero,
+            onPressed: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "為我推薦",
+                  style: TextStyle(
+                    fontSize: 12.0,
+                    color: Colors.white,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_forward,
+                  size: 16.0,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 8.0,
+        ),
+      ],
     );
   }
 
@@ -413,6 +469,9 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           child: Text(
             "設為最愛",
             textAlign: TextAlign.end,
+            style: TextStyle(
+              fontSize: 14.0,
+            ),
           ),
         ),
         Expanded(
