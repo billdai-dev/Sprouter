@@ -24,6 +24,8 @@ class OrderDrinkPage extends StatefulWidget {
 
 class _OrderDrinkPageState extends State<OrderDrinkPage>
     with SingleTickerProviderStateMixin {
+  final bool _useMaleImage = Random().nextBool();
+
   OrderDrinkBloc bloc;
 
   OverlayEntry overlayEntry;
@@ -110,7 +112,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: <Widget>[
                               Expanded(
-                                child: _buildQuickDrinkSetting(),
+                                child: _buildQuickDrinkSetting(_useMaleImage),
                               ),
                               Expanded(
                                 child: _buildHandmadeDrinkImage(),
@@ -202,78 +204,87 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
     );
   }
 
-  Widget _buildQuickDrinkSetting() {
-    bool isMale = Random().nextBool();
-    String imageFile = isMale ? "drinking_man.png" : "drinking_woman.png";
+  Widget _buildQuickDrinkSetting(bool useMaleImage) {
+    String imageFile = useMaleImage ? "drinking_man.png" : "drinking_woman.png";
 
     return Column(
       children: <Widget>[
         Expanded(
+          flex: 50,
           child: Image.asset(
             "assets/images/$imageFile",
           ),
         ),
-        FractionallySizedBox(
-          widthFactor: 0.8,
-          child: RaisedButton(
-            color: Theme.of(context).accentColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            padding: EdgeInsets.zero,
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "最愛喝的",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.0,
+        Flexible(
+          flex: 20,
+          child: FractionallySizedBox(
+            widthFactor: 0.8,
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              padding: EdgeInsets.zero,
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "最愛喝的",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12.0,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 2.0,
-                ),
-                Icon(
-                  FontAwesomeIcons.solidHeart,
-                  color: Colors.white,
-                  size: 16.0,
-                ),
-              ],
+                  SizedBox(
+                    width: 2.0,
+                  ),
+                  Icon(
+                    FontAwesomeIcons.solidHeart,
+                    color: Colors.white,
+                    size: 16.0,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-        FractionallySizedBox(
-          widthFactor: 0.8,
-          child: RaisedButton(
-            color: Theme.of(context).accentColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            padding: EdgeInsets.zero,
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  "為我推薦",
-                  style: TextStyle(
-                    fontSize: 12.0,
+        Spacer(
+          flex: 2,
+        ),
+        Flexible(
+          flex: 20,
+          child: FractionallySizedBox(
+            widthFactor: 0.8,
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              padding: EdgeInsets.zero,
+              onPressed: () {},
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "為我推薦",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward,
+                    size: 16.0,
                     color: Colors.white,
                   ),
-                ),
-                Icon(
-                  Icons.arrow_forward,
-                  size: 16.0,
-                  color: Colors.white,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-        SizedBox(
-          height: 8.0,
+        Spacer(
+          flex: 1,
         ),
       ],
     );
@@ -313,10 +324,10 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
             },
           ),
         ),
-        _buildFavoriteIcon(),
+        /*_buildFavoriteIcon(),
         SizedBox(
           height: 8.0,
-        ),
+        ),*/
         _buildPriceTag(),
       ],
     );
