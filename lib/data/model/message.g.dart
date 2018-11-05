@@ -562,6 +562,8 @@ class _$Message extends Message {
   final Profile userProfile;
   @override
   final bool isAddedBySprouter;
+  @override
+  final bool isFavoriteDrink;
 
   factory _$Message([void updates(MessageBuilder b)]) =>
       (new MessageBuilder()..update(updates)).build();
@@ -580,7 +582,8 @@ class _$Message extends Message {
       this.ts,
       this.files,
       this.userProfile,
-      this.isAddedBySprouter})
+      this.isAddedBySprouter,
+      this.isFavoriteDrink})
       : super._();
 
   @override
@@ -650,7 +653,8 @@ class _$Message extends Message {
           ..add('ts', ts)
           ..add('files', files)
           ..add('userProfile', userProfile)
-          ..add('isAddedBySprouter', isAddedBySprouter))
+          ..add('isAddedBySprouter', isAddedBySprouter)
+          ..add('isFavoriteDrink', isFavoriteDrink))
         .toString();
   }
 }
@@ -718,6 +722,11 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
   set isAddedBySprouter(bool isAddedBySprouter) =>
       _$this._isAddedBySprouter = isAddedBySprouter;
 
+  bool _isFavoriteDrink;
+  bool get isFavoriteDrink => _$this._isFavoriteDrink;
+  set isFavoriteDrink(bool isFavoriteDrink) =>
+      _$this._isFavoriteDrink = isFavoriteDrink;
+
   MessageBuilder();
 
   MessageBuilder get _$this {
@@ -736,6 +745,7 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
       _files = _$v.files?.toBuilder();
       _userProfile = _$v.userProfile?.toBuilder();
       _isAddedBySprouter = _$v.isAddedBySprouter;
+      _isFavoriteDrink = _$v.isFavoriteDrink;
       _$v = null;
     }
     return this;
@@ -773,7 +783,8 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
               ts: ts,
               files: _files?.build(),
               userProfile: _userProfile?.build(),
-              isAddedBySprouter: isAddedBySprouter);
+              isAddedBySprouter: isAddedBySprouter,
+              isFavoriteDrink: isFavoriteDrink);
     } catch (_) {
       String _$failedField;
       try {

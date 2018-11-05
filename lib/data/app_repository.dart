@@ -55,14 +55,6 @@ class AppRepository implements Repository {
   Future<List<Message>> fetchLatestDrinkMessages() async {
     const String orderBroadcastKeyword = "今天點的是";
 
-    Future<List<Members>> getMembersFuture =
-        _members == null || _members.isEmpty
-            ? _remoteRepo.getTeamMemberProfile().then((response) => response
-                ?.members
-                ?.where((member) => !member.isBot && !member.deleted)
-                ?.toList())
-            : Future.value(_members);
-
     Message thread = await _remoteRepo
         .fetchLunchMessages() //1. 抓出 Lunch channel 前 N 筆 message
         .then((conversationList) async {
@@ -87,19 +79,39 @@ class AppRepository implements Repository {
     String shopName = thread.files[0]?.title?.split(" ")[1];
     String ts = thread.threadTs;
 
-    //5. 用 點單 thread 的 ts 抓出其底下所有 reply
-    Future<List<Message>> getOrderRepliesFuture = _remoteRepo
-        .fetchMessageReplies(ts)
-        .then((drinkThread) => drinkThread.messages.toList());
+    //5. 抓 Slack team 中所有成員資料
+    Future<List<Members>> getMembersFuture =
+        _members == null || _members.isEmpty
+            ? _remoteRepo.getTeamMemberProfile().then((response) => response
+                ?.members
+                ?.where((member) => !member.isBot && !member.deleted)
+                ?.toList())
+            : Future.value(_members);
 
     //6. 抓 Database 中有儲存的 order
     Future<List<String>> getOrderTsListFuture =
         _localRepo.getOrderTsList(shopName, ts);
 
-    //7. 結合會員列表、reply 資料和 database 資料, 最後回傳加料過的 reply[]
-    return Future.wait(
-            [getMembersFuture, getOrderTsListFuture, getOrderRepliesFuture])
-        .then((results) async {
+    //7. 抓 Database 中的最愛飲料
+    _userId ??= await _localRepo.loadUserId();
+    Future<String> getFavoriteDrinkOrderTsFuture = _localRepo
+        .getFavoriteDrinkId(_userId, shopName)
+        .then((drinkId) => drinkId == null || drinkId == 0
+            ? null
+            : _localRepo.getOrderTs(drinkId: drinkId));
+
+    //8. 用 點單 thread 的 ts 抓出其底下所有 reply
+    Future<List<Message>> getOrderRepliesFuture = _remoteRepo
+        .fetchMessageReplies(ts)
+        .then((drinkThread) => drinkThread.messages.toList());
+
+    //9. 結合會員列表、reply 資料和 database 資料, 最後回傳加料過的 reply[]
+    return Future.wait([
+      getMembersFuture,
+      getOrderTsListFuture,
+      getFavoriteDrinkOrderTsFuture,
+      getOrderRepliesFuture
+    ]).then((results) async {
       if (results[0] is List<Members>) {
         _members ??= results[0];
       }
@@ -107,13 +119,18 @@ class AppRepository implements Repository {
       if (results[1] is List<String>) {
         orderTsList = results[1];
       }
+      String favoriteDrinkOrderTs;
+      if (results[2] is String) {
+        favoriteDrinkOrderTs = results[2];
+      }
+
       orderTsList ??= List<String>();
-      if (!(results[2] is List<Message>)) {
+      if (!(results[3] is List<Message>)) {
         return [];
       }
-      _userId ??= await _localRepo.loadUserId();
+      //_userId ??= await _localRepo.loadUserId();
 
-      List<Message> drinkMessages = results[2];
+      List<Message> drinkMessages = results[3];
       List<Message> zippedMessages = List();
       for (Message message in drinkMessages) {
         int memberIndex =
@@ -125,6 +142,8 @@ class AppRepository implements Repository {
           b.userProfile = memberIndex == -1 ? null : ProfileBuilder()
             ..replace(_members[memberIndex]?.profile);
           b.isAddedBySprouter = orderTsIndex != -1 && _userId == message.user;
+          b.isFavoriteDrink = favoriteDrinkOrderTs != null &&
+              favoriteDrinkOrderTs == message.ts;
         });
         zippedMessages.add(zippedMessage);
       }

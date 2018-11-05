@@ -251,6 +251,26 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   }
 
   Widget _createMessageTile(int index, Message reply) {
+    Widget _buildTrailingIcon() {
+      IconData iconData;
+      bool isAddedBySprouter = reply.isAddedBySprouter ?? false;
+      bool isFavoriteDrink =
+          isAddedBySprouter && (reply.isFavoriteDrink ?? false);
+      if (isFavoriteDrink) {
+        return Icon(
+          FontAwesomeIcons.solidHeart,
+          color: Colors.redAccent,
+        );
+      }
+      if (isAddedBySprouter) {
+        return Icon(
+          Icons.grade,
+          color: Colors.greenAccent,
+        );
+      }
+      return null;
+    }
+
     String userName = reply?.userProfile?.displayName;
     userName = Utils.isStringNullOrEmpty(userName)
         ? reply?.userProfile?.realName
@@ -291,12 +311,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
             Text(reply?.text),
           ],
         ),
-        trailing: reply.isAddedBySprouter != null && reply.isAddedBySprouter
-            ? Icon(
-                Icons.grade,
-                color: Theme.of(context).primaryColor,
-              )
-            : null,
+        trailing: _buildTrailingIcon(),
         onTap: reply.isAddedBySprouter != null && reply.isAddedBySprouter
             ? () => _showOrderDrinkPage(message: reply)
             : null,

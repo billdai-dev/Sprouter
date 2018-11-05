@@ -141,8 +141,16 @@ class AppLocalRepo implements LocalRepo {
         columns: ["order_ts"],
         where: "shop_name = ? AND thread_ts = ?",
         whereArgs: [shopName, threadTs]);
-    List<String> orderTsList = List.from(results.expand((map) => map.values));
+    List<String> orderTsList = List.from(results?.expand((map) => map.values));
     return orderTsList;
+  }
+
+  @override
+  Future<String> getOrderTs({int drinkId}) async {
+    Database db = await openDB();
+    List<Map<String, dynamic>> results = await db.query("DrinkOrder",
+        columns: ["order_ts"], where: "drink_id = ?", whereArgs: [drinkId]);
+    return Utils.isListNullOrEmpty(results) ? null : results.first["order_ts"];
   }
 
   @override
