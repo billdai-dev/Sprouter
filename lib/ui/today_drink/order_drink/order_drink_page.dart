@@ -445,27 +445,8 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
               ),
             ),
             Expanded(
-              flex: 1,
-              child: StreamBuilder<bool>(
-                stream: bloc?.isLoading,
-                builder: (context, snapshot) {
-                  return IconButton(
-                    icon: Icon(Icons.send),
-                    color: Theme.of(context).accentColor,
-                    disabledColor: Colors.grey,
-                    onPressed: snapshot.data == true
-                        ? null
-                        : () async {
-                            bool success = await bloc?.submitOrder();
-                            if (success) {
-                              Navigator.of(context, rootNavigator: true)
-                                  .pop(true);
-                            }
-                          },
-                  );
-                },
-              ),
-            )
+              child: _buildSubmitButton(),
+            ),
           ],
         ),
       ),
@@ -511,6 +492,107 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSubmitButton() {
+    void onClick() async {
+      int addedDrinkId = await bloc?.submitOrder();
+      if (addedDrinkId == null) {
+        Navigator.of(context).pop(false);
+        return;
+      }
+
+      await showModalBottomSheet(
+          context: context,
+          builder: (context) =>
+              _buildSetFavoriteBottomSheet(context, addedDrinkId));
+      Navigator.of(context).pop(true);
+    }
+
+    return StreamBuilder<bool>(
+      stream: bloc?.isLoading,
+      builder: (context, snapshot) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            canvasColor: Colors.transparent,
+          ),
+          child: Builder(
+            builder: (context) {
+              Color accentColor = Theme.of(context).accentColor;
+              return IconButton(
+                icon: Icon(Icons.send),
+                color: accentColor,
+                disabledColor: Colors.grey,
+                onPressed: snapshot.hasData && snapshot.data ? null : onClick,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSetFavoriteBottomSheet(BuildContext context, int addedDrinkId) {
+    String imageFile =
+        _useMaleImage ? "drinking_man.png" : "drinking_woman.png";
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double width = constraints.maxWidth;
+        double height = constraints.maxHeight * 0.8;
+        return Container(
+          width: width,
+          height: height,
+          child: Card(
+            color: Colors.green.shade50,
+            margin: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  width: width / 2.0,
+                  child: AspectRatio(
+                    aspectRatio: 1.0,
+                    child: Image.asset("assets/images/$imageFile"),
+                  ),
+                ),
+                Text(
+                  "將此杯飲料設為我的最愛即可一鍵下單！",
+                  style: TextStyle(
+                    fontSize: 14.0,
+                  ),
+                ),
+                ButtonTheme.bar(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: ButtonBar(
+                    alignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+                      FlatButton.icon(
+                          color: Colors.grey.shade400,
+                          onPressed: () => Navigator.of(context).pop(false),
+                          icon: Icon(FontAwesomeIcons.tired),
+                          label: Text("不用")),
+                      FlatButton.icon(
+                          color: Colors.greenAccent,
+                          onPressed: () async {
+                            await bloc?.setFavoriteDrink(addedDrinkId);
+                            Navigator.of(context).pop(true);
+                          },
+                          icon: Icon(FontAwesomeIcons.grinHearts),
+                          label: Text("設為最愛")),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

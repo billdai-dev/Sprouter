@@ -82,8 +82,8 @@ class AppLocalRepo implements LocalRepo {
   }
 
   @override
-  Future<void> addDrinkOrderToDB(String userId, String shopName,
-      String threadTs, String orderTs, Drink drink) async {
+  Future<int> addDrinkOrderToDB(String userId, String shopName, String threadTs,
+      String orderTs, Drink drink) async {
     Database db = await openDB();
     int drinkId =
         await queryDrinkId(shopName, threadTs, orderTs, userId: userId);
@@ -110,6 +110,7 @@ class AppLocalRepo implements LocalRepo {
       await txn.update("DrinkOrder", {"updated_date": "datetime('now')"},
           where: "drink_id = ?", whereArgs: [drinkId]);
     });
+    return drinkId;
   }
 
   @override
@@ -166,6 +167,7 @@ class AppLocalRepo implements LocalRepo {
         columns: columns,
         where: "drink_id = ?",
         whereArgs: [drinkId],
+        orderBy: "DESC",
         limit: 1,
       );
     } else if (orderTs != null) {
@@ -200,6 +202,47 @@ class AppLocalRepo implements LocalRepo {
     return count;
   }
 
+  @override
+  Future<void> addFavoriteDrink(
+      String userId, String shopName, int drinkId) async {
+    Database db = await openDB();
+
+    int count = await db.update("FavoriteDrink", {"drink_id": drinkId},
+        where: "user_id = ? AND shop_name = ?", whereArgs: [userId, shopName]);
+    if (count > 0) {
+      return;
+    }
+    await db?.insert(
+        "FavoriteDrink",
+        {
+          "user_id": userId,
+          "shop_name": shopName,
+          "drink_id": drinkId,
+        },
+        conflictAlgorithm: ConflictAlgorithm.ignore);
+  }
+
+  @override
+  Future<int> getFavoriteDrinkId(String userId, String shopName) async {
+    Database db = await openDB();
+    Map<String, dynamic> result;
+    List<Map<String, dynamic>> results;
+    results = await db.query(
+      "FavoriteDrink",
+      columns: ["drink_id"],
+      where: "user_id = ? AND shop_name = ?",
+      whereArgs: [userId, shopName],
+    );
+    if (Utils.isListNullOrEmpty(results)) {
+      return 0;
+    }
+    result = results.first;
+    if (Utils.isMapNullOrEmpty(result)) {
+      return 0;
+    }
+    return result["drink_id"];
+  }
+
   Future<Database> _initDB() async {
     String dirPath = await getDatabasesPath();
     String path = join(dirPath, _DbName);
@@ -210,7 +253,8 @@ class AppLocalRepo implements LocalRepo {
 
   void _onCreateDatabase(Database db, int version) async {
     await db.execute("""
-        CREATE TABLE User(user_id TEXT PRIMARY KEY NOT NULL, name TEXT, token TEXT, created_date TEXT DEFAULT (datetime('now')), updated_date TEXT DEFAULT (datetime('now')))
+        CREATE TABLE User(user_id TEXT PRIMARY KEY NOT NULL, name TEXT, 
+        created_date TEXT DEFAULT (datetime('now')), updated_date TEXT DEFAULT (datetime('now')))
         """);
 
     await db.execute("""
@@ -220,7 +264,10 @@ class AppLocalRepo implements LocalRepo {
         """);
 
     await db.execute("""
-        CREATE TABLE Drink(drink_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, price INTEGER, ice TEXT, sugar TEXT, pearl TEXT, coconut TEXT, cup_size TEXT, other_ingredient TEXT, created_date TEXT DEFAULT (datetime('now')), updated_date TEXT DEFAULT (datetime('now')))
+        CREATE TABLE Drink(drink_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, 
+        price INTEGER, ice TEXT, sugar TEXT, pearl TEXT, coconut TEXT, cup_size TEXT, 
+        other_ingredient TEXT, created_date TEXT DEFAULT (datetime('now')), 
+        updated_date TEXT DEFAULT (datetime('now')))
         """);
 
     await db.execute("""
@@ -230,23 +277,46 @@ class AppLocalRepo implements LocalRepo {
         """);
 
     await db.execute("""
-        CREATE TABLE Shop(shop_name TEXT, thread_ts TEXT, created_date TEXT DEFAULT (datetime('now')), updated_date TEXT DEFAULT (datetime('now')), PRIMARY KEY (shop_name, thread_ts))
+        CREATE TABLE Shop(shop_name TEXT, thread_ts TEXT, 
+        created_date TEXT DEFAULT (datetime('now')), 
+        updated_date TEXT DEFAULT (datetime('now')), 
+        PRIMARY KEY (shop_name, thread_ts))
         """);
 
     await db.execute("""
-        CREATE TRIGGER on_shop_updated AFTER UPDATE ON Shop
-         BEGIN UPDATE Shop SET updated_date = datetime('now') WHERE shop_name = new.shop_name AND thread_ts = new.thread_ts;
-         END
+        CREATE TRIGGER on_shop_updated AFTER UPDATE ON Shop 
+        BEGIN UPDATE Shop SET updated_date = datetime('now') 
+        WHERE shop_name = new.shop_name AND thread_ts = new.thread_ts;
+        END
         """);
 
     await db.execute("""
-        CREATE TABLE DrinkOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, shop_name TEXT, thread_ts TEXT, drink_id INTEGER, order_ts TEXT, created_date TEXT DEFAULT (datetime('now')), updated_date TEXT DEFAULT (datetime('now')), FOREIGN KEY (user_id) REFERENCES User (user_id), FOREIGN KEY (shop_name, thread_ts) REFERENCES Shop (shop_name, thread_ts), FOREIGN KEY (drink_id) REFERENCES Drink (drink_id))
+        CREATE TABLE DrinkOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, 
+        shop_name TEXT, thread_ts TEXT, drink_id INTEGER, order_ts TEXT, 
+        created_date TEXT DEFAULT (datetime('now')), 
+        updated_date TEXT DEFAULT (datetime('now')), 
+        FOREIGN KEY (user_id) REFERENCES User (user_id), 
+        FOREIGN KEY (shop_name, thread_ts) REFERENCES Shop (shop_name, thread_ts), 
+        FOREIGN KEY (drink_id) REFERENCES Drink (drink_id))
         """);
 
     await db.execute("""
-        CREATE TRIGGER on_drink_order_updated AFTER UPDATE ON DrinkOrder
-         BEGIN UPDATE DrinkOrder SET updated_date = datetime('now') WHERE id = new.id;
-         END
+        CREATE TRIGGER on_drink_order_updated AFTER UPDATE ON DrinkOrder 
+        BEGIN UPDATE DrinkOrder SET updated_date = datetime('now') WHERE id = new.id;
+        END
+        """);
+    await db.execute("""
+        CREATE TABLE FavoriteDrink (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, 
+        shop_name TEXT, drink_id INTEGER, created_date TEXT DEFAULT (datetime('now')), 
+        updated_date TEXT DEFAULT (datetime('now')), 
+        FOREIGN KEY (user_id) REFERENCES User (user_id), 
+        FOREIGN KEY (shop_name) REFERENCES Shop (shop_name), 
+        FOREIGN KEY (drink_id) REFERENCES Drink (drink_id))
+        """);
+    await db.execute("""
+        CREATE TRIGGER on_favorite_drink_updated AFTER UPDATE ON FavoriteDrink 
+        BEGIN UPDATE FavoriteDrink SET updated_date = datetime('now') WHERE id = new.id;
+        END
         """);
   }
 }

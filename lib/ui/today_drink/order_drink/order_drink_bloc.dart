@@ -4,7 +4,6 @@ import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
-import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 
 class OrderDrinkBloc {
@@ -106,13 +105,19 @@ class OrderDrinkBloc {
     _currentDrink.sink.add(_drink);
   }
 
-  Future<bool> submitOrder() async {
+  Future<int> submitOrder() async {
     _isLoading.sink.add(true);
-    PostMessageResponse response = await repository.orderDrink(
-        shopName, drinkShop?.ts, _drink,
+    int drinkId = await repository.orderDrink(shopName, drinkShop?.ts, _drink,
         orderTs: selectedOrder?.ts);
     _isLoading.sink.add(false);
-    return response.ok;
+    return drinkId;
+  }
+
+  Future<void> setFavoriteDrink(int drinkId, {String shopName}) async {
+    shopName ??= drinkShop?.getShopName;
+    _isLoading.sink.add(true);
+    await repository.addFavoriteDrink(shopName, drinkId);
+    _isLoading.sink.add(false);
   }
 
   void dispose() {

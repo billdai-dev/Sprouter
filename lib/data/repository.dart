@@ -11,8 +11,7 @@ abstract class Repository {
 
   Future<List<Message>> fetchLatestDrinkMessages();
 
-  Future<PostMessageResponse> orderDrink(
-      String shopName, String threadTs, Drink drink,
+  Future<int> orderDrink(String shopName, String threadTs, Drink drink,
       {String orderTs});
 
   Future<Drink> getLocalDrinkData(
@@ -20,4 +19,8 @@ abstract class Repository {
 
   Future<PostMessageResponse> deleteDrinkOrder(
       String shopName, String threadTs, String orderTs);
+
+  Future<void> addFavoriteDrink(String shopName, int drinkId, {String userId});
+
+  Future<Drink> getFavoriteDrink(String shopName, {String userId});
 }

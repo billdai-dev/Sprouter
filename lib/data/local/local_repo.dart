@@ -18,8 +18,8 @@ abstract class LocalRepo {
 
   Future<void> addShopToDB(String shopName, String threadTs);
 
-  Future<void> addDrinkOrderToDB(String userId, String shopName,
-      String threadTs, String orderTs, Drink drink);
+  Future<int> addDrinkOrderToDB(String userId, String shopName, String threadTs,
+      String orderTs, Drink drink);
 
   Future<int> queryDrinkId(String shopName, String threadTs, String orderTs,
       {String userId});
@@ -32,4 +32,8 @@ abstract class LocalRepo {
 
   Future<int> deleteDrinkOrderInDB(
       String userId, String shopName, String threadTs, String orderTs);
+
+  Future<void> addFavoriteDrink(String userId, String shopName, int drinkId);
+
+  Future<int> getFavoriteDrinkId(String userId, String shopName);
 }

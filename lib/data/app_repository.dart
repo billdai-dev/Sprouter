@@ -133,19 +133,19 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<PostMessageResponse> orderDrink(
-      String shopName, String threadTs, Drink drink,
+  Future<int> orderDrink(String shopName, String threadTs, Drink drink,
       {String orderTs}) async {
     String completeDrinkName = drink?.completeDrinkName;
     PostMessageResponse response = Utils.isStringNullOrEmpty(orderTs)
         ? await _remoteRepo.postMessage(threadTs, completeDrinkName)
         : await _remoteRepo.updateMessage(orderTs, completeDrinkName);
+    int drinkId;
     if (response != null && response.ok) {
       _userId ??= await _localRepo.loadUserId();
-      await _localRepo.addDrinkOrderToDB(
+      drinkId = await _localRepo.addDrinkOrderToDB(
           _userId, shopName, threadTs, orderTs ?? response.ts, drink);
     }
-    return response;
+    return drinkId;
   }
 
   @override
@@ -169,5 +169,27 @@ class AppRepository implements Repository {
           _userId, shopName, threadTs, orderTs);
     }
     return response;
+  }
+
+  @override
+  Future<void> addFavoriteDrink(String shopName, int drinkId,
+      {String userId}) async {
+    userId ??= await _localRepo.loadUserId().then((uid) {
+      _userId = uid;
+      return uid;
+    });
+    _localRepo.addFavoriteDrink(userId, shopName, drinkId);
+  }
+
+  @override
+  Future<Drink> getFavoriteDrink(String shopName, {String userId}) async {
+    userId ??= await _localRepo.loadUserId().then((uid) {
+      _userId = uid;
+      return uid;
+    });
+    int favoriteDrinkId = await _localRepo.getFavoriteDrinkId(userId, shopName);
+    return _localRepo
+        .getLocalDrinkData(drinkId: favoriteDrinkId)
+        .then((drinkData) => Drink.fromMap(drinkData));
   }
 }

@@ -5,7 +5,6 @@ import 'package:sprouter/ui/tab_navigator.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
 
 void main() {
-  debugPaintSizeEnabled = false;
   runApp(new MaterialApp(
     builder: (context, child) => SlackLoginBlocProvider(
           child: TodayDrinkBlocProvider(
