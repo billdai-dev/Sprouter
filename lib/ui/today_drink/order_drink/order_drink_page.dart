@@ -217,71 +217,14 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
         ),
         Flexible(
           flex: 20,
-          child: FractionallySizedBox(
-            widthFactor: 0.8,
-            child: RaisedButton(
-              color: Theme.of(context).accentColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              padding: EdgeInsets.zero,
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "最愛喝的",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12.0,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 2.0,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.solidHeart,
-                    color: Colors.white,
-                    size: 16.0,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          child: _buildGetFavoriteDrinkButton(),
         ),
         Spacer(
           flex: 2,
         ),
         Flexible(
           flex: 20,
-          child: FractionallySizedBox(
-            widthFactor: 0.8,
-            child: RaisedButton(
-              color: Theme.of(context).accentColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              padding: EdgeInsets.zero,
-              onPressed: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "為我推薦",
-                    style: TextStyle(
-                      fontSize: 12.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_forward,
-                    size: 16.0,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          child: _buildRecommendationButton(),
         ),
         Spacer(
           flex: 1,
@@ -453,45 +396,68 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
     );
   }
 
-  Widget _buildFavoriteIcon() {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          flex: 65,
-          child: Text(
-            "設為最愛",
-            textAlign: TextAlign.end,
-            style: TextStyle(
-              fontSize: 14.0,
+  Widget _buildGetFavoriteDrinkButton() {
+    return FractionallySizedBox(
+      widthFactor: 0.8,
+      child: RaisedButton(
+        color: Theme.of(context).accentColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        padding: EdgeInsets.zero,
+        onPressed: () => bloc?.getFavoriteDrink(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "最愛喝的",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.0,
+              ),
             ),
-          ),
+            SizedBox(
+              width: 2.0,
+            ),
+            Icon(
+              FontAwesomeIcons.solidHeart,
+              color: Colors.white,
+              size: 16.0,
+            ),
+          ],
         ),
-        Expanded(
-          flex: 35,
-          child: StreamBuilder<bool>(
-            stream: null,
-            builder: (context, snapshot) {
-              Widget icon = snapshot.hasData && snapshot.data
-                  ? Icon(
-                      FontAwesomeIcons.solidHeart,
-                      color: Colors.redAccent,
-                      size: 20.0,
-                    )
-                  : Icon(
-                      FontAwesomeIcons.heart,
-                      size: 20.0,
-                    );
-              return Container(
-                alignment: Alignment(-0.6, 0.5),
-                child: GestureDetector(
-                  child: icon,
-                  onTap: () => {},
-                ),
-              );
-            },
-          ),
+      ),
+    );
+  }
+
+  Widget _buildRecommendationButton() {
+    return FractionallySizedBox(
+      widthFactor: 0.8,
+      child: RaisedButton(
+        color: Theme.of(context).accentColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
         ),
-      ],
+        padding: EdgeInsets.zero,
+        onPressed: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "為我推薦",
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Colors.white,
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward,
+              size: 16.0,
+              color: Colors.white,
+            ),
+          ],
+        ),
+      ),
     );
   }
 

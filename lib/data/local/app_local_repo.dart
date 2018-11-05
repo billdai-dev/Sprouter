@@ -167,7 +167,7 @@ class AppLocalRepo implements LocalRepo {
         columns: columns,
         where: "drink_id = ?",
         whereArgs: [drinkId],
-        orderBy: "DESC",
+        orderBy: "updated_date DESC",
         limit: 1,
       );
     } else if (orderTs != null) {

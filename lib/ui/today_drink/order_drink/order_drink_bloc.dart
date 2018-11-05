@@ -113,8 +113,16 @@ class OrderDrinkBloc {
     return drinkId;
   }
 
-  Future<void> setFavoriteDrink(int drinkId, {String shopName}) async {
-    shopName ??= drinkShop?.getShopName;
+  Future<void> getFavoriteDrink() async {
+    String shopName = drinkShop?.getShopName;
+    _isLoading.sink.add(true);
+    _drink = await repository.getFavoriteDrink(shopName);
+    _currentDrink.sink.add(_drink);
+    _isLoading.sink.add(false);
+  }
+
+  Future<void> setFavoriteDrink(int drinkId) async {
+    String shopName = drinkShop?.getShopName;
     _isLoading.sink.add(true);
     await repository.addFavoriteDrink(shopName, drinkId);
     _isLoading.sink.add(false);
