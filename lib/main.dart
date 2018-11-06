@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
@@ -13,10 +15,22 @@ void main() {
         ),
     theme: ThemeData(
       primaryColor: Color(0xFF93bf37),
-      accentColor: Color(0xcc8a4422),
-      accentColorBrightness: Brightness.dark,
-      primaryColorBrightness: Brightness.light,
+      accentColor: Color(0xff427aa1),
       accentIconTheme: IconThemeData(color: Colors.white),
+      primaryTextTheme: Typography(
+              platform: Platform.isAndroid
+                  ? TargetPlatform.android
+                  : TargetPlatform.iOS)
+          .black,
+      accentTextTheme: Typography(
+              platform: Platform.isAndroid
+                  ? TargetPlatform.android
+                  : TargetPlatform.iOS)
+          .black
+          .apply(
+            displayColor: Color(0xfffffde7),
+            bodyColor: Color(0xfffffde7),
+          ),
     ),
     home: MainPage(),
   ));

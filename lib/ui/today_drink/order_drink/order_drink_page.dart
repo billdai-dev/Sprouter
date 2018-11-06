@@ -412,10 +412,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           children: <Widget>[
             Text(
               "最愛喝的",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.0,
-              ),
+              style: Theme.of(context).accentTextTheme.caption,
             ),
             SizedBox(
               width: 2.0,
@@ -446,10 +443,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           children: <Widget>[
             Text(
               "為我推薦",
-              style: TextStyle(
-                fontSize: 12.0,
-                color: Colors.white,
-              ),
+              style: Theme.of(context).accentTextTheme.caption,
             ),
             Icon(
               Icons.arrow_forward,
@@ -617,9 +611,7 @@ class _IngredientChipState extends State<_IngredientChip> {
           : null,
       label: Text(
         label,
-        style: TextStyle(
-          color: Colors.white,
-        ),
+        style: Theme.of(context).accentTextTheme.body1,
       ),
       backgroundColor: Theme.of(context).accentColor,
       deleteIconColor: Colors.black54,
