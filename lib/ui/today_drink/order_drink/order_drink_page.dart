@@ -72,7 +72,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
         actions: <Widget>[
           IconButton(
               icon: Icon(
-                FontAwesomeIcons.fileImage,
+                FontAwesomeIcons.clipboard,
                 key: _drinkMenuKey,
               ),
               onPressed: () {
@@ -83,7 +83,8 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                 String token = slackLoginBloc?.token;
                 String photoUrl = todayDrinkBloc?.photoUrl;
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => DetailPhotoPage(photoUrl, token)));
+                    builder: (context) =>
+                        DetailPhotoPage(bloc?.shopName, photoUrl, token)));
               }),
         ],
       ),

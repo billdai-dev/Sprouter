@@ -341,9 +341,12 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       color: Colors.grey,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context, rootNavigator: false).push(
+          Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(
-              builder: (context) => DetailPhotoPage(imageUrl, token),
+              builder: (context) => DetailPhotoPage(
+                  todayDrinkBloc?.drinkShopMessage?.getShopName,
+                  imageUrl,
+                  token),
             ),
           );
         },
