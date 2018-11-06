@@ -34,7 +34,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   TodayDrinkBloc todayDrinkBloc;
   SlackLoginBloc slackLoginBloc;
 
-  bool _isInited = false;
   AnimationController _slackIconController;
   Animation<double> _slackIconAnimation;
   ScrollController _scrollController;
@@ -70,10 +69,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   Widget build(BuildContext context) {
     todayDrinkBloc = TodayDrinkBlocProvider.of(context);
     slackLoginBloc = SlackLoginBlocProvider.of(context);
-    if (!_isInited) {
-      todayDrinkBloc?.fetchMessage?.add(null);
-      _isInited = true;
-    }
 
     return Scaffold(
       body: Stack(

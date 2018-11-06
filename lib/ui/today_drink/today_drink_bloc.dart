@@ -31,9 +31,9 @@ class TodayDrinkBloc {
 
   Observable<String> get slackToken => _slackToken.stream;
 
-  final StreamController<Null> _fetchMessage = StreamController<Null>();
+  final StreamController<void> _fetchMessage = StreamController();
 
-  Sink<Null> get fetchMessage => _fetchMessage.sink;
+  Sink<void> get fetchMessage => _fetchMessage.sink;
 
   final PublishSubject<bool> _showMoreContentIndicator = PublishSubject();
 
@@ -81,6 +81,9 @@ class TodayDrinkBloc {
         _drinkMessage.sink.add(_drinkMessages);
       });
     });
+
+    //Initialization
+    _fetchMessage.add(null);
   }
 
   void dispose() {
