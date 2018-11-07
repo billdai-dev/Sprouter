@@ -29,7 +29,7 @@ class AppRemoteRepo implements RemoteRepo {
   static const String _chatUpdatePath = "/api/chat.update";
   static const String _chatDeletePath = "/api/chat.delete";
 
-  static final ContentType x_www_form_urlencoded =
+  static final ContentType xWwwFormUrlencoded =
       ContentType.parse("application/x-www-form-urlencoded");
 
   static final AppRemoteRepo _repo = AppRemoteRepo.internal();
@@ -78,7 +78,7 @@ class AppRemoteRepo implements RemoteRepo {
         data: params,
         options: Options(
           headers: {"Authoriation": null},
-          contentType: x_www_form_urlencoded,
+          contentType: xWwwFormUrlencoded,
         ));
     Future<SlackToken> slackToken = response.then((response) {
       return SlackToken.fromJson(jsonEncode(Map.from(response.data)));
@@ -147,7 +147,7 @@ class AppRemoteRepo implements RemoteRepo {
   Future<UserListResponse> getTeamMemberProfile() {
     Future<Response> response = dio.get(
       _usersListPath,
-      options: Options(contentType: x_www_form_urlencoded),
+      options: Options(contentType: xWwwFormUrlencoded),
     );
     return response.then(
         (response) => UserListResponse.fromJson(jsonEncode(response.data)));

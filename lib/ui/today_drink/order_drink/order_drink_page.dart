@@ -192,13 +192,44 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
       child: StreamBuilder<Drink>(
         stream: bloc.currentDrink,
         builder: (context, snapshot) {
-          return Text(
-            "我想喝...\n${snapshot.hasData ? snapshot.data.completeDrinkName : ""}",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              height: 1.1,
-              fontSize: 16.0,
-            ),
+          String imageFile =
+              _useMaleImage ? "thirsty_man.png" : "thirsty_woman.png";
+          bool isEmptyDrink = !snapshot.hasData ||
+              Utils.isStringNullOrEmpty(snapshot.data.completeDrinkName);
+          String completeDrinkName = snapshot.hasData &&
+                  !Utils.isStringNullOrEmpty(snapshot.data.completeDrinkName)
+              ? snapshot.data.completeDrinkName
+              : "我想喝...";
+          return Row(
+            children: <Widget>[
+              Spacer(flex: 3),
+              Flexible(
+                flex: 14,
+                child: AspectRatio(
+                  aspectRatio: 1.0,
+                  child: Image.asset(
+                    "assets/images/$imageFile",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              SizedBox(width: 3.0),
+              Flexible(
+                flex: 83,
+                child: Text(
+                  isEmptyDrink ? "我想喝..." : snapshot.data.completeDrinkName,
+                  style: isEmptyDrink
+                      ? TextStyle(
+                          color: Colors.grey,
+                          fontSize: 16.0,
+                        )
+                      : TextStyle(
+                          height: 1.0,
+                          fontSize: 16.0,
+                        ),
+                ),
+              ),
+            ],
           );
         },
       ),
@@ -206,7 +237,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
   }
 
   Widget _buildQuickDrinkSetting(bool useMaleImage) {
-    String imageFile = useMaleImage ? "drinking_man.png" : "drinking_woman.png";
+    String imageFile = useMaleImage ? "waiter.png" : "waitress.png";
 
     return Column(
       children: <Widget>[

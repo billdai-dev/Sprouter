@@ -49,16 +49,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/images/handmade_drink.png
-    - assets/images/coconut.png
-    - assets/images/ice.png
-    - assets/images/pearl.png
-    - assets/images/sugar.png
-    - assets/images/cup.png
-    - assets/images/other_ingredient.png
-    - assets/images/bulb.png
-    - assets/images/drinking_man.png
-    - assets/images/drinking_woman.png
+    - assets/images/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

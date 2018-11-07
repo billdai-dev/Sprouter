@@ -247,7 +247,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   Widget _createMessageTile(int index, Message reply) {
     Widget _buildTrailingIcon() {
-      IconData iconData;
       bool isAddedBySprouter = reply.isAddedBySprouter ?? false;
       bool isFavoriteDrink =
           isAddedBySprouter && (reply.isFavoriteDrink ?? false);
