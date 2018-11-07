@@ -15,8 +15,10 @@ void main() {
         ),
     theme: ThemeData(
       primaryColor: Color(0xFF93bf37),
-      accentColor: Color(0xff427aa1),
-      accentIconTheme: IconThemeData(color: Colors.white),
+      accentColor: Color(0xff3794bf),
+      accentIconTheme: IconThemeData(
+        color: Colors.white,
+      ),
       primaryTextTheme: Typography(
               platform: Platform.isAndroid
                   ? TargetPlatform.android
@@ -26,11 +28,7 @@ void main() {
               platform: Platform.isAndroid
                   ? TargetPlatform.android
                   : TargetPlatform.iOS)
-          .black
-          .apply(
-            displayColor: Color(0xfffffde7),
-            bodyColor: Color(0xfffffde7),
-          ),
+          .white,
     ),
     home: MainPage(),
   ));

@@ -412,7 +412,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           children: <Widget>[
             Text(
               "最愛喝的",
-              style: Theme.of(context).accentTextTheme.caption,
+              style: Theme.of(context).accentTextTheme.button,
             ),
             SizedBox(
               width: 2.0,
@@ -443,7 +443,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           children: <Widget>[
             Text(
               "為我推薦",
-              style: Theme.of(context).accentTextTheme.caption,
+              style: Theme.of(context).accentTextTheme.button,
             ),
             Icon(
               Icons.arrow_forward,
@@ -457,20 +457,6 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
   }
 
   Widget _buildSubmitButton() {
-    void onClick() async {
-      int addedDrinkId = await bloc?.submitOrder();
-      if (addedDrinkId == null) {
-        Navigator.of(context).pop(false);
-        return;
-      }
-
-      await showModalBottomSheet(
-          context: context,
-          builder: (context) =>
-              _buildSetFavoriteBottomSheet(context, addedDrinkId));
-      Navigator.of(context).pop(true);
-    }
-
     return StreamBuilder<bool>(
       stream: bloc?.isLoading,
       builder: (context, snapshot) {
@@ -485,7 +471,21 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                 icon: Icon(Icons.send),
                 color: accentColor,
                 disabledColor: Colors.grey,
-                onPressed: snapshot.hasData && snapshot.data ? null : onClick,
+                onPressed: snapshot.hasData && snapshot.data
+                    ? null
+                    : () async {
+                        int addedDrinkId = await bloc?.submitOrder();
+                        if (addedDrinkId == null) {
+                          Navigator.of(context).pop(false);
+                          return;
+                        }
+
+                        await showModalBottomSheet(
+                            context: context,
+                            builder: (context) => _buildSetFavoriteBottomSheet(
+                                context, addedDrinkId));
+                        Navigator.of(context).pop(true);
+                      },
               );
             },
           ),
@@ -534,18 +534,32 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       FlatButton.icon(
-                          color: Colors.grey.shade400,
-                          onPressed: () => Navigator.of(context).pop(false),
-                          icon: Icon(FontAwesomeIcons.tired),
-                          label: Text("不用")),
+                        color: Colors.grey.shade400,
+                        onPressed: () => Navigator.of(context).pop(false),
+                        icon: Icon(
+                          FontAwesomeIcons.tired,
+                          color: Theme.of(context).accentIconTheme.color,
+                        ),
+                        label: Text(
+                          "不用",
+                          style: Theme.of(context).accentTextTheme.button,
+                        ),
+                      ),
                       FlatButton.icon(
-                          color: Colors.greenAccent,
-                          onPressed: () async {
-                            await bloc?.setFavoriteDrink(addedDrinkId);
-                            Navigator.of(context).pop(true);
-                          },
-                          icon: Icon(FontAwesomeIcons.grinHearts),
-                          label: Text("設為最愛")),
+                        color: Theme.of(context).accentColor,
+                        onPressed: () async {
+                          await bloc?.setFavoriteDrink(addedDrinkId);
+                          Navigator.of(context).pop(true);
+                        },
+                        icon: Icon(
+                          FontAwesomeIcons.grinHearts,
+                          color: Theme.of(context).accentIconTheme.color,
+                        ),
+                        label: Text(
+                          "設為最愛",
+                          style: Theme.of(context).accentTextTheme.button,
+                        ),
+                      ),
                     ],
                   ),
                 )
