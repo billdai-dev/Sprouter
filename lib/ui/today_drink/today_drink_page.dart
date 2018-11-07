@@ -300,9 +300,15 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(userName),
+            Text(
+              userName,
+              style: Theme.of(context).primaryTextTheme.subhead,
+            ),
             SizedBox(height: 3.0),
-            Text(reply?.text),
+            Text(
+              reply?.text,
+              style: Theme.of(context).primaryTextTheme.body2,
+            ),
           ],
         ),
         trailing: _buildTrailingIcon(),
@@ -322,9 +328,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         parsedTitle.isEmpty || parsedTitle.length < 2 ? "" : parsedTitle[1];
     return Text(
       shopName,
-      style: TextStyle(
-        color: Colors.black87,
-      ),
+      style: Theme.of(context).primaryTextTheme.title,
     );
   }
 

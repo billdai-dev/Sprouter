@@ -14,7 +14,9 @@ void main() {
           ),
         ),
     theme: ThemeData(
-      primaryColor: Color(0xFF93bf37),
+      primaryColor: Color(0xff93bf37),
+      primaryColorDark: Color(0xff618f00),
+      primaryColorLight: Color(0xffc6f268),
       accentColor: Color(0xff3794bf),
       accentIconTheme: IconThemeData(
         color: Colors.white,

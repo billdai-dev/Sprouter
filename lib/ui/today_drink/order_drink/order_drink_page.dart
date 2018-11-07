@@ -404,8 +404,10 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                   return TextField(
                     decoration: InputDecoration(
                       labelText: "品名",
-                      labelStyle:
-                          TextStyle(color: Theme.of(context).accentColor),
+                      labelStyle: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontFamily: "NotoSansTC",
+                      ),
                       isDense: true,
                       contentPadding: EdgeInsets.all(4.0),
                       focusedBorder: UnderlineInputBorder(
