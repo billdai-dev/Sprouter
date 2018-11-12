@@ -11,6 +11,7 @@ abstract class SlackToken implements Built<SlackToken, SlackTokenBuilder> {
 
   factory SlackToken([updates(SlackTokenBuilder b)]) = _$SlackToken;
 
+  @nullable
   @BuiltValueField(wireName: 'access_token')
   String get accessToken;
 

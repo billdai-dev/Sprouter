@@ -30,11 +30,13 @@ class _$SlackTokenSerializer implements StructuredSerializer<SlackToken> {
   @override
   Iterable serialize(Serializers serializers, SlackToken object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'access_token',
-      serializers.serialize(object.accessToken,
-          specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
+    if (object.accessToken != null) {
+      result
+        ..add('access_token')
+        ..add(serializers.serialize(object.accessToken,
+            specifiedType: const FullType(String)));
+    }
     if (object.scope != null) {
       result
         ..add('scope')
@@ -105,11 +107,7 @@ class _$SlackToken extends SlackToken {
       (new SlackTokenBuilder()..update(updates)).build();
 
   _$SlackToken._({this.accessToken, this.scope, this.teamName, this.teamId})
-      : super._() {
-    if (accessToken == null) {
-      throw new BuiltValueNullFieldError('SlackToken', 'accessToken');
-    }
-  }
+      : super._();
 
   @override
   SlackToken rebuild(void updates(SlackTokenBuilder b)) =>

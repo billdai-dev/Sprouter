@@ -55,9 +55,9 @@ class AppLocalRepo implements LocalRepo {
       ]);
     });
     Database db = await openDB();
-    await db?.insert("User", {"user_id": id, "name": name, "token": token},
+    await db?.insert("User", {"user_id": id, "name": name},
         conflictAlgorithm: ConflictAlgorithm.ignore);
-    await db.update("User", {"name": name, "token": token},
+    await db.update("User", {"name": name},
         where: "user_id = ?", whereArgs: [id]);
   }
 
