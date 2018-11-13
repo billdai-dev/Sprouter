@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/slack_login/slack_login_web_view_page.dart';
@@ -31,8 +32,13 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     with SingleTickerProviderStateMixin {
   static const String _ARG_TOKEN = "token";
   static const String _ARG_MESSAGES = "messages";
+
+  GlobalKey<ScaffoldState> _scaffoldKey;
+
   TodayDrinkBloc todayDrinkBloc;
   SlackLoginBloc slackLoginBloc;
+
+  StreamSubscription authErrorHandler;
 
   AnimationController _slackIconController;
   Animation<double> _slackIconAnimation;
@@ -41,6 +47,8 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   @override
   void initState() {
     super.initState();
+    _scaffoldKey = GlobalKey();
+
     _slackIconController = AnimationController(
       duration: const Duration(milliseconds: 200),
       vsync: this,
@@ -68,16 +76,25 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   @override
   Widget build(BuildContext context) {
     todayDrinkBloc = TodayDrinkBlocProvider.of(context);
+    authErrorHandler ??=
+        todayDrinkBloc.drinkMessage.listen((_) {}, onError: (e) {
+      if (e is AuthError) {
+        _scaffoldKey?.currentState?.showSnackBar(SnackBar(
+          content: Text("使用者資料異常，請重新登入"),
+        ));
+      }
+    });
     slackLoginBloc = SlackLoginBlocProvider.of(context);
 
     return Scaffold(
+      key: _scaffoldKey,
       body: Stack(
         children: <Widget>[
           Platform.isIOS
-              ? _createScrollView(context)
+              ? _createScrollView()
               : RefreshIndicator(
-                  child: _createScrollView(context),
-                  onRefresh: () => _createRefreshCallback(context),
+                  child: _createScrollView(),
+                  onRefresh: () => _createRefreshCallback(),
                 ),
           Positioned(
             child: _buildShowMoreContentButton(),
@@ -95,6 +112,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   void dispose() {
     _slackIconController?.dispose();
     _scrollController?.dispose();
+    authErrorHandler?.cancel();
     super.dispose();
   }
 
@@ -154,7 +172,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createScrollView(BuildContext context) {
+  Widget _createScrollView() {
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
@@ -193,24 +211,26 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                 ),
               ],
               flexibleSpace: FlexibleSpaceBar(
-                  background: _createShopImage(context, token, messages)),
+                background: snapshot.hasError
+                    ? Container(color: Colors.grey)
+                    : _createShopImage(context, token, messages),
+              ),
             );
           },
         ),
         CupertinoSliverRefreshControl(
-          onRefresh: () => _createRefreshCallback(context),
+          onRefresh: () => _createRefreshCallback(),
         ),
         StreamBuilder<List<Message>>(
           stream: todayDrinkBloc?.drinkMessage,
-          builder: (context, snapshot) {
-            return _createReplyListView(context, snapshot.data);
-          },
+          builder: (context, snapshot) =>
+              _createReplyListView(context, snapshot),
         )
       ],
     );
   }
 
-  Future<void> _createRefreshCallback(BuildContext context) async {
+  Future<void> _createRefreshCallback() async {
     todayDrinkBloc?.fetchMessage?.add(null);
     await todayDrinkBloc.drinkMessage
         .timeout(Duration(seconds: 3), onTimeout: (sink) => sink.close())
@@ -218,7 +238,12 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     return null;
   }
 
-  Widget _createReplyListView(BuildContext context, List<Message> drinkThread) {
+  Widget _createReplyListView(
+      BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
+    if (snapshot.hasError) {
+      return SliverFillRemaining(child: Center(child: Text("目前尚無資料")));
+    }
+    List<Message> drinkThread = snapshot.data;
     List<Message> replies;
     if (drinkThread == null ||
         (replies = drinkThread?.skip(1)?.toList(growable: false)) == null ||

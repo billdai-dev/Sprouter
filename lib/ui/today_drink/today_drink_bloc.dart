@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/util/utils.dart';
 
 class TodayDrinkBloc {
@@ -45,16 +46,24 @@ class TodayDrinkBloc {
     _fetchMessage.stream
         .transform(ThrottleStreamTransformer(Duration(seconds: 3)))
         .listen((_) async {
-      List<Message> newDrinkMessages =
-          await this.repository.fetchLatestDrinkMessages();
+      List<Message> newDrinkMessages;
+      try {
+        newDrinkMessages = await this.repository.fetchLatestDrinkMessages();
+      } catch (error) {
+        if (error is ApiError && ApiError.authErrors.contains(error.errorMsg)) {
+          _drinkMessage.addError(AuthError(error.errorMsg));
+          return;
+        }
+      }
       bool showNewContentIndicator =
           !Utils.isListNullOrEmpty(newDrinkMessages) &&
               !Utils.isListNullOrEmpty(_drinkMessages) &&
               newDrinkMessages.length > _drinkMessages.length;
+      _showMoreContentIndicator.add(showNewContentIndicator);
+
       _drinkMessages = newDrinkMessages;
-      _drinkShopMessage = _drinkMessages == null || _drinkMessages.isEmpty
-          ? null
-          : _drinkMessages[0];
+      _drinkShopMessage =
+          Utils.isListNullOrEmpty(_drinkMessages) ? null : _drinkMessages[0];
 
       List<Message> orderKeywords = _drinkMessages.where((message) {
         return message.text == "點單" || message.text == "收單";
@@ -65,7 +74,6 @@ class TodayDrinkBloc {
 
       String token = await this.repository.getTokenCache();
       _slackToken.sink.add(token);
-      _showMoreContentIndicator.add(showNewContentIndicator);
     });
     _deleteMessage.stream.listen((index) {
       this

@@ -7,6 +7,7 @@ import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/profile.dart';
 import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
+import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/data/remote/app_remote_repo.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/data/repository.dart';
@@ -58,6 +59,9 @@ class AppRepository implements Repository {
     Message thread = await _remoteRepo
         .fetchLunchMessages() //1. 抓出 Lunch channel 前 N 筆 message
         .then((conversationList) async {
+      if (!conversationList.ok) {
+        throw ApiError(conversationList.error);
+      }
       List<Message> messages = conversationList.messages.toList();
       //2. 用關鍵字 parse 出"最新"廣播訊息的 message
       Message orderBroadcastMessage = messages.firstWhere(

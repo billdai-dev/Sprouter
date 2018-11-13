@@ -52,6 +52,12 @@ class _$ConversationListSerializer
         ..add(serializers.serialize(object.ok,
             specifiedType: const FullType(bool)));
     }
+    if (object.error != null) {
+      result
+        ..add('error')
+        ..add(serializers.serialize(object.error,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -80,6 +86,10 @@ class _$ConversationListSerializer
           result.ok = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'error':
+          result.error = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -94,11 +104,14 @@ class _$ConversationList extends ConversationList {
   final bool hasMore;
   @override
   final bool ok;
+  @override
+  final String error;
 
   factory _$ConversationList([void updates(ConversationListBuilder b)]) =>
       (new ConversationListBuilder()..update(updates)).build();
 
-  _$ConversationList._({this.messages, this.hasMore, this.ok}) : super._();
+  _$ConversationList._({this.messages, this.hasMore, this.ok, this.error})
+      : super._();
 
   @override
   ConversationList rebuild(void updates(ConversationListBuilder b)) =>
@@ -114,13 +127,15 @@ class _$ConversationList extends ConversationList {
     return other is ConversationList &&
         messages == other.messages &&
         hasMore == other.hasMore &&
-        ok == other.ok;
+        ok == other.ok &&
+        error == other.error;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, messages.hashCode), hasMore.hashCode), ok.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, messages.hashCode), hasMore.hashCode), ok.hashCode),
+        error.hashCode));
   }
 
   @override
@@ -128,7 +143,8 @@ class _$ConversationList extends ConversationList {
     return (newBuiltValueToStringHelper('ConversationList')
           ..add('messages', messages)
           ..add('hasMore', hasMore)
-          ..add('ok', ok))
+          ..add('ok', ok)
+          ..add('error', error))
         .toString();
   }
 }
@@ -150,6 +166,10 @@ class ConversationListBuilder
   bool get ok => _$this._ok;
   set ok(bool ok) => _$this._ok = ok;
 
+  String _error;
+  String get error => _$this._error;
+  set error(String error) => _$this._error = error;
+
   ConversationListBuilder();
 
   ConversationListBuilder get _$this {
@@ -157,6 +177,7 @@ class ConversationListBuilder
       _messages = _$v.messages?.toBuilder();
       _hasMore = _$v.hasMore;
       _ok = _$v.ok;
+      _error = _$v.error;
       _$v = null;
     }
     return this;
@@ -181,7 +202,10 @@ class ConversationListBuilder
     try {
       _$result = _$v ??
           new _$ConversationList._(
-              messages: _messages?.build(), hasMore: hasMore, ok: ok);
+              messages: _messages?.build(),
+              hasMore: hasMore,
+              ok: ok,
+              error: error);
     } catch (_) {
       String _$failedField;
       try {

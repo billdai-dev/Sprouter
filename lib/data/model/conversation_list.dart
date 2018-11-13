@@ -13,7 +13,7 @@ abstract class ConversationList
   ConversationList._();
 
   factory ConversationList([updates(ConversationListBuilder b)]) =
-  _$ConversationList;
+      _$ConversationList;
 
   @nullable
   @BuiltValueField(wireName: 'messages')
@@ -26,6 +26,10 @@ abstract class ConversationList
   @nullable
   @BuiltValueField(wireName: 'ok')
   bool get ok;
+
+  @nullable
+  @BuiltValueField(wireName: 'error')
+  String get error;
 
   String toJson() {
     return json
