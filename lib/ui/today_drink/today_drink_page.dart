@@ -298,56 +298,79 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     userName = Utils.isStringNullOrEmpty(userName)
         ? reply?.userProfile?.realName
         : userName;
-    return Dismissible(
+
+    Widget listTile = ListTile(
       key: ValueKey(reply?.ts),
-      background: Container(
-        color: Colors.redAccent,
+      leading: StreamBuilder(
+        stream: todayDrinkBloc?.slackToken,
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    reply?.userProfile?.image48,
+                    headers: {"Authorization": "Bearer ${snapshot.data}"},
+                  ),
+                )
+              : SizedBox(
+                  width: 0.0,
+                  height: 0.0,
+                );
+        },
       ),
-      direction: DismissDirection.endToStart,
-      dismissThresholds: {
-        DismissDirection.endToStart: reply.isAddedBySprouter ? 0.4 : 2.0
-      },
-      onDismissed: ((direction) => todayDrinkBloc?.deleteMessage?.add(index)),
-      child: ListTile(
-        key: ValueKey(reply?.ts),
-        leading: StreamBuilder(
-          stream: todayDrinkBloc?.slackToken,
-          builder: (context, snapshot) {
-            return snapshot.hasData
-                ? CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      reply?.userProfile?.image48,
-                      headers: {"Authorization": "Bearer ${snapshot.data}"},
-                    ),
-                  )
-                : SizedBox(
-                    width: 0.0,
-                    height: 0.0,
-                  );
-          },
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              userName,
-              style: Theme.of(context).primaryTextTheme.subhead,
-            ),
-            SizedBox(height: 3.0),
-            Text(
-              reply?.text,
-              style: Theme.of(context).primaryTextTheme.body2,
-            ),
-          ],
-        ),
-        trailing: _buildTrailingIcon(),
-        onTap: isOrdering &&
-                reply.isAddedBySprouter != null &&
-                reply.isAddedBySprouter
-            ? () => _showOrderDrinkPage(message: reply)
-            : null,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            userName,
+            style: Theme.of(context).primaryTextTheme.subhead,
+          ),
+          SizedBox(height: 3.0),
+          Text(
+            reply?.text,
+            style: Theme.of(context).primaryTextTheme.body2,
+          ),
+        ],
       ),
+      trailing: _buildTrailingIcon(),
+      onTap: isOrdering &&
+              reply.isAddedBySprouter != null &&
+              reply.isAddedBySprouter
+          ? () => _showOrderDrinkPage(message: reply)
+          : null,
     );
+
+    return reply.isAddedBySprouter
+        ? Dismissible(
+            key: ValueKey(reply?.ts),
+            background: Container(
+              padding: EdgeInsets.only(right: 12.0),
+              color: Colors.redAccent,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "刪除",
+                    style: Theme.of(context).accentTextTheme.body2,
+                  ),
+                  SizedBox(width: 4.0),
+                  Icon(
+                    FontAwesomeIcons.trash,
+                    color: Theme.of(context).accentIconTheme.color,
+                  ),
+                ],
+              ),
+            ),
+            direction: DismissDirection.endToStart,
+            dismissThresholds: {
+              DismissDirection.endToStart: reply.isAddedBySprouter ? 0.6 : 2.0
+            },
+            onDismissed: ((direction) =>
+                todayDrinkBloc?.deleteMessage?.add(index)),
+            child: listTile,
+          )
+        : listTile;
   }
 
   Widget _createTitle(List<Message> messages) {
@@ -375,7 +398,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       color: Colors.grey,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context, rootNavigator: true).push(
+          Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => DetailPhotoPage(
                   todayDrinkBloc?.drinkShopMessage?.getShopName,
