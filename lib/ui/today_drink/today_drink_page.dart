@@ -193,7 +193,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
             return SliverAppBar(
               expandedHeight: 220.0,
               pinned: true,
-              floating: true,
+              floating: false,
               title: _createTitle(messages),
               actions: <Widget>[
                 _SlackLoginAction(

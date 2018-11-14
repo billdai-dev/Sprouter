@@ -18,9 +18,22 @@ class SlackLoginWebViewPage extends StatefulWidget {
 
 class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
   static const String _teamId = "T024ZT2L3";
-  static const String _teamName = "25sprout";
+  static const String _25SproutSlackUrl = "25sprout";
+
+  final StreamController<bool> _rebuildController = StreamController();
 
   bool _initialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _rebuildController?.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +53,38 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
 
         Navigator.of(context).pop(token != null);
       });
+      _initialized = true;
     }
-    return FutureBuilder(
-      future: _initialized ? Future.value(true) : showCopyTeamNameHint(),
+    return StreamBuilder<bool>(
+      stream: _rebuildController.stream,
+      initialData: false,
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Container(color: Colors.white);
+        print(snapshot.connectionState);
+        if (!snapshot.hasData || !snapshot.data) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("登入 25Sprout Slack"),
+            ),
+            body: Builder(
+              builder: (context) {
+                Clipboard.setData(ClipboardData(text: _25SproutSlackUrl));
+                Future.delayed(Duration(milliseconds: 10), () {
+                  return Scaffold.of(context)
+                      .showSnackBar(SnackBar(
+                        content: _buildSnackBar(),
+                        duration: Duration(seconds: 2),
+                      ))
+                      .closed;
+                }).then((_) {
+                  _rebuildController.sink.add(true);
+                });
+
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          );
         }
         return WebviewScaffold(
           appBar: AppBar(
@@ -58,41 +97,22 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
     );
   }
 
-  Future<bool> showCopyTeamNameHint() {
-    return Future.delayed(
-      Duration(
-        milliseconds: 0,
+  Widget _buildSnackBar() {
+    return RichText(
+      text: TextSpan(
+        style: Theme.of(context).accentTextTheme.body2,
+        children: <TextSpan>[
+          TextSpan(text: "已複製"),
+          TextSpan(
+            text: " $_25SproutSlackUrl ",
+            style: Theme.of(context)
+                .accentTextTheme
+                .body2
+                .copyWith(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: "至剪貼簿，貼上即可前往下一步"),
+        ],
       ),
-    ).then((_) async {
-      await showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          Clipboard.setData(new ClipboardData(text: _teamName));
-
-          return Container(
-            color: Colors.grey.shade800,
-            padding: EdgeInsets.all(8.0),
-            child: RichText(
-              text: TextSpan(
-                style: Theme.of(context).accentTextTheme.body2,
-                children: <TextSpan>[
-                  TextSpan(text: "已複製"),
-                  TextSpan(
-                    text: " $_teamName ",
-                    style: Theme.of(context)
-                        .accentTextTheme
-                        .body2
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  TextSpan(text: "至剪貼簿，任意輕觸以繼續"),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-      _initialized = true;
-      return true;
-    });
+    );
   }
 }
