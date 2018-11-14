@@ -29,14 +29,6 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
     final String redirectUrl = bloc?.getSlackRedirectUrl();
     final String clientId = bloc?.getSlackClientId();
 
-    /*Widget webView = WebviewScaffold(
-      appBar: AppBar(
-        title: Text("登入 25Sprout Slack"),
-      ),
-      url:
-          "https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.email&team=$_teamId&client_id=$clientId&redirect_uri=$redirectUrl",
-    );*/
-
     if (!_initialized) {
       flutterWebviewPlugin.onUrlChanged.listen((String changedUrl) async {
         if (!changedUrl.startsWith(redirectUrl)) {
@@ -53,7 +45,7 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
       future: _initialized ? Future.value(true) : showCopyTeamNameHint(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Container();
+          return Container(color: Colors.white);
         }
         return WebviewScaffold(
           appBar: AppBar(

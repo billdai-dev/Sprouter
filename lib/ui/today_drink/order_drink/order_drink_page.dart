@@ -72,7 +72,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
         actions: <Widget>[
           IconButton(
               icon: Icon(
-                FontAwesomeIcons.clipboard,
+                FontAwesomeIcons.bookReader,
                 key: _drinkMenuKey,
               ),
               onPressed: () {

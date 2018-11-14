@@ -191,16 +191,18 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               _slackIconController.stop();
             }
             return SliverAppBar(
-              expandedHeight: 250.0,
+              expandedHeight: 220.0,
               pinned: true,
-              floating: false,
+              floating: true,
               title: _createTitle(messages),
               actions: <Widget>[
                 _SlackLoginAction(
                   animation: _slackIconAnimation,
                   onPressed: () async {
-                    bool success = await Navigator.of(context)
-                        .push(MaterialPageRoute<bool>(
+                    bool success = await Navigator.of(
+                      context,
+                      rootNavigator: true,
+                    ).push(MaterialPageRoute<bool>(
                       builder: (BuildContext context) =>
                           SlackLoginWebViewPage(),
                     ));
@@ -255,14 +257,16 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     Message lastOrderKeywords = drinkThread.lastWhere((message) {
       return message.text == "點單" || message.text == "收單";
     }, orElse: () => null);
-    if (lastOrderKeywords == null || lastOrderKeywords.text == "收單") {
-      return SliverFillRemaining(child: Center(child: Text("Closed")));
+    if (lastOrderKeywords == null) {
+      return SliverFillRemaining(child: Center(child: Text("無法取得訊息")));
     }
+    bool isOrdering = lastOrderKeywords.text == "點單";
+
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
         return Column(
           children: <Widget>[
-            _createMessageTile(index, replies[index]),
+            _createMessageTile(isOrdering, index, replies[index]),
             Divider(height: 2.0)
           ],
         );
@@ -270,7 +274,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createMessageTile(int index, Message reply) {
+  Widget _createMessageTile(bool isOrdering, int index, Message reply) {
     Widget _buildTrailingIcon() {
       bool isAddedBySprouter = reply.isAddedBySprouter ?? false;
       bool isFavoriteDrink =
@@ -283,8 +287,8 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       }
       if (isAddedBySprouter) {
         return Icon(
-          Icons.grade,
-          color: Colors.greenAccent,
+          FontAwesomeIcons.leaf,
+          color: Color(0xff50bf37),
         );
       }
       return null;
@@ -337,7 +341,9 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           ],
         ),
         trailing: _buildTrailingIcon(),
-        onTap: reply.isAddedBySprouter != null && reply.isAddedBySprouter
+        onTap: isOrdering &&
+                reply.isAddedBySprouter != null &&
+                reply.isAddedBySprouter
             ? () => _showOrderDrinkPage(message: reply)
             : null,
       ),
@@ -361,7 +367,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       BuildContext context, String token, List<Message> messages) {
     if (messages == null || messages.isEmpty) {
       return Container(
-          color: Colors.grey,
+          color: Colors.transparent,
           child: Center(child: CircularProgressIndicator()));
     }
     String imageUrl = messages[0].files[0].thumb800;
@@ -467,7 +473,6 @@ class _SlackLoginAction extends AnimatedWidget {
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
     return IconButton(
-      color: Colors.white,
       icon: Icon(
         FontAwesomeIcons.slack,
         size: animation?.value ?? 24.0,
