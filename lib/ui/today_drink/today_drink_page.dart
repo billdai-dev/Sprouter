@@ -390,12 +390,12 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       BuildContext context, String token, List<Message> messages) {
     if (messages == null || messages.isEmpty) {
       return Container(
-          color: Colors.transparent,
+          color: Colors.white,
           child: Center(child: CircularProgressIndicator()));
     }
     String imageUrl = messages[0].files[0].thumb800;
     return Container(
-      color: Colors.grey,
+      color: Colors.grey.shade300,
       child: GestureDetector(
         onTap: () {
           Navigator.of(context).push(
