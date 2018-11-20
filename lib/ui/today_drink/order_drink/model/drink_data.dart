@@ -4,11 +4,16 @@ class Drink {
   List<Ingredient> ingredients = [];
 
   String get completeDrinkName {
-    StringBuffer ingredientString = StringBuffer("");
-    ingredients?.forEach((ingredient) =>
-        ingredientString.write(" / ${getIngredientMapping(ingredient)}"));
-    String _price = price == null ? "" : " / \$$price";
-    return "${name ?? ""}${ingredientString.toString()}$_price";
+    StringBuffer ingredientStringBuffer = StringBuffer("");
+    ingredients?.forEach((ingredient) {
+      String ingredientString = getIngredientMapping(ingredient);
+      if (ingredient is Pearl || ingredient is CoconutJelly) {
+        ingredientString = "加$ingredientString";
+      }
+      ingredientStringBuffer.write(" / $ingredientString");
+    });
+    String _price = price == null || price.isEmpty ? "" : " / \$$price";
+    return "${name ?? ""}${ingredientStringBuffer.toString()}$_price";
   }
 
   Drink();
@@ -126,10 +131,10 @@ class Drink {
 const List<Type> ingredientWeights = [
   Sugar,
   Ice,
-  DrinkSize,
   Pearl,
   CoconutJelly,
-  OtherIngredient
+  OtherIngredient,
+  DrinkSize
 ];
 
 class Ingredient {}

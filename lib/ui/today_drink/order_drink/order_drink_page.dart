@@ -196,10 +196,6 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
               _useMaleImage ? "thirsty_man.png" : "thirsty_woman.png";
           bool isEmptyDrink = !snapshot.hasData ||
               Utils.isStringNullOrEmpty(snapshot.data.completeDrinkName);
-          String completeDrinkName = snapshot.hasData &&
-                  !Utils.isStringNullOrEmpty(snapshot.data.completeDrinkName)
-              ? snapshot.data.completeDrinkName
-              : "我想喝...";
           return Row(
             children: <Widget>[
               Spacer(flex: 3),
@@ -964,7 +960,7 @@ class _AdjustIngredientDialogState extends State<_AdjustIngredientDialog> {
           ? TextField(
               controller: textEditingController,
               inputFormatters: [
-                LengthLimitingTextInputFormatter(3),
+                LengthLimitingTextInputFormatter(10),
               ],
               onChanged: (value) {
                 bool needRebuild =
