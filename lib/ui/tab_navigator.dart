@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sprouter/ui/check_in/check_in_page.dart';
 import 'package:sprouter/ui/today_drink/today_drink_page.dart';
 
 class TabNavigatorRoutes {
@@ -21,7 +22,9 @@ class TabNavigator extends StatelessWidget {
           TabNavigatorRoutes.ORDER_DRINK: (context) => null
         };
       case 1:
-        return {TabNavigatorRoutes.ROOT: (context) => null};
+        return {
+          TabNavigatorRoutes.ROOT: (context) => CheckInPage(),
+        };
       default:
         return null;
     }

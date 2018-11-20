@@ -16,7 +16,8 @@ class AppRemoteRepo implements RemoteRepo {
   static const String slackClientSecret = "f0ce30315c4689da519c5281883c0667";
   static const String slackRedirectUrl =
       "https://kunstmaan.github.io/flutter_slack_oauth/success.html";
-  static const String _lunchChannel = "CAZQ503L2";
+
+  //static const String _lunchChannel = "CAZQ503L2";
 
   static const String _slackApiBaseUrl = "https://slack.com";
 
@@ -105,10 +106,10 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<ConversationList> fetchLunchMessages(
+  Future<ConversationList> fetchConversationHistory(String channel,
       {String oldest, String latest, int limit = 200}) {
     var query = {
-      "channel": _lunchChannel,
+      "channel": channel,
     };
     query.removeWhere((key, value) => value == null);
     Future<Response> response = dio.get(_conversationHistoryPath, data: query);
@@ -119,8 +120,8 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<ConversationList> fetchMessageReplies(String ts) {
-    var query = {"channel": _lunchChannel, "ts": ts};
+  Future<ConversationList> fetchMessageReplies(String channel, String ts) {
+    var query = {"channel": channel, "ts": ts};
     query.removeWhere((key, value) => value == null);
     Future<Response> response = dio.get(_conversationRepliesPath, data: query);
     return response.then((response) {
@@ -129,9 +130,10 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<PostMessageResponse> postMessage(String ts, String text) {
+  Future<PostMessageResponse> postMessage(
+      String channel, String ts, String text) {
     PostMessageRequest request = PostMessageRequest((builder) {
-      builder.channel = _lunchChannel;
+      builder.channel = channel;
       builder.threadTs = ts;
       builder.asUser = true;
       builder.text = text;
@@ -154,9 +156,10 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<PostMessageResponse> updateMessage(String ts, String text) {
+  Future<PostMessageResponse> updateMessage(
+      String channel, String ts, String text) {
     PostMessageRequest request = PostMessageRequest((builder) {
-      builder.channel = _lunchChannel;
+      builder.channel = channel;
       builder.ts = ts;
       builder.asUser = true;
       builder.text = text;
@@ -169,9 +172,9 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<PostMessageResponse> deleteMessage(String ts) {
+  Future<PostMessageResponse> deleteMessage(String channel, String ts) {
     PostMessageRequest request = PostMessageRequest((builder) {
-      builder.channel = _lunchChannel;
+      builder.channel = channel;
       builder.ts = ts;
       builder.asUser = true;
     });

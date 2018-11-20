@@ -15,16 +15,19 @@ abstract class RemoteRepo {
 
   Future<UserListResponse> getUsers({String accessToken});
 
-  Future<ConversationList> fetchLunchMessages(
+  Future<ConversationList> fetchConversationHistory(String channel,
       {String oldest, String latest, int limit});
 
-  Future<ConversationList> fetchMessageReplies(String ts);
+  Future<ConversationList> fetchMessageReplies(String channel, String ts);
 
-  Future<PostMessageResponse> postMessage(String ts, String text);
+  Future<PostMessageResponse> postMessage(
+      String channel, String ts, String text);
 
   Future<UserListResponse> getTeamMemberProfile();
 
-  Future<PostMessageResponse> updateMessage(String ts, String text);
+  Future<PostMessageResponse> updateMessage(
+      String channel, String ts, String text);
 
-  Future<PostMessageResponse> deleteMessage(String ts);
+  Future<PostMessageResponse> deleteMessage(String channel, String ts);
+  Future<PostMessageResponse> deleteMessage(String channel, String ts);
 }

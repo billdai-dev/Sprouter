@@ -15,8 +15,10 @@ import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sprouter/util/utils.dart';
 
 class AppRepository implements Repository {
-  static const String CLIENT_ID = AppRemoteRepo.slackClientId;
-  static const String REDIRECT_URL = AppRemoteRepo.slackRedirectUrl;
+  static const String clientId = AppRemoteRepo.slackClientId;
+  static const String redirectUrl = AppRemoteRepo.slackRedirectUrl;
+  static const String _lunchChannel = "CAZQ503L2";
+  static const String _jibbleChannel = "UB0APDPFT";
 
   static final AppRepository _repo = AppRepository._internal();
 
@@ -57,7 +59,8 @@ class AppRepository implements Repository {
     const String orderBroadcastKeyword = "今天點的是";
 
     Message thread = await _remoteRepo
-        .fetchLunchMessages() //1. 抓出 Lunch channel 前 N 筆 message
+        .fetchConversationHistory(
+            _lunchChannel) //1. 抓出 Lunch channel 前 N 筆 message
         .then((conversationList) async {
       if (!conversationList.ok) {
         throw ApiError(conversationList.error);
@@ -106,7 +109,7 @@ class AppRepository implements Repository {
 
     //8. 用 點單 thread 的 ts 抓出其底下所有 reply
     Future<List<Message>> getOrderRepliesFuture = _remoteRepo
-        .fetchMessageReplies(ts)
+        .fetchMessageReplies(_lunchChannel, ts)
         .then((drinkThread) => drinkThread.messages.toList());
 
     //9. 結合會員列表、reply 資料和 database 資料, 最後回傳加料過的 reply[]
@@ -160,8 +163,10 @@ class AppRepository implements Repository {
       {String orderTs}) async {
     String completeDrinkName = drink?.completeDrinkName;
     PostMessageResponse response = Utils.isStringNullOrEmpty(orderTs)
-        ? await _remoteRepo.postMessage(threadTs, completeDrinkName)
-        : await _remoteRepo.updateMessage(orderTs, completeDrinkName);
+        ? await _remoteRepo.postMessage(
+            _lunchChannel, threadTs, completeDrinkName)
+        : await _remoteRepo.updateMessage(
+            _lunchChannel, orderTs, completeDrinkName);
     int drinkId;
     if (response != null && response.ok) {
       _userId ??= await _localRepo.loadUserId();
@@ -185,7 +190,8 @@ class AppRepository implements Repository {
   @override
   Future<PostMessageResponse> deleteDrinkOrder(
       String shopName, String threadTs, String orderTs) async {
-    PostMessageResponse response = await _remoteRepo.deleteMessage(orderTs);
+    PostMessageResponse response =
+        await _remoteRepo.deleteMessage(_lunchChannel, orderTs);
     if (response != null && response.ok) {
       _userId ??= await _localRepo.loadUserId();
       await _localRepo.deleteDrinkOrderInDB(
@@ -218,4 +224,10 @@ class AppRepository implements Repository {
         .getLocalDrinkData(drinkId: favoriteDrinkId)
         .then((drinkData) => Drink.fromMap(drinkData));
   }
+
+  @override
+  Future<List<Message>> fetchLatestJibbleMessage() {}
+
+  @override
+  Future<Function> checkInOrOut(bool checkIn) {}
 }

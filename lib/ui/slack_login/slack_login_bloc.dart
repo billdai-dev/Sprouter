@@ -31,9 +31,9 @@ class SlackLoginBloc {
     return token;
   }
 
-  String getSlackClientId() => AppRepository.CLIENT_ID;
+  String getSlackClientId() => AppRepository.clientId;
 
-  String getSlackRedirectUrl() => AppRepository.REDIRECT_URL;
+  String getSlackRedirectUrl() => AppRepository.redirectUrl;
 
   void dispose() {
     _initData?.close();

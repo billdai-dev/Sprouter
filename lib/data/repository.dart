@@ -23,4 +23,8 @@ abstract class Repository {
   Future<void> addFavoriteDrink(String shopName, int drinkId, {String userId});
 
   Future<Drink> getFavoriteDrink(String shopName, {String userId});
+
+  Future<List<Message>> fetchLatestJibbleMessage();
+
+  Future<void> checkInOrOut(bool checkIn);
 }
