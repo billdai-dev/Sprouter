@@ -275,10 +275,11 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   }
 
   Widget _createMessageTile(bool isOrdering, int index, Message reply) {
+    bool isAddedBySprouter = reply?.isAddedBySprouter ?? false;
+    bool isFavoriteDrink =
+        isAddedBySprouter && (reply?.isFavoriteDrink ?? false);
+
     Widget _buildTrailingIcon() {
-      bool isAddedBySprouter = reply.isAddedBySprouter ?? false;
-      bool isFavoriteDrink =
-          isAddedBySprouter && (reply.isFavoriteDrink ?? false);
       if (isFavoriteDrink) {
         return Icon(
           FontAwesomeIcons.solidHeart,
@@ -332,14 +333,12 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         ],
       ),
       trailing: _buildTrailingIcon(),
-      onTap: isOrdering &&
-              reply.isAddedBySprouter != null &&
-              reply.isAddedBySprouter
+      onTap: isOrdering && isAddedBySprouter
           ? () => _showOrderDrinkPage(message: reply)
           : null,
     );
 
-    return reply.isAddedBySprouter
+    return isAddedBySprouter
         ? Dismissible(
             key: ValueKey(reply?.ts),
             background: Container(
@@ -363,9 +362,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               ),
             ),
             direction: DismissDirection.endToStart,
-            dismissThresholds: {
-              DismissDirection.endToStart: reply.isAddedBySprouter ? 0.6 : 2.0
-            },
+            dismissThresholds: {DismissDirection.endToStart: 0.6},
             onDismissed: ((direction) =>
                 todayDrinkBloc?.deleteMessage?.add(index)),
             child: listTile,

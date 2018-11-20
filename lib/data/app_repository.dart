@@ -211,6 +211,9 @@ class AppRepository implements Repository {
       return uid;
     });
     int favoriteDrinkId = await _localRepo.getFavoriteDrinkId(userId, shopName);
+    if (favoriteDrinkId == 0) {
+      return null;
+    }
     return _localRepo
         .getLocalDrinkData(drinkId: favoriteDrinkId)
         .then((drinkData) => Drink.fromMap(drinkData));

@@ -431,33 +431,41 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
   }
 
   Widget _buildGetFavoriteDrinkButton() {
-    return FractionallySizedBox(
-      widthFactor: 0.8,
-      child: RaisedButton(
-        color: Theme.of(context).accentColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        padding: EdgeInsets.zero,
-        onPressed: () => bloc?.getFavoriteDrink(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "最愛喝的",
-              style: Theme.of(context).accentTextTheme.button,
+    return Builder(
+      builder: (context) => FractionallySizedBox(
+            widthFactor: 0.8,
+            child: RaisedButton(
+              color: Theme.of(context).accentColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              padding: EdgeInsets.zero,
+              onPressed: () async {
+                bool success = await bloc?.getFavoriteDrink();
+                String snackBarText =
+                    success != null && success ? "已套用最愛飲料" : "還沒有最愛的飲料哦";
+                Scaffold.of(context)
+                    .showSnackBar(SnackBar(content: Text(snackBarText)));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "最愛喝的",
+                    style: Theme.of(context).accentTextTheme.button,
+                  ),
+                  SizedBox(
+                    width: 2.0,
+                  ),
+                  Icon(
+                    FontAwesomeIcons.solidHeart,
+                    color: Colors.white,
+                    size: 16.0,
+                  ),
+                ],
+              ),
             ),
-            SizedBox(
-              width: 2.0,
-            ),
-            Icon(
-              FontAwesomeIcons.solidHeart,
-              color: Colors.white,
-              size: 16.0,
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 
