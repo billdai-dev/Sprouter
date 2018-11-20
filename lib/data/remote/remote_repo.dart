@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:sprouter/data/model/conversation_history.dart';
 import 'package:sprouter/data/model/conversation_list.dart';
 import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
@@ -15,10 +16,13 @@ abstract class RemoteRepo {
 
   Future<UserListResponse> getUsers({String accessToken});
 
-  Future<ConversationList> fetchConversationHistory(String channel,
+  Future<ConversationList> fetchConversationList(String conversationType,
+      {bool excludeArchived, int limit});
+
+  Future<ConversationHistory> fetchConversationHistory(String channel,
       {String oldest, String latest, int limit});
 
-  Future<ConversationList> fetchMessageReplies(String channel, String ts);
+  Future<ConversationHistory> fetchMessageReplies(String channel, String ts);
 
   Future<PostMessageResponse> postMessage(
       String channel, String ts, String text);
@@ -28,6 +32,5 @@ abstract class RemoteRepo {
   Future<PostMessageResponse> updateMessage(
       String channel, String ts, String text);
 
-  Future<PostMessageResponse> deleteMessage(String channel, String ts);
   Future<PostMessageResponse> deleteMessage(String channel, String ts);
 }

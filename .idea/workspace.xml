@@ -12,23 +12,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1455656-8e1f-4cfb-960e-3d9918fb16ff" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/images/bg_street_day.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/bg_street_night.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/bg_working.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/man_off_duty.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/man_on_duty.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/woman_off_duty.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/woman_on_duty.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc_provider.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/data/model/conversation_history.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/app_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/app_repository.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/model/conversation_list.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/conversation_list.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/model/conversation_list.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/conversation_list.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/model/serializers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/serializers.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/data/model/serializers.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/serializers.g.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/tab_navigator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/tab_navigator.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -46,11 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app_repository.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app_repository.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="229" column="4" selection-start-line="229" selection-start-column="4" selection-end-line="229" selection-end-column="4" />
+            <state relative-caret-position="143">
+              <caret line="202" column="11" lean-forward="true" selection-start-line="202" selection-start-column="11" selection-end-line="202" selection-end-column="11" />
             </state>
           </provider>
         </entry>
@@ -58,8 +49,8 @@
       <file leaf-file-name="repository.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/repository.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
+            <state relative-caret-position="396">
+              <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -67,17 +58,8 @@
       <file leaf-file-name="slack_login_bloc.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="485">
-              <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="check_in_page.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+            <state relative-caret-position="144">
+              <caret line="11" column="39" lean-forward="true" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -94,17 +76,35 @@
       <file leaf-file-name="remote_repo.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/remote/remote_repo.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="25" column="50" lean-forward="true" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
+            <state relative-caret-position="216">
+              <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app_remote_repo.dart" pinned="false" current-in-tab="false">
+      <file leaf-file-name="post_message.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/data/model/post_message.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="251">
+              <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app_remote_repo.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="186" selection-start-line="186" selection-end-line="186" />
+            <state relative-caret-position="236">
+              <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="conversation_history.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/data/model/conversation_history.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -112,26 +112,11 @@
       <file leaf-file-name="conversation_list.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/model/conversation_list.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="check_in_bloc.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="19" lean-forward="true" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/main.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="10" column="33" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+            <state relative-caret-position="147">
+              <caret line="9" column="65" lean-forward="true" selection-start-line="9" selection-start-column="65" selection-end-line="9" selection-end-column="65" />
+              <folding>
+                <element signature="e#28#50#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -149,7 +134,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>adder</find>
       <find>pop</find>
       <find>setst</find>
       <find>cl</find>
@@ -179,6 +163,7 @@
       <find>showdialog</find>
       <find>Image.asset</find>
       <find>jibble</find>
+      <find>list</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/lib/data</dir>
@@ -191,8 +176,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc_provider.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/login/slack_login_page.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/user.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/user_identity.dart" />
         <option value="$PROJECT_DIR$/pubspec.lock" />
@@ -210,7 +193,6 @@
         <option value="$PROJECT_DIR$/lib/data/model/profile.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/slack/user_profile.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/slack/user_list.dart" />
-        <option value="$PROJECT_DIR$/lib/data/model/serializers.dart" />
         <option value="$PROJECT_DIR$/lib/util/utils.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_bloc_provider.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/post_message.dart" />
@@ -225,7 +207,6 @@
         <option value="$PROJECT_DIR$/ios/Runner/Info.plist" />
         <option value="$PROJECT_DIR$/lib/data/model/message.dart" />
         <option value="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" />
-        <option value="$PROJECT_DIR$/lib/data/model/conversation_list.dart" />
         <option value="$PROJECT_DIR$/lib/data/remote/api_error.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart" />
@@ -238,10 +219,14 @@
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" />
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc_provider.dart" />
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
-        <option value="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" />
-        <option value="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" />
         <option value="$PROJECT_DIR$/lib/data/repository.dart" />
         <option value="$PROJECT_DIR$/lib/data/app_repository.dart" />
+        <option value="$PROJECT_DIR$/lib/data/model/conversation_list.dart" />
+        <option value="$PROJECT_DIR$/lib/data/model/conversation_history.dart" />
+        <option value="$PROJECT_DIR$/lib/data/model/converation_list.dart" />
+        <option value="$PROJECT_DIR$/lib/data/model/serializers.dart" />
+        <option value="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" />
+        <option value="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" />
       </list>
     </option>
   </component>
@@ -383,6 +368,13 @@
               <item name="sprouter" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sprouter" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
               <item name="remote" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -446,6 +438,323 @@
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
               <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
               <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="painting" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -474,7 +783,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DART_PUB_BUILD_MODE" value="debug" />
-    <property name="SearchEverywhereHistoryKey" value="convers&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;repo&#9;null&#9;null&#10;appr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;remoter&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remore&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;orderdrp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;detail&#9;null&#9;null&#10;showsn&#9;null&#9;null&#10;builder&#9;null&#9;null&#10;completer&#9;null&#9;null&#10;whereite&#9;null&#9;null&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;todadri&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;nosuchme&#9;null&#9;null&#10;exception&#9;null&#9;null&#10;conver&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;applo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;messa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;webview&#9;null&#9;null&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;orderdrinpa&#9;null&#9;null&#10;mess&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;applocalre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;localrep&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;localrepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;orbloc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;buttonth&#9;null&#9;null&#10;repos&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;re&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;ord&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;apploc&#9;null&#9;null&#10;apprep&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;lo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;local&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;spacer&#9;null&#9;null&#10;useri&#9;null&#9;null&#10;pubsp.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;posme&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/post_message.dart&#10;appremote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;orderblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart" />
+    <property name="SearchEverywhereHistoryKey" value="appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;appremo&#9;null&#9;null&#10;repo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;convers&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;appr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;remoter&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remore&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;orderdrp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;detail&#9;null&#9;null&#10;showsn&#9;null&#9;null&#10;builder&#9;null&#9;null&#10;completer&#9;null&#9;null&#10;whereite&#9;null&#9;null&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;todadri&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;nosuchme&#9;null&#9;null&#10;exception&#9;null&#9;null&#10;conver&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;applo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;messa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;webview&#9;null&#9;null&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;orderdrinpa&#9;null&#9;null&#10;mess&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;applocalre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;localrep&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;localrepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;orbloc&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;buttonth&#9;null&#9;null&#10;repos&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;re&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;ord&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart&#10;apploc&#9;null&#9;null&#10;apprep&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;lo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;local&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;spacer&#9;null&#9;null&#10;useri&#9;null&#9;null&#10;pubsp.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;posme&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/post_message.dart&#10;appremote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;orderblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/data" />
@@ -832,8 +1141,8 @@
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32820514" />
       <window_info anchor="bottom" id="Terminal" order="13" weight="0.32820514" />
       <window_info id="Captures" order="5" weight="0.32904148" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49787235" weight="0.18669528" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32857144" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49787235" visible="true" weight="0.18669528" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32820514" />
       <window_info anchor="right" id="Fabric" order="6" />
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="6" side_tool="true" weight="0.3297568" />
@@ -998,27 +1307,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.2.1+2/lib/src/base.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="147" column="9" selection-start-line="147" selection-start-column="9" selection-end-line="147" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.2.1+2/lib/src/webview_scaffold.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-341">
-          <caret line="56" column="23" selection-start-line="56" selection-start-column="23" selection-end-line="56" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/material/bottom_sheet.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="317" column="21" selection-start-line="317" selection-start-column="21" selection-end-line="317" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/painting/text_span.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -1193,13 +1481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/model/message.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="69" column="11" selection-start-line="69" selection-start-column="11" selection-end-line="69" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-68">
@@ -1297,13 +1578,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/main.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -1318,6 +1592,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="23" column="24" lean-forward="true" selection-start-line="23" selection-start-column="24" selection-end-line="23" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="11" column="39" lean-forward="true" selection-start-line="11" selection-start-column="39" selection-end-line="11" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="202" column="11" lean-forward="true" selection-start-line="202" selection-start-column="11" selection-end-line="202" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc_provider.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -1325,45 +1620,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
+    <entry file="file://$PROJECT_DIR$/lib/data/model/message.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="485">
-          <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
+        <state relative-caret-position="-2593">
+          <caret line="69" column="11" selection-start-line="69" selection-start-column="11" selection-end-line="69" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/model/serializers.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/data/model/conversation_list.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/remote/remote_repo.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="25" column="50" lean-forward="true" selection-start-line="25" selection-start-column="50" selection-end-line="25" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="186" selection-start-line="186" selection-end-line="186" />
+        <state relative-caret-position="147">
+          <caret line="9" column="65" lean-forward="true" selection-start-line="9" selection-start-column="65" selection-end-line="9" selection-end-column="65" />
+          <folding>
+            <element signature="e#28#50#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/data/repository.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
+        <state relative-caret-position="396">
+          <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
+    <entry file="file://$PROJECT_DIR$/lib/data/model/post_message.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="229" column="4" selection-start-line="229" selection-start-column="4" selection-end-line="229" selection-end-column="4" />
+        <state relative-caret-position="251">
+          <caret line="50" column="15" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/model/conversation_history.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/remote/remote_repo.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="108" lean-forward="true" selection-start-line="108" selection-end-line="108" />
         </state>
       </provider>
     </entry>

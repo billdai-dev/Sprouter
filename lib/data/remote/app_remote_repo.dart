@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:sprouter/data/local/app_local_repo.dart';
+import 'package:sprouter/data/model/conversation_history.dart';
 import 'package:sprouter/data/model/conversation_list.dart';
 import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
@@ -24,6 +25,7 @@ class AppRemoteRepo implements RemoteRepo {
   static const String _oauthAccessPath = "/api/oauth.access";
   static const String _usersListPath = "/api/users.list";
   static const String _usersIdentityPath = "/api/users.identity";
+  static const String _conversationListPath = "/api/conversations.list";
   static const String _conversationHistoryPath = "/api/conversations.history";
   static const String _conversationRepliesPath = "/api/conversations.replies";
   static const String _chatPostMessagePath = "/api/chat.postMessage";
@@ -106,13 +108,14 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<ConversationList> fetchConversationHistory(String channel,
-      {String oldest, String latest, int limit = 200}) {
-    var query = {
-      "channel": channel,
+  Future<ConversationList> fetchConversationList(String conversationType,
+      {bool excludeArchived = true, int limit = 100}) {
+    var params = {
+      "exclude_archived": excludeArchived,
+      "limit": limit,
+      "types": conversationType ?? "im",
     };
-    query.removeWhere((key, value) => value == null);
-    Future<Response> response = dio.get(_conversationHistoryPath, data: query);
+    Future<Response> response = dio.get(_conversationListPath, data: params);
     Future<ConversationList> conversationList = response.then((response) {
       return ConversationList.fromJson(jsonEncode(response.data));
     });
@@ -120,12 +123,26 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<ConversationList> fetchMessageReplies(String channel, String ts) {
+  Future<ConversationHistory> fetchConversationHistory(String channel,
+      {String oldest, String latest, int limit = 200}) {
+    var query = {
+      "channel": channel,
+    };
+    query.removeWhere((key, value) => value == null);
+    Future<Response> response = dio.get(_conversationHistoryPath, data: query);
+    Future<ConversationHistory> conversationList = response.then((response) {
+      return ConversationHistory.fromJson(jsonEncode(response.data));
+    });
+    return conversationList;
+  }
+
+  @override
+  Future<ConversationHistory> fetchMessageReplies(String channel, String ts) {
     var query = {"channel": channel, "ts": ts};
     query.removeWhere((key, value) => value == null);
     Future<Response> response = dio.get(_conversationRepliesPath, data: query);
     return response.then((response) {
-      return ConversationList.fromJson(jsonEncode(response.data));
+      return ConversationHistory.fromJson(jsonEncode(response.data));
     });
   }
 

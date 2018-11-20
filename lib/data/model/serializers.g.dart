@@ -20,6 +20,8 @@ part of 'serializers.dart';
 // ignore_for_file: test_types_in_equals
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(Channels.serializer)
+      ..add(ConversationHistory.serializer)
       ..add(ConversationList.serializer)
       ..add(File.serializer)
       ..add(Members.serializer)
@@ -28,11 +30,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PostMessageResponse.serializer)
       ..add(Profile.serializer)
       ..add(Reply.serializer)
+      ..add(ResponseMetadata.serializer)
       ..add(SlackToken.serializer)
       ..add(Team.serializer)
       ..add(User.serializer)
       ..add(UserIdentity.serializer)
       ..add(UserListResponse.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(Channels)]),
+          () => new ListBuilder<Channels>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Members)]),
           () => new ListBuilder<Members>())
