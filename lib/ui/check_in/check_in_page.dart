@@ -67,24 +67,51 @@ class _CheckInPageState extends State<CheckInPage> {
                   ),
                 ),
                 Flexible(
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(
-                        "assets/images/bg_street_day.jpg",
-                        fit: BoxFit.cover,
-                      ),
-                      Positioned(
-                        width: 120.0,
-                        height: 120.0,
-                        left: figureLeft,
-                        bottom: figureBottom,
-                        child: Image.asset(
-                          "assets/images/man_on_duty.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ],
+                  child: StreamBuilder<String>(
+                    stream: _bloc.latestJibbleText,
+                    builder: (context, snapshot) {
+                      String bgFileName;
+                      String figureFileName = "";
+                      //Default image
+                      if (!snapshot.hasData) {
+                        bgFileName = "bg_street_day.jpg";
+                      } else {
+                        //Jibbled in
+                        if (snapshot.data.contains("in")) {
+                          bgFileName = "bg_working.png";
+                        }
+                        //Jibbled out
+                        else {
+                          DateTime now = DateTime.now();
+                          bool isDayNow = now.hour >= 6 && now.hour <= 18;
+                          bgFileName = isDayNow
+                              ? "bg_street_day.jpg"
+                              : "bg_street_night.jpg";
+                          figureFileName =
+                              isDayNow ? "man_on_duty.png" : "man_off_duty.png";
+                        }
+                      }
+
+                      return Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          Image.asset(
+                            "assets/images/$bgFileName",
+                            fit: BoxFit.cover,
+                          ),
+                          Positioned(
+                            width: 120.0,
+                            height: 120.0,
+                            left: figureLeft,
+                            bottom: figureBottom,
+                            child: Image.asset(
+                              "assets/images/$figureFileName",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],
