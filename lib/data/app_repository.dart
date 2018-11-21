@@ -18,9 +18,9 @@ import 'package:sprouter/util/utils.dart';
 class AppRepository implements Repository {
   static const String clientId = AppRemoteRepo.slackClientId;
   static const String redirectUrl = AppRemoteRepo.slackRedirectUrl;
+  static const String jibbleUserId = "UB0APDPFT";
   static const String _lunchChannel = "CAZQ503L2"; //TODO: Change to 25sprout's
   static const String _conversationType_im = "im";
-  static const String _jibbleUserId = "UB0APDPFT";
 
   static final AppRepository _repo = AppRepository._internal();
 
@@ -238,7 +238,7 @@ class AppRepository implements Repository {
         List<Channel> channels =
             conversations?.channels?.toList(growable: false);
         String channelId = channels
-            ?.firstWhere((channel) => channel.user == _jibbleUserId,
+            ?.firstWhere((channel) => channel.user == jibbleUserId,
                 orElse: () => null)
             ?.id;
         if (channelId != null) {
@@ -259,7 +259,7 @@ class AppRepository implements Repository {
   Future<bool> checkInOrOut(bool checkIn) {
     String message = checkIn ? "in" : "out";
     return _remoteRepo
-        .postMessage(_jibbleUserId, message)
+        .postMessage(jibbleUserId, message)
         .then((response) => response.ok);
   }
 }

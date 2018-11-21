@@ -24,16 +24,32 @@ class CheckInBloc {
 
   CheckInBloc({AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
-    this.repository.fetchLatestJibbleMessage().then((messages) {
-      _jibbleRecords.sink.add(messages);
-      Message latest = messages.firstWhere(
-          (message) =>
-              message.text.contains("jibbled in") ||
-              message.text.contains("jibbled out"),
-          orElse: () => null);
-      _latestJibbleTimestamp.add(latest?.ts?.split(".")[0]);
-      _latestJibbleText.add(latest?.text);
-    });
+    fetchLatestJibbleMessage();
+  }
+
+  void fetchLatestJibbleMessage() {
+    Future.delayed(Duration(milliseconds: 500))
+        .then((_) => repository.fetchLatestJibbleMessage().then((messages) {
+              _jibbleRecords.sink.add(messages);
+              Message latest = messages.firstWhere((message) {
+                if (message.user == AppRepository.jibbleUserId) {
+                  return message.text.contains("in") ||
+                      message.text.contains("out");
+                } else {
+                  return message.text == "in" || message.text == "out";
+                }
+              }, orElse: () => null);
+              _latestJibbleTimestamp.add(latest?.ts?.split(".")[0]);
+              _latestJibbleText.add(latest?.text);
+            }));
+  }
+
+  Future<bool> checkInOrOut(bool checkIn) async {
+    bool success = await repository.checkInOrOut(checkIn);
+    if (success != null && success) {
+      fetchLatestJibbleMessage();
+    }
+    return success;
   }
 
   void dispose() {
