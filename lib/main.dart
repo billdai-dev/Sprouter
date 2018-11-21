@@ -56,11 +56,11 @@ class _MainPageState extends State<MainPage> {
         return !await navigatorKeys[_currentPage].currentState.maybePop();
       },
       child: Scaffold(
-        appBar: _currentPage == 0
+        /*appBar: _currentPage == 0
             ? null
             : AppBar(
                 title: Text("Sprouter"),
-              ),
+              ),*/
         body: Stack(
           children: <Widget>[
             _buildOffstageNavigator(0),

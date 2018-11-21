@@ -20,7 +20,7 @@ class AppRepository implements Repository {
   static const String redirectUrl = AppRemoteRepo.slackRedirectUrl;
   static const String _lunchChannel = "CAZQ503L2"; //TODO: Change to 25sprout's
   static const String _conversationType_im = "im";
-  static const String _jibbleUserId = "UB0LYBTRC";
+  static const String _jibbleUserId = "UB0APDPFT";
 
   static final AppRepository _repo = AppRepository._internal();
 
@@ -244,6 +244,7 @@ class AppRepository implements Repository {
         if (channelId != null) {
           await _localRepo.saveJibbleChannelId(channelId);
         }
+        return channelId;
       });
     } else {
       jibbleChannelIdFuture = Future.value(jibbleChannelId);
