@@ -14,6 +14,10 @@ abstract class LocalRepo {
 
   Future<String> loadUserName();
 
+  Future<String> loadJibbleChannelId();
+
+  Future<void> saveJibbleChannelId(String channelId);
+
   Future<Database> openDB();
 
   Future<void> addShopToDB(String shopName, String threadTs);

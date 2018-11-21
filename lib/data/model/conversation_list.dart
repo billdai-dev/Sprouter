@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:sprouter/data/model/serializers.dart';
 
 part 'conversation_list.g.dart';
 
@@ -19,7 +20,7 @@ abstract class ConversationList
 
   @nullable
   @BuiltValueField(wireName: 'channels')
-  BuiltList<Channels> get channels;
+  BuiltList<Channel> get channels;
 
   @nullable
   @BuiltValueField(wireName: 'response_metadata')
@@ -39,10 +40,10 @@ abstract class ConversationList
       _$conversationListSerializer;
 }
 
-abstract class Channels implements Built<Channels, ChannelsBuilder> {
-  Channels._();
+abstract class Channel implements Built<Channel, ChannelBuilder> {
+  Channel._();
 
-  factory Channels([updates(ChannelsBuilder b)]) = _$Channels;
+  factory Channel([updates(ChannelBuilder b)]) = _$Channel;
 
   @nullable
   @BuiltValueField(wireName: 'id')
@@ -73,15 +74,15 @@ abstract class Channels implements Built<Channels, ChannelsBuilder> {
   int get priority;
 
   String toJson() {
-    return json.encode(serializers.serializeWith(Channels.serializer, this));
+    return json.encode(serializers.serializeWith(Channel.serializer, this));
   }
 
-  static Channels fromJson(String jsonString) {
+  static Channel fromJson(String jsonString) {
     return serializers.deserializeWith(
-        Channels.serializer, json.decode(jsonString));
+        Channel.serializer, json.decode(jsonString));
   }
 
-  static Serializer<Channels> get serializer => _$channelsSerializer;
+  static Serializer<Channel> get serializer => _$channelSerializer;
 }
 
 abstract class ResponseMetadata

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
+import 'package:sprouter/data/model/conversation_list.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/profile.dart';
@@ -17,8 +18,9 @@ import 'package:sprouter/util/utils.dart';
 class AppRepository implements Repository {
   static const String clientId = AppRemoteRepo.slackClientId;
   static const String redirectUrl = AppRemoteRepo.slackRedirectUrl;
-  static const String _lunchChannel = "CAZQ503L2";
-  static const String _jibbleChannel = "UB0APDPFT";
+  static const String _lunchChannel = "CAZQ503L2"; //TODO: Change to 25sprout's
+  static const String _conversationType_im = "im";
+  static const String _jibbleUserId = "UB0LYBTRC";
 
   static final AppRepository _repo = AppRepository._internal();
 
@@ -163,8 +165,8 @@ class AppRepository implements Repository {
       {String orderTs}) async {
     String completeDrinkName = drink?.completeDrinkName;
     PostMessageResponse response = Utils.isStringNullOrEmpty(orderTs)
-        ? await _remoteRepo.postMessage(
-            _lunchChannel, threadTs, completeDrinkName)
+        ? await _remoteRepo.postMessage(_lunchChannel, completeDrinkName,
+            ts: threadTs)
         : await _remoteRepo.updateMessage(
             _lunchChannel, orderTs, completeDrinkName);
     int drinkId;
@@ -226,8 +228,37 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<List<Message>> fetchLatestJibbleMessage() {}
+  Future<List<Message>> fetchLatestJibbleMessage() async {
+    String jibbleChannelId = await _localRepo.loadJibbleChannelId();
+    Future<String> jibbleChannelIdFuture;
+    if (Utils.isStringNullOrEmpty(jibbleChannelId)) {
+      jibbleChannelIdFuture = _remoteRepo
+          .fetchConversationList(_conversationType_im)
+          .then((conversations) async {
+        List<Channel> channels =
+            conversations?.channels?.toList(growable: false);
+        String channelId = channels
+            ?.firstWhere((channel) => channel.user == _jibbleUserId,
+                orElse: () => null)
+            ?.id;
+        if (channelId != null) {
+          await _localRepo.saveJibbleChannelId(channelId);
+        }
+      });
+    } else {
+      jibbleChannelIdFuture = Future.value(jibbleChannelId);
+    }
+    return jibbleChannelIdFuture
+        .then((jibbleChannelId) =>
+            _remoteRepo.fetchConversationHistory(jibbleChannelId, limit: 10))
+        .then((conversationHistory) => conversationHistory.messages.toList());
+  }
 
   @override
-  Future<Function> checkInOrOut(bool checkIn) {}
+  Future<bool> checkInOrOut(bool checkIn) {
+    String message = checkIn ? "in" : "out";
+    return _remoteRepo
+        .postMessage(_jibbleUserId, message)
+        .then((response) => response.ok);
+  }
 }

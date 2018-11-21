@@ -12,6 +12,7 @@ class AppLocalRepo implements LocalRepo {
   static const String _keySlackAccessToken = "slackAccessToken";
   static const String _keyUserId = "keyUserId";
   static const String _keyUserName = "keyUserName";
+  static const String _keyJibbleChannelId = "jibbleChannelId";
 
   static final AppLocalRepo _repo = new AppLocalRepo.internal();
 
@@ -43,6 +44,18 @@ class AppLocalRepo implements LocalRepo {
   Future<String> loadUserName() {
     return SharedPreferences.getInstance()
         .then((sp) => sp.getString(_keyUserName));
+  }
+
+  @override
+  Future<String> loadJibbleChannelId() {
+    return SharedPreferences.getInstance()
+        .then((sp) => sp.getString(_keyJibbleChannelId));
+  }
+
+  @override
+  Future<void> saveJibbleChannelId(String channelId) {
+    return SharedPreferences.getInstance().then((sharedPreferences) =>
+        sharedPreferences.setString(_keyJibbleChannelId, channelId));
   }
 
   @override

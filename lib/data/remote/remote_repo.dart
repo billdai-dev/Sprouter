@@ -24,8 +24,8 @@ abstract class RemoteRepo {
 
   Future<ConversationHistory> fetchMessageReplies(String channel, String ts);
 
-  Future<PostMessageResponse> postMessage(
-      String channel, String ts, String text);
+  Future<PostMessageResponse> postMessage(String channel, String text,
+      {String ts});
 
   Future<UserListResponse> getTeamMemberProfile();
 

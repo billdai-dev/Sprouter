@@ -21,7 +21,7 @@ part of 'conversation_list.dart';
 
 Serializer<ConversationList> _$conversationListSerializer =
     new _$ConversationListSerializer();
-Serializer<Channels> _$channelsSerializer = new _$ChannelsSerializer();
+Serializer<Channel> _$channelSerializer = new _$ChannelSerializer();
 Serializer<ResponseMetadata> _$responseMetadataSerializer =
     new _$ResponseMetadataSerializer();
 
@@ -47,7 +47,7 @@ class _$ConversationListSerializer
         ..add('channels')
         ..add(serializers.serialize(object.channels,
             specifiedType:
-                const FullType(BuiltList, const [const FullType(Channels)])));
+                const FullType(BuiltList, const [const FullType(Channel)])));
     }
     if (object.responseMetadata != null) {
       result
@@ -77,7 +77,7 @@ class _$ConversationListSerializer
         case 'channels':
           result.channels.replace(serializers.deserialize(value,
               specifiedType: const FullType(
-                  BuiltList, const [const FullType(Channels)])) as BuiltList);
+                  BuiltList, const [const FullType(Channel)])) as BuiltList);
           break;
         case 'response_metadata':
           result.responseMetadata.replace(serializers.deserialize(value,
@@ -91,14 +91,14 @@ class _$ConversationListSerializer
   }
 }
 
-class _$ChannelsSerializer implements StructuredSerializer<Channels> {
+class _$ChannelSerializer implements StructuredSerializer<Channel> {
   @override
-  final Iterable<Type> types = const [Channels, _$Channels];
+  final Iterable<Type> types = const [Channel, _$Channel];
   @override
-  final String wireName = 'Channels';
+  final String wireName = 'Channel';
 
   @override
-  Iterable serialize(Serializers serializers, Channels object,
+  Iterable serialize(Serializers serializers, Channel object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
     if (object.id != null) {
@@ -148,9 +148,9 @@ class _$ChannelsSerializer implements StructuredSerializer<Channels> {
   }
 
   @override
-  Channels deserialize(Serializers serializers, Iterable serialized,
+  Channel deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ChannelsBuilder();
+    final result = new ChannelBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -240,7 +240,7 @@ class _$ConversationList extends ConversationList {
   @override
   final bool ok;
   @override
-  final BuiltList<Channels> channels;
+  final BuiltList<Channel> channels;
   @override
   final ResponseMetadata responseMetadata;
 
@@ -291,10 +291,10 @@ class ConversationListBuilder
   bool get ok => _$this._ok;
   set ok(bool ok) => _$this._ok = ok;
 
-  ListBuilder<Channels> _channels;
-  ListBuilder<Channels> get channels =>
-      _$this._channels ??= new ListBuilder<Channels>();
-  set channels(ListBuilder<Channels> channels) => _$this._channels = channels;
+  ListBuilder<Channel> _channels;
+  ListBuilder<Channel> get channels =>
+      _$this._channels ??= new ListBuilder<Channel>();
+  set channels(ListBuilder<Channel> channels) => _$this._channels = channels;
 
   ResponseMetadataBuilder _responseMetadata;
   ResponseMetadataBuilder get responseMetadata =>
@@ -354,7 +354,7 @@ class ConversationListBuilder
   }
 }
 
-class _$Channels extends Channels {
+class _$Channel extends Channel {
   @override
   final String id;
   @override
@@ -370,10 +370,10 @@ class _$Channels extends Channels {
   @override
   final int priority;
 
-  factory _$Channels([void updates(ChannelsBuilder b)]) =>
-      (new ChannelsBuilder()..update(updates)).build();
+  factory _$Channel([void updates(ChannelBuilder b)]) =>
+      (new ChannelBuilder()..update(updates)).build();
 
-  _$Channels._(
+  _$Channel._(
       {this.id,
       this.created,
       this.isIm,
@@ -384,16 +384,16 @@ class _$Channels extends Channels {
       : super._();
 
   @override
-  Channels rebuild(void updates(ChannelsBuilder b)) =>
+  Channel rebuild(void updates(ChannelBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ChannelsBuilder toBuilder() => new ChannelsBuilder()..replace(this);
+  ChannelBuilder toBuilder() => new ChannelBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is Channels &&
+    return other is Channel &&
         id == other.id &&
         created == other.created &&
         isIm == other.isIm &&
@@ -419,7 +419,7 @@ class _$Channels extends Channels {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('Channels')
+    return (newBuiltValueToStringHelper('Channel')
           ..add('id', id)
           ..add('created', created)
           ..add('isIm', isIm)
@@ -431,8 +431,8 @@ class _$Channels extends Channels {
   }
 }
 
-class ChannelsBuilder implements Builder<Channels, ChannelsBuilder> {
-  _$Channels _$v;
+class ChannelBuilder implements Builder<Channel, ChannelBuilder> {
+  _$Channel _$v;
 
   String _id;
   String get id => _$this._id;
@@ -463,9 +463,9 @@ class ChannelsBuilder implements Builder<Channels, ChannelsBuilder> {
   int get priority => _$this._priority;
   set priority(int priority) => _$this._priority = priority;
 
-  ChannelsBuilder();
+  ChannelBuilder();
 
-  ChannelsBuilder get _$this {
+  ChannelBuilder get _$this {
     if (_$v != null) {
       _id = _$v.id;
       _created = _$v.created;
@@ -480,22 +480,22 @@ class ChannelsBuilder implements Builder<Channels, ChannelsBuilder> {
   }
 
   @override
-  void replace(Channels other) {
+  void replace(Channel other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$Channels;
+    _$v = other as _$Channel;
   }
 
   @override
-  void update(void updates(ChannelsBuilder b)) {
+  void update(void updates(ChannelBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$Channels build() {
+  _$Channel build() {
     final _$result = _$v ??
-        new _$Channels._(
+        new _$Channel._(
             id: id,
             created: created,
             isIm: isIm,

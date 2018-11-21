@@ -20,7 +20,7 @@ part of 'serializers.dart';
 // ignore_for_file: test_types_in_equals
 
 Serializers _$serializers = (new Serializers().toBuilder()
-      ..add(Channels.serializer)
+      ..add(Channel.serializer)
       ..add(ConversationHistory.serializer)
       ..add(ConversationList.serializer)
       ..add(File.serializer)
@@ -37,8 +37,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(UserIdentity.serializer)
       ..add(UserListResponse.serializer)
       ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(Channels)]),
-          () => new ListBuilder<Channels>())
+          const FullType(BuiltList, const [const FullType(Channel)]),
+          () => new ListBuilder<Channel>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Members)]),
           () => new ListBuilder<Members>())

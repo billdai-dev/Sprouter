@@ -147,8 +147,8 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<PostMessageResponse> postMessage(
-      String channel, String ts, String text) {
+  Future<PostMessageResponse> postMessage(String channel, String text,
+      {String ts}) {
     PostMessageRequest request = PostMessageRequest((builder) {
       builder.channel = channel;
       builder.threadTs = ts;

@@ -26,5 +26,5 @@ abstract class Repository {
 
   Future<List<Message>> fetchLatestJibbleMessage();
 
-  Future<void> checkInOrOut(bool checkIn);
+  Future<bool> checkInOrOut(bool checkIn);
 }
