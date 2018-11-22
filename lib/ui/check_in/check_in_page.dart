@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sprouter/ui/check_in/check_in_bloc.dart';
@@ -99,21 +101,40 @@ class _CheckInPageState extends State<CheckInPage> {
                             : Image.asset(
                                 "assets/images/$figureFileName",
                                 fit: BoxFit.contain,
+                                key: ValueKey(Random().nextInt(1000)),
                               );
 
                         return Stack(
                           fit: StackFit.expand,
                           children: <Widget>[
-                            Image.asset(
-                              "assets/images/$bgFileName",
-                              fit: BoxFit.cover,
+                            AnimatedSwitcher(
+                              duration: Duration(seconds: 1),
+                              transitionBuilder:
+                                  (child, Animation<double> animation) =>
+                                      FadeTransition(
+                                        opacity: animation,
+                                        child: child,
+                                      ),
+                              child: Image.asset(
+                                "assets/images/$bgFileName",
+                                key: ValueKey(Random().nextInt(1000)),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             Positioned(
                               width: 120.0,
                               height: 120.0,
                               left: figureLeft,
                               bottom: figureBottom,
-                              child: figureImage,
+                              child: AnimatedSwitcher(
+                                child: figureImage,
+                                duration: Duration(seconds: 1),
+                                transitionBuilder: (child, animation) =>
+                                    FadeTransition(
+                                      opacity: animation,
+                                      child: child,
+                                    ),
+                              ),
                             ),
                           ],
                         );

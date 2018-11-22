@@ -28,17 +28,19 @@ class CheckInBloc {
   }
 
   void fetchLatestJibbleMessage() {
-    Future.delayed(Duration(milliseconds: 500))
+    Future.delayed(Duration(milliseconds: 300))
         .then((_) => repository.fetchLatestJibbleMessage().then((messages) {
-              _jibbleRecords.sink.add(messages);
-              Message latest = messages.firstWhere((message) {
+              messages = messages.where((message) {
                 if (message.user == AppRepository.jibbleUserId) {
-                  return message.text.contains("in") ||
-                      message.text.contains("out");
+                  return message.text.contains("*jibbled in*") ||
+                      message.text.contains("*jibbled out*");
                 } else {
                   return message.text == "in" || message.text == "out";
                 }
-              }, orElse: () => null);
+              }).toList(growable: false);
+              _jibbleRecords.sink.add(messages);
+
+              Message latest = messages.first;
               _latestJibbleTimestamp.add(latest?.ts?.split(".")[0]);
               _latestJibbleText.add(latest?.text);
             }));
