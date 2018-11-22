@@ -1,10 +1,15 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sprouter/ui/check_in/check_in_page.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
-import 'package:sprouter/ui/tab_navigator.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
+import 'package:sprouter/ui/today_drink/today_drink_page.dart';
+
+const int drinkPageIndex = 0;
+const int checkInPageIndex = 1;
 
 void main() {
   runApp(new MaterialApp(
@@ -42,59 +47,117 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
-    0: GlobalKey<NavigatorState>(),
-    1: GlobalKey<NavigatorState>(),
-  };
+  final StreamController<int> _currentPageIndex = StreamController();
+  Map<int, GlobalKey<NavigatorState>> _navigatorKeys;
 
-  int _currentPage = 0;
+  @override
+  void initState() {
+    super.initState();
+    _navigatorKeys = {
+      drinkPageIndex: GlobalKey<NavigatorState>(),
+      checkInPageIndex: GlobalKey<NavigatorState>(),
+    };
+  }
+
+  @override
+  void dispose() {
+    _currentPageIndex?.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return !await navigatorKeys[_currentPage].currentState.maybePop();
-      },
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            _buildOffstageNavigator(0),
-            _buildOffstageNavigator(1),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentPage,
-            onTap: (index) {
-              setState(() {
-                _currentPage = index;
-              });
-            },
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: const Icon(Icons.local_drink),
-                title: Text('Drink'),
-              ),
-              BottomNavigationBarItem(
-                icon: const Icon(
-                  Icons.access_time,
-                  color: Colors.orange,
+    return StreamBuilder<int>(
+      stream: _currentPageIndex?.stream,
+      initialData: drinkPageIndex,
+      builder: (context, snapshot) {
+        int currentPageIndex = snapshot.data;
+        return WillPopScope(
+          onWillPop: () async {
+            return !await _navigatorKeys[currentPageIndex]
+                .currentState
+                .maybePop();
+          },
+          child: Scaffold(
+            body: Stack(
+              children: <Widget>[
+                Visibility(
+                  visible: currentPageIndex == drinkPageIndex,
+                  maintainState: true,
+                  child: TabNavigator(
+                    drinkPageIndex,
+                    _navigatorKeys[drinkPageIndex],
+                  ),
                 ),
-                title: Text('Jibbler'),
-              )
-            ]),
-      ),
+                Visibility(
+                  visible: currentPageIndex == checkInPageIndex,
+                  maintainState: true,
+                  child: TabNavigator(
+                    checkInPageIndex,
+                    _navigatorKeys[checkInPageIndex],
+                  ),
+                ),
+              ],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+                currentIndex: currentPageIndex,
+                onTap: (index) => _currentPageIndex?.add(index),
+                type: BottomNavigationBarType.fixed,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: const Icon(Icons.local_drink),
+                    title: Text('Drink'),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(
+                      Icons.access_time,
+                      color: Colors.orange,
+                    ),
+                    title: Text('Jibbler'),
+                  )
+                ]),
+          ),
+        );
+      },
     );
   }
+}
 
-  Widget _buildOffstageNavigator(int pageIndex) {
-    return Visibility(
-      visible: _currentPage == pageIndex,
-      maintainState: true,
-      child: TabNavigator(
-        pageIndex,
-        navigatorKey: navigatorKeys[pageIndex],
-      ),
+class TabNavigator extends StatelessWidget {
+  static const String routeRoot = '/';
+  static const String routeOrderDrink = '/order_drink';
+
+  final int _pageIndex;
+  final GlobalKey<NavigatorState> navigatorKey;
+
+  TabNavigator(this._pageIndex, this.navigatorKey);
+
+  Map<String, WidgetBuilder> _routeBuilders(int pageIndex) {
+    switch (pageIndex) {
+      case drinkPageIndex:
+        return {
+          routeRoot: (context) => TodayDrinkPage(),
+          routeOrderDrink: (context) => null
+        };
+      case checkInPageIndex:
+        return {
+          routeRoot: (context) => CheckInPage(),
+        };
+      default:
+        return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Map<String, WidgetBuilder> routeBuilders = _routeBuilders(_pageIndex);
+    return Navigator(
+      key: navigatorKey,
+      initialRoute: routeRoot,
+      onGenerateRoute: (routeSettings) {
+        return MaterialPageRoute(builder: routeBuilders[routeSettings.name]);
+      },
+      observers: [HeroController()],
     );
   }
 }
