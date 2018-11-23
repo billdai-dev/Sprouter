@@ -69,7 +69,7 @@ class _CheckInPageState extends State<CheckInPage> {
                       ],
                     ),
                   ),
-                  Flexible(
+                  Expanded(
                     child: StreamBuilder<String>(
                       stream: bloc.latestJibbleText,
                       builder: (context, snapshot) {
@@ -115,6 +115,17 @@ class _CheckInPageState extends State<CheckInPage> {
                                         opacity: animation,
                                         child: child,
                                       ),
+                              layoutBuilder: (currentChild, previousChildren) {
+                                List<Widget> children = previousChildren;
+                                if (currentChild != null) {
+                                  children = children.toList()
+                                    ..add(currentChild);
+                                }
+                                return Stack(
+                                  fit: StackFit.expand,
+                                  children: children,
+                                );
+                              },
                               child: Image.asset(
                                 "assets/images/$bgFileName",
                                 key: ValueKey(Random().nextInt(1000)),
