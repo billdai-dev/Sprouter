@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/ui/check_in/check_in_bloc.dart';
 import 'package:sprouter/ui/check_in/check_in_bloc_provider.dart';
+import 'package:sprouter/util/utils.dart';
 
 class CheckInPage extends StatefulWidget {
   @override
@@ -21,138 +23,153 @@ class _CheckInPageState extends State<CheckInPage> {
     double figureBottom = screenHeight * 0.01;
 
     return CheckInBlocProvider(
-      child: Builder(
-        builder: (context) {
-          bloc = CheckInBlocProvider.of(context);
-          return Scaffold(
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          canvasColor: Colors.transparent,
+        ),
+        child: Builder(
+          builder: (context) {
+            bloc = CheckInBlocProvider.of(context);
+            return Scaffold(
               appBar: AppBar(
                 title: Text("Sprouter"),
               ),
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    color: Colors.grey,
-                    height: 80.0,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        StreamBuilder<List<String>>(
-                          stream: bloc.latestJibbleTextTimestamp,
+              body: Builder(
+                builder: (context) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          showBottomSheet(
+                              context: context,
+                              builder: (context) => DetailRecordsBottomSheet());
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: Colors.grey,
+                          height: 80.0,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              StreamBuilder<List<String>>(
+                                stream: bloc.latestJibbleTextTimestamp,
+                                builder: (context, snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return Text("無資料");
+                                  }
+                                  String text = snapshot.data[0];
+                                  int timestamp = int.parse(snapshot.data[1]);
+                                  String time = Utils.convertTimestamp(
+                                      seconds: timestamp);
+                                  String duty =
+                                      text.contains("in") ? "上班" : "下班";
+                                  return Text(
+                                    "上次$duty時間：$time",
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .title,
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                width: 4.0,
+                              ),
+                              IconButton(
+                                  icon: Icon(FontAwesomeIcons.bellSlash),
+                                  onPressed: () {})
+                            ],
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: StreamBuilder<String>(
+                          stream: bloc.latestJibbleText,
                           builder: (context, snapshot) {
+                            String bgFileName;
+                            String figureFileName;
+                            ;
+                            //Default image
                             if (!snapshot.hasData) {
-                              return Text("無資料");
+                              bgFileName = "bg_street_day.jpg";
+                            } else {
+                              //Jibbled in
+                              if (snapshot.data.contains("in")) {
+                                bgFileName = "bg_working.png";
+                              }
+                              //Jibbled out
+                              else {
+                                DateTime now = DateTime.now();
+                                bool isDayNow = now.hour >= 6 && now.hour < 18;
+                                bgFileName = isDayNow
+                                    ? "bg_street_day.jpg"
+                                    : "bg_street_night.jpg";
+                                figureFileName = isDayNow
+                                    ? "man_on_duty.png"
+                                    : "man_off_duty.png";
+                              }
                             }
-                            String text = snapshot.data[0];
-                            String timestamp = snapshot.data[1];
-                            String time = DateTime.fromMillisecondsSinceEpoch(
-                                    int.parse(timestamp) * 1000)
-                                .toString();
-                            String displayTime =
-                                time.substring(0, time.lastIndexOf(":"));
-                            String statement =
-                                text.contains("in") ? "上班" : "下班";
-                            return Text(
-                              "上次$statement時間：$displayTime",
-                              style: Theme.of(context).primaryTextTheme.title,
+                            Widget figureImage = figureFileName == null
+                                ? Container()
+                                : Image.asset(
+                                    "assets/images/$figureFileName",
+                                    fit: BoxFit.contain,
+                                    key: ValueKey(Random().nextInt(1000)),
+                                  );
+
+                            return Stack(
+                              fit: StackFit.expand,
+                              children: <Widget>[
+                                AnimatedSwitcher(
+                                  duration: Duration(seconds: 1),
+                                  transitionBuilder:
+                                      (child, Animation<double> animation) =>
+                                          FadeTransition(
+                                            opacity: animation,
+                                            child: child,
+                                          ),
+                                  layoutBuilder:
+                                      (currentChild, previousChildren) {
+                                    List<Widget> children = previousChildren;
+                                    if (currentChild != null) {
+                                      children = children.toList()
+                                        ..add(currentChild);
+                                    }
+                                    return Stack(
+                                      fit: StackFit.expand,
+                                      children: children,
+                                    );
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/$bgFileName",
+                                    key: ValueKey(Random().nextInt(1000)),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                Positioned(
+                                  width: 120.0,
+                                  height: 120.0,
+                                  left: figureLeft,
+                                  bottom: figureBottom,
+                                  child: AnimatedSwitcher(
+                                    child: figureImage,
+                                    duration: Duration(seconds: 1),
+                                    transitionBuilder: (child, animation) =>
+                                        FadeTransition(
+                                          opacity: animation,
+                                          child: child,
+                                        ),
+                                  ),
+                                ),
+                              ],
                             );
                           },
                         ),
-                        SizedBox(
-                          width: 4.0,
-                        ),
-                        IconButton(
-                            icon: Icon(FontAwesomeIcons.bellSlash),
-                            onPressed: () {})
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: StreamBuilder<String>(
-                      stream: bloc.latestJibbleText,
-                      builder: (context, snapshot) {
-                        String bgFileName;
-                        String figureFileName;
-                        ;
-                        //Default image
-                        if (!snapshot.hasData) {
-                          bgFileName = "bg_street_day.jpg";
-                        } else {
-                          //Jibbled in
-                          if (snapshot.data.contains("in")) {
-                            bgFileName = "bg_working.png";
-                          }
-                          //Jibbled out
-                          else {
-                            DateTime now = DateTime.now();
-                            bool isDayNow = now.hour >= 6 && now.hour < 18;
-                            bgFileName = isDayNow
-                                ? "bg_street_day.jpg"
-                                : "bg_street_night.jpg";
-                            figureFileName = isDayNow
-                                ? "man_on_duty.png"
-                                : "man_off_duty.png";
-                          }
-                        }
-                        Widget figureImage = figureFileName == null
-                            ? Container()
-                            : Image.asset(
-                                "assets/images/$figureFileName",
-                                fit: BoxFit.contain,
-                                key: ValueKey(Random().nextInt(1000)),
-                              );
-
-                        return Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            AnimatedSwitcher(
-                              duration: Duration(seconds: 1),
-                              transitionBuilder:
-                                  (child, Animation<double> animation) =>
-                                      FadeTransition(
-                                        opacity: animation,
-                                        child: child,
-                                      ),
-                              layoutBuilder: (currentChild, previousChildren) {
-                                List<Widget> children = previousChildren;
-                                if (currentChild != null) {
-                                  children = children.toList()
-                                    ..add(currentChild);
-                                }
-                                return Stack(
-                                  fit: StackFit.expand,
-                                  children: children,
-                                );
-                              },
-                              child: Image.asset(
-                                "assets/images/$bgFileName",
-                                key: ValueKey(Random().nextInt(1000)),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              width: 120.0,
-                              height: 120.0,
-                              left: figureLeft,
-                              bottom: figureBottom,
-                              child: AnimatedSwitcher(
-                                child: figureImage,
-                                duration: Duration(seconds: 1),
-                                transitionBuilder: (child, animation) =>
-                                    FadeTransition(
-                                      opacity: animation,
-                                      child: child,
-                                    ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
               floatingActionButton: StreamBuilder<String>(
                 stream: bloc.latestJibbleText,
@@ -175,9 +192,84 @@ class _CheckInPageState extends State<CheckInPage> {
                     label: Text(label),
                   );
                 },
-              ));
-        },
+              ),
+            );
+          },
+        ),
       ),
+    );
+  }
+}
+
+class DetailRecordsBottomSheet extends StatefulWidget {
+  @override
+  _DetailRecordsBottomSheetState createState() =>
+      _DetailRecordsBottomSheetState();
+}
+
+class _DetailRecordsBottomSheetState extends State<DetailRecordsBottomSheet> {
+  @override
+  Widget build(BuildContext context) {
+    CheckInBloc bloc = CheckInBlocProvider.of(context);
+    return StreamBuilder<List<Message>>(
+      stream: bloc.jibbleRecords,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Container(
+            child: CircularProgressIndicator(),
+          );
+        }
+        double bottomSheetHeight = MediaQuery.of(context).size.height * 0.3;
+        return Container(
+          height: bottomSheetHeight,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.0),
+              topRight: Radius.circular(8.0),
+            ),
+          ),
+          child: Column(
+            children: <Widget>[
+              Text(
+                "最近打卡記錄",
+                style: Theme.of(context).primaryTextTheme.title,
+              ),
+              SizedBox(
+                height: 4.0,
+              ),
+              Divider(
+                height: 1.0,
+              ),
+              SizedBox(
+                height: 4.0,
+              ),
+              Flexible(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    Message message = snapshot.data[index];
+                    bool isOnDuty = message.text.contains("in");
+                    String duty = isOnDuty ? "上班" : "下班";
+                    int timestamp = int.parse(message.ts.split(".")[0]);
+                    String time = Utils.convertTimestamp(seconds: timestamp);
+                    IconData leadingIcon = isOnDuty
+                        ? FontAwesomeIcons.signInAlt
+                        : FontAwesomeIcons.signOutAlt;
+                    return ListTile(
+                      leading: Icon(leadingIcon),
+                      title: Text("於 $time $duty",
+                          style: Theme.of(context).primaryTextTheme.subhead),
+                    );
+                  },
+                  reverse: true,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

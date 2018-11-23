@@ -127,6 +127,7 @@ class AppRemoteRepo implements RemoteRepo {
       {String oldest, String latest, int limit = 200}) {
     var query = {
       "channel": channel,
+      "limit": limit,
     };
     query.removeWhere((key, value) => value == null);
     Future<Response> response = dio.get(_conversationHistoryPath, data: query);
