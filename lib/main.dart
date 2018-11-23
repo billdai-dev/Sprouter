@@ -1,8 +1,8 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sprouter/app_provider.dart';
 import 'package:sprouter/ui/check_in/check_in_page.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
@@ -13,9 +13,11 @@ const int checkInPageIndex = 1;
 
 void main() {
   runApp(new MaterialApp(
-    builder: (context, child) => SlackLoginBlocProvider(
-          child: TodayDrinkBlocProvider(
-            child: child,
+    builder: (context, child) => AppProvider(
+          child: SlackLoginBlocProvider(
+            child: TodayDrinkBlocProvider(
+              child: child,
+            ),
           ),
         ),
     theme: ThemeData(
@@ -37,88 +39,80 @@ void main() {
                   : TargetPlatform.iOS)
           .white,
     ),
-    home: MainPage(),
+    home: MainPageContainer(),
   ));
 }
 
-class MainPage extends StatefulWidget {
+class MainPageContainer extends StatefulWidget {
   @override
-  _MainPageState createState() => new _MainPageState();
+  _MainPageContainerState createState() => new _MainPageContainerState();
+}
+
+class _MainPageContainerState extends State<MainPageContainer> {
+  @override
+  Widget build(BuildContext context) {
+    Map<int, GlobalKey<NavigatorState>> navigatorKeys =
+        AppProvider.of(context).navigatorKeys;
+    List<Widget> tabs = [
+      TabNavigator(drinkPageIndex, navigatorKeys[drinkPageIndex]),
+      TabNavigator(checkInPageIndex, navigatorKeys[checkInPageIndex]),
+    ];
+    return MainPage(tabs);
+  }
+}
+
+class MainPage extends StatefulWidget {
+  final List<Widget> _tabs;
+
+  MainPage(this._tabs);
+
+  @override
+  _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  final StreamController<int> _currentPageIndex = StreamController();
-  Map<int, GlobalKey<NavigatorState>> _navigatorKeys;
-
-  @override
-  void initState() {
-    super.initState();
-    _navigatorKeys = {
-      drinkPageIndex: GlobalKey<NavigatorState>(),
-      checkInPageIndex: GlobalKey<NavigatorState>(),
-    };
-  }
-
-  @override
-  void dispose() {
-    _currentPageIndex?.close();
-    super.dispose();
-  }
+  int _currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<int>(
-      stream: _currentPageIndex?.stream,
-      initialData: drinkPageIndex,
-      builder: (context, snapshot) {
-        int currentPageIndex = snapshot.data;
-        return WillPopScope(
-          onWillPop: () async {
-            return !await _navigatorKeys[currentPageIndex]
-                .currentState
-                .maybePop();
-          },
-          child: Scaffold(
-            body: Stack(
-              children: <Widget>[
-                Visibility(
-                  visible: currentPageIndex == drinkPageIndex,
-                  maintainState: true,
-                  child: TabNavigator(
-                    drinkPageIndex,
-                    _navigatorKeys[drinkPageIndex],
-                  ),
-                ),
-                Visibility(
-                  visible: currentPageIndex == checkInPageIndex,
-                  maintainState: true,
-                  child: TabNavigator(
-                    checkInPageIndex,
-                    _navigatorKeys[checkInPageIndex],
-                  ),
-                ),
-              ],
+    Map<int, GlobalKey<NavigatorState>> navigatorKeys =
+        AppProvider.of(context).navigatorKeys;
+    return WillPopScope(
+      onWillPop: () async =>
+          !await navigatorKeys[_currentPageIndex].currentState.maybePop(),
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Visibility(
+              visible: _currentPageIndex == drinkPageIndex,
+              maintainState: true,
+              child: widget._tabs[drinkPageIndex],
             ),
-            bottomNavigationBar: BottomNavigationBar(
-                currentIndex: currentPageIndex,
-                onTap: (index) => _currentPageIndex?.add(index),
-                type: BottomNavigationBarType.fixed,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: const Icon(Icons.local_drink),
-                    title: Text('Drink'),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(
-                      Icons.access_time,
-                      color: Colors.orange,
-                    ),
-                    title: Text('Jibbler'),
-                  )
-                ]),
-          ),
-        );
-      },
+            Visibility(
+              visible: _currentPageIndex == checkInPageIndex,
+              maintainState: true,
+              child: widget._tabs[checkInPageIndex],
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentPageIndex,
+            onTap: (index) => setState(() => _currentPageIndex = index),
+            type: BottomNavigationBarType.fixed,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.local_drink),
+                title: Text('Drink'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(
+                  Icons.access_time,
+                  color: Colors.orange,
+                ),
+                title: Text('Jibbler'),
+              )
+            ]),
+      ),
     );
   }
 }
