@@ -3,26 +3,52 @@ import 'package:flutter/widgets.dart';
 
 import 'main.dart';
 
-class AppProvider extends InheritedWidget {
-  final Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
-    drinkPageIndex: GlobalKey<NavigatorState>(),
-    checkInPageIndex: GlobalKey<NavigatorState>(),
-  };
+class AppStateContainer extends StatefulWidget {
+  final Widget child;
 
-  AppProvider({
-    Key key,
-    @required Widget child,
-  })  : assert(child != null),
-        super(key: key, child: child);
+  AppStateContainer({Key key, this.child}) : super(key: key);
 
-  static AppProvider of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(AppProvider) as AppProvider;
+  @override
+  _AppStateContainerState createState() => _AppStateContainerState();
+
+  static _AppStateContainerState of(BuildContext context) =>
+      (context.inheritFromWidgetOfExactType(_AppStateProvider)
+              as _AppStateProvider)
+          .data;
+}
+
+class _AppStateContainerState extends State<AppStateContainer> {
+  Map<int, GlobalKey<NavigatorState>> navigatorKeys;
+
+  @override
+  void initState() {
+    super.initState();
+    navigatorKeys = {
+      drinkPageIndex: GlobalKey<NavigatorState>(),
+      checkInPageIndex: GlobalKey<NavigatorState>(),
+    };
   }
 
   @override
-  bool updateShouldNotify(AppProvider old) {
-    return old.navigatorKeys != navigatorKeys ||
-        old.navigatorKeys[drinkPageIndex] != navigatorKeys[drinkPageIndex] ||
-        old.navigatorKeys[checkInPageIndex] != navigatorKeys[checkInPageIndex];
+  Widget build(BuildContext context) {
+    return _AppStateProvider(
+      data: this,
+      child: widget.child,
+    );
   }
+}
+
+class _AppStateProvider extends InheritedWidget {
+  final _AppStateContainerState data;
+
+  _AppStateProvider({
+    Key key,
+    @required this.data,
+    @required Widget child,
+  })  : assert(child != null),
+        assert(data != null),
+        super(key: key, child: child);
+
+  @override
+  bool updateShouldNotify(_AppStateProvider old) => old.data != data;
 }

@@ -13,7 +13,7 @@ const int checkInPageIndex = 1;
 
 void main() {
   runApp(new MaterialApp(
-    builder: (context, child) => AppProvider(
+    builder: (context, child) => AppStateContainer(
           child: SlackLoginBlocProvider(
             child: TodayDrinkBlocProvider(
               child: child,
@@ -52,7 +52,7 @@ class _MainPageContainerState extends State<MainPageContainer> {
   @override
   Widget build(BuildContext context) {
     Map<int, GlobalKey<NavigatorState>> navigatorKeys =
-        AppProvider.of(context).navigatorKeys;
+        AppStateContainer.of(context).navigatorKeys;
     List<Widget> tabs = [
       TabNavigator(drinkPageIndex, navigatorKeys[drinkPageIndex]),
       TabNavigator(checkInPageIndex, navigatorKeys[checkInPageIndex]),
@@ -76,7 +76,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     Map<int, GlobalKey<NavigatorState>> navigatorKeys =
-        AppProvider.of(context).navigatorKeys;
+        AppStateContainer.of(context).navigatorKeys;
     return WillPopScope(
       onWillPop: () async =>
           !await navigatorKeys[_currentPageIndex].currentState.maybePop(),
