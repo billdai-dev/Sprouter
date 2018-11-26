@@ -53,20 +53,22 @@ class _CheckInPageState extends State<CheckInPage> {
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              StreamBuilder<List<String>>(
-                                stream: bloc.latestJibbleTextTimestamp,
+                              StreamBuilder<Map<bool, String>>(
+                                stream: bloc.latestJibbleStatus,
                                 builder: (context, snapshot) {
                                   if (!snapshot.hasData) {
                                     return Text("無資料");
                                   }
-                                  String text = snapshot.data[0];
-                                  int timestamp = int.parse(snapshot.data[1]);
+                                  bool latestCheckInStatus =
+                                      snapshot.data.keys.first;
+                                  int timestamp =
+                                      int.parse(snapshot.data.values.first);
                                   String time = Utils.convertTimestamp(
                                       seconds: timestamp);
-                                  String duty =
-                                      text.contains("in") ? "上班" : "下班";
+                                  String latestCheckIn =
+                                      latestCheckInStatus ? "上班" : "下班";
                                   return Text(
-                                    "上次$duty時間：$time",
+                                    "上次$latestCheckIn時間：$time",
                                     style: Theme.of(context)
                                         .primaryTextTheme
                                         .title,
@@ -84,18 +86,18 @@ class _CheckInPageState extends State<CheckInPage> {
                         ),
                       ),
                       Expanded(
-                        child: StreamBuilder<String>(
-                          stream: bloc.latestJibbleText,
+                        child: StreamBuilder<bool>(
+                          stream: bloc.showCheckInBtn.stream,
                           builder: (context, snapshot) {
                             String bgFileName;
                             String figureFileName;
-                            ;
                             //Default image
                             if (!snapshot.hasData) {
                               bgFileName = "bg_street_day.jpg";
                             } else {
+                              bool shouldShowCheckIn = snapshot.data;
                               //Jibbled in
-                              if (snapshot.data.contains("in")) {
+                              if (!shouldShowCheckIn) {
                                 bgFileName = "bg_working.png";
                               }
                               //Jibbled out
@@ -171,7 +173,8 @@ class _CheckInPageState extends State<CheckInPage> {
                   );
                 },
               ),
-              floatingActionButton: StreamBuilder<String>(
+              floatingActionButton: CheckInFab()
+                  /*floatingActionButton: StreamBuilder<String>(
                 stream: bloc.latestJibbleText,
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -192,7 +195,8 @@ class _CheckInPageState extends State<CheckInPage> {
                     label: Text(label),
                   );
                 },
-              ),
+              )*/
+                  ,
             );
           },
         ),
@@ -201,13 +205,117 @@ class _CheckInPageState extends State<CheckInPage> {
   }
 }
 
-class DetailRecordsBottomSheet extends StatefulWidget {
+class CheckInFab extends StatefulWidget {
   @override
-  _DetailRecordsBottomSheetState createState() =>
-      _DetailRecordsBottomSheetState();
+  _CheckInFabState createState() => _CheckInFabState();
 }
 
-class _DetailRecordsBottomSheetState extends State<DetailRecordsBottomSheet> {
+class _CheckInFabState extends State<CheckInFab>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  CheckInBloc bloc;
+
+  static const List<IconData> icons = const [
+    FontAwesomeIcons.signInAlt,
+    FontAwesomeIcons.signOutAlt,
+  ];
+
+  final Animatable<Offset> _slideAnimatable = Tween<Offset>(
+    begin: const Offset(0.0, 1.0),
+    end: Offset(0.0, -0.2),
+  ).chain(CurveTween(
+    curve: Curves.fastOutSlowIn,
+  ));
+  final Animatable<double> _scaleAnimatable = Tween<double>(
+    begin: 0.0,
+    end: 1.0,
+  ).chain(CurveTween(
+    curve: Curves.fastOutSlowIn,
+  ));
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(
+        milliseconds: 400,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bloc = CheckInBlocProvider.of(context);
+    return StreamBuilder<bool>(
+      stream: bloc.showCheckInBtn.stream,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Container();
+        }
+        bool shouldShowCheckIn = snapshot.data;
+        IconData icon = shouldShowCheckIn
+            ? FontAwesomeIcons.signInAlt
+            : FontAwesomeIcons.signOutAlt;
+        String label = shouldShowCheckIn ? "上班啦" : "下班啦";
+
+        Widget extendedFab = GestureDetector(
+          onLongPress: () => bloc.checkInOrOut(shouldShowCheckIn),
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              if (_controller.isDismissed) {
+                _controller.forward();
+              } else {
+                _controller.reverse();
+              }
+            },
+            icon: Icon(icon),
+            label: Text(label),
+          ),
+        );
+
+        IconData anotherIcon = shouldShowCheckIn
+            ? FontAwesomeIcons.signOutAlt
+            : FontAwesomeIcons.signInAlt;
+
+        Widget anotherFab = SlideTransition(
+          position: _slideAnimatable.animate(_controller),
+          child: ScaleTransition(
+            scale: _scaleAnimatable.animate(_controller),
+            child: FloatingActionButton(
+              onPressed: () {
+                if (_controller.isCompleted) {
+                  _controller.reverse();
+                }
+                bloc.showCheckInBtn.add(!shouldShowCheckIn);
+              },
+              //backgroundColor: backgroundColor,
+              mini: true,
+              child: Icon(anotherIcon),
+            ),
+          ),
+        );
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            anotherFab,
+            extendedFab,
+          ],
+        );
+      },
+    );
+  }
+}
+
+class DetailRecordsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CheckInBloc bloc = CheckInBlocProvider.of(context);

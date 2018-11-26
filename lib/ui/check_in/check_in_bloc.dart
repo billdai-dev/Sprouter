@@ -13,12 +13,14 @@ class CheckInBloc {
 
   Stream<String> get latestJibbleTimestamp => _latestJibbleTimestamp.stream;
 
-  final BehaviorSubject<String> _latestJibbleText = BehaviorSubject();
+  final BehaviorSubject<bool> _latestCheckInStatus = BehaviorSubject();
 
-  Stream<String> get latestJibbleText => _latestJibbleText.stream;
+  Stream<bool> get latestCheckInStatus => _latestCheckInStatus.stream;
 
-  Observable<List<String>> get latestJibbleTextTimestamp => _latestJibbleText
-      .zipWith(_latestJibbleTimestamp.stream, (text, ts) => [text, ts]);
+  final BehaviorSubject<bool> showCheckInBtn = BehaviorSubject();
+
+  Observable<Map<bool, String>> get latestJibbleStatus => _latestCheckInStatus
+      .zipWith(_latestJibbleTimestamp, (isCheckedIn, ts) => {isCheckedIn: ts});
 
   AppRepository repository;
 
@@ -41,8 +43,12 @@ class CheckInBloc {
               _jibbleRecords.sink.add(messages);
 
               Message latest = messages.first;
+              bool latestCheckInStatus = latest?.text?.contains("in");
+              bool shouldShowCheckInBtn = !latestCheckInStatus;
+
               _latestJibbleTimestamp.add(latest?.ts?.split(".")[0]);
-              _latestJibbleText.add(latest?.text);
+              _latestCheckInStatus.add(latestCheckInStatus);
+              showCheckInBtn.add(shouldShowCheckInBtn);
             }));
   }
 
@@ -57,6 +63,7 @@ class CheckInBloc {
   void dispose() {
     _jibbleRecords?.close();
     _latestJibbleTimestamp?.close();
-    _latestJibbleText?.close();
+    _latestCheckInStatus?.close();
+    showCheckInBtn?.close();
   }
 }
