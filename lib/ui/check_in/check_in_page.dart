@@ -96,15 +96,12 @@ class _CheckInPageState extends State<CheckInPage> {
   }
 
   Widget _buildBackgroundImage() {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double figureLeft = screenWidth * (0.4 - 120 / screenWidth / 2);
-    double figureBottom = screenHeight * 0.01;
     return StreamBuilder<bool>(
       stream: bloc.showCheckInBtn.stream,
       builder: (context, snapshot) {
         String bgFileName;
-        String figureFileName;
+        bool isDayNow;
+
         //Default image
         if (!snapshot.hasData) {
           bgFileName = "bg_street_day.jpg";
@@ -117,19 +114,10 @@ class _CheckInPageState extends State<CheckInPage> {
           //Jibbled out
           else {
             DateTime now = DateTime.now();
-            bool isDayNow = now.hour >= 6 && now.hour < 18;
+            isDayNow = now.hour >= 6 && now.hour < 18;
             bgFileName = isDayNow ? "bg_street_day.jpg" : "bg_street_night.jpg";
-            figureFileName = isDayNow ? "man_on_duty.png" : "man_off_duty.png";
           }
         }
-        Widget figureImage = figureFileName == null
-            ? Container()
-            : Image.asset(
-                "assets/images/$figureFileName",
-                fit: BoxFit.contain,
-                key: ValueKey(Random().nextInt(1000)),
-              );
-
         return Stack(
           fit: StackFit.expand,
           children: <Widget>[
@@ -156,24 +144,136 @@ class _CheckInPageState extends State<CheckInPage> {
                 fit: BoxFit.cover,
               ),
             ),
-            Positioned(
-              width: 120.0,
-              height: 120.0,
-              left: figureLeft,
-              bottom: figureBottom,
-              child: AnimatedSwitcher(
-                child: figureImage,
-                duration: Duration(seconds: 1),
-                transitionBuilder: (child, animation) => FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    ),
-              ),
-            ),
+            AnimatedFigure(isDayNow),
           ],
         );
       },
     );
+  }
+}
+
+class AnimatedFigure extends StatefulWidget {
+  final bool isDayNow;
+
+  AnimatedFigure(this.isDayNow);
+
+  @override
+  _AnimatedFigureState createState() => _AnimatedFigureState();
+}
+
+class _AnimatedFigureState extends State<AnimatedFigure>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 5));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    bool isDayNow = widget.isDayNow;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double figureBottom = screenHeight * 0.03;
+
+    String figureFileName =
+        isDayNow != null && isDayNow ? "man_on_duty.png" : "man_off_duty.png";
+    Widget figureImage = isDayNow == null || figureFileName == null
+        ? Container()
+        : Image.asset(
+            "assets/images/$figureFileName",
+            fit: BoxFit.contain,
+            key: ValueKey(Random().nextInt(1000)),
+          );
+    Animation<Offset> walkingAnimation;
+    Animation<double> rotateAnimation;
+    var animations = generateFigureAnimations(_controller, isDayNow);
+    walkingAnimation =
+        animations?.firstWhere((anim) => anim is Animation<Offset>);
+    rotateAnimation =
+        animations?.firstWhere((anim) => anim is Animation<double>);
+    if (isDayNow != null) {
+      _controller?.repeat();
+    }
+
+    return Positioned(
+      width: 120.0,
+      height: 120.0,
+      left: isDayNow != null && isDayNow ? 0.0 : null,
+      right: isDayNow != null && !isDayNow ? 0.0 : null,
+      bottom: figureBottom,
+      child: AnimatedSwitcher(
+        child: figureImage,
+        duration: Duration(seconds: 1),
+        transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: isDayNow != null
+                  ? RotationTransition(
+                      turns: rotateAnimation,
+                      child: SlideTransition(
+                        position: walkingAnimation,
+                        child: child,
+                      ),
+                    )
+                  : child,
+            ),
+      ),
+    );
+  }
+
+  List<dynamic> generateFigureAnimations(
+      AnimationController controller, bool isDayNow) {
+    if (controller == null || isDayNow == null) {
+      return null;
+    }
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double figureWidth = 120.0;
+    int steps = (screenWidth / figureWidth).ceil() + 1;
+
+    double step = isDayNow ? 1.0 : -1.0;
+    final double rotateAngle = 0.01;
+
+    List<TweenSequenceItem<Offset>> walkingTweenItems = [];
+    List<TweenSequenceItem<double>> rotateTweenItems = [];
+
+    double startPos = isDayNow ? -1.0 : 1.0;
+    double lastStep;
+    double lastEndAngle;
+    for (int i = 0; i < steps; i++) {
+      TweenSequenceItem<Offset> walkingTweenItem = TweenSequenceItem(
+        tween: Tween<Offset>(
+                begin: Offset(lastStep ?? startPos, 0.0),
+                end: Offset(step * i, 0.0))
+            .chain(
+          CurveTween(curve: Curves.fastOutSlowIn),
+        ),
+        weight: 1.0,
+      );
+      walkingTweenItems.add(walkingTweenItem);
+      lastStep = step * i;
+
+      double angle = i.isEven ? rotateAngle : -rotateAngle;
+      TweenSequenceItem<double> rotateTweenItem = TweenSequenceItem(
+        tween: Tween<double>(begin: lastEndAngle ?? -rotateAngle, end: angle)
+            .chain(CurveTween(curve: Curves.fastOutSlowIn)),
+        weight: 1.0,
+      );
+      rotateTweenItems.add(rotateTweenItem);
+      lastEndAngle = angle;
+    }
+    Animation<Offset> walkingAnimation =
+        TweenSequence(walkingTweenItems).animate(_controller);
+    Animation<double> rotateAnimation =
+        TweenSequence(rotateTweenItems).animate(_controller);
+    return [walkingAnimation, rotateAnimation];
   }
 }
 
