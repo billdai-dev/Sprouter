@@ -91,6 +91,7 @@ class _MainPageState extends State<MainPage> {
             Visibility(
               visible: _currentPageIndex == checkInPageIndex,
               maintainState: true,
+              maintainAnimation: true,
               child: widget._tabs[checkInPageIndex],
             ),
           ],

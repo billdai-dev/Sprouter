@@ -12,11 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1455656-8e1f-4cfb-960e-3d9918fb16ff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -34,23 +30,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="check_in_page.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="check_in_page.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2990">
-              <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
+            <state relative-caret-position="306">
+              <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pubspec.yaml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pubspec.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
             </state>
           </provider>
         </entry>
@@ -85,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.dart" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="166">
-              <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
+            <state relative-caret-position="259">
+              <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -131,7 +118,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>asset</find>
       <find>a</find>
       <find>gap</find>
       <find>global</find>
@@ -161,6 +147,7 @@
       <find>rotation</find>
       <find>0.01</find>
       <find>seq</find>
+      <find>tab</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/lib/data</dir>
@@ -219,11 +206,11 @@
         <option value="$PROJECT_DIR$/lib/AppProvider.dart" />
         <option value="$PROJECT_DIR$/lib/util/utils.dart" />
         <option value="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" />
-        <option value="$PROJECT_DIR$/lib/main.dart" />
         <option value="$PROJECT_DIR$/lib/app_provider.dart" />
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" />
+        <option value="$PROJECT_DIR$/lib/main.dart" />
       </list>
     </option>
   </component>
@@ -261,7 +248,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DART_PUB_BUILD_MODE" value="debug" />
-    <property name="SearchEverywhereHistoryKey" value="publo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;rotati&#9;null&#9;null&#10;rota&#9;PSI&#9;JAVA://android.view.animation.RotateAnimation&#10;rotatio&#9;null&#9;null&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;scaletra&#9;null&#9;null&#10;scaleani&#9;PSI&#9;JAVA://android.view.animation.ScaleAnimation&#10;curveda&#9;null&#9;null&#10;floatingac&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/floating_action_button.dart&#10;checkinpage&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;provid&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;slacklopr&#9;null&#9;null&#10;orderdr&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;util&#9;null&#9;null&#10;showbott&#9;null&#9;null&#10;checkin&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;pro&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;provi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;inheritedModel&#9;null&#9;null&#10;inheritModel&#9;null&#9;null&#10;inherite&#9;null&#9;null&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;indexsta&#9;null&#9;null&#10;indexs&#9;null&#9;null&#10;cachednet&#9;null&#9;null&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;fadein&#9;null&#9;null&#10;che&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;fittedbo&#9;null&#9;null&#10;checkinblop&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;checkinb&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;tabn&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/tab_navigator.dart&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;repo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;local&#9;null&#9;null&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;slack&#9;null&#9;null&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;convers&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;appr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;remoter&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remore&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart" />
+    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;publo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;rotati&#9;null&#9;null&#10;rota&#9;PSI&#9;JAVA://android.view.animation.RotateAnimation&#10;rotatio&#9;null&#9;null&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;scaletra&#9;null&#9;null&#10;scaleani&#9;PSI&#9;JAVA://android.view.animation.ScaleAnimation&#10;curveda&#9;null&#9;null&#10;floatingac&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/floating_action_button.dart&#10;checkinpage&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;provid&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;slacklopr&#9;null&#9;null&#10;orderdr&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;util&#9;null&#9;null&#10;showbott&#9;null&#9;null&#10;checkin&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;pro&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;provi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;inheritedModel&#9;null&#9;null&#10;inheritModel&#9;null&#9;null&#10;inherite&#9;null&#9;null&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;indexsta&#9;null&#9;null&#10;indexs&#9;null&#9;null&#10;cachednet&#9;null&#9;null&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;fadein&#9;null&#9;null&#10;che&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;fittedbo&#9;null&#9;null&#10;checkinblop&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;checkinb&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;tabn&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/tab_navigator.dart&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;repo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;local&#9;null&#9;null&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;slack&#9;null&#9;null&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;convers&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;appr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;remoter&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remore&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_bloc.dart" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/data" />
@@ -727,7 +714,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/main.dart</url>
-          <line>99</line>
+          <line>100</line>
           <option name="timeStamp" value="538" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
@@ -820,13 +807,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
           <caret line="37" column="3" lean-forward="true" selection-start-line="37" selection-start-column="3" selection-end-line="37" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/widgets/visibility.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="53" column="6" selection-start-line="53" selection-start-column="6" selection-end-line="53" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -1117,16 +1097,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/main.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter/flutter/bin/cache/dart-sdk/lib/collection/list.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -1171,10 +1141,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2990">
-          <caret line="173" lean-forward="true" selection-start-line="173" selection-end-line="173" />
+        <state relative-caret-position="306">
+          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/widgets/visibility.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="132" column="45" selection-start-line="132" selection-start-column="45" selection-end-line="132" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/main.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
