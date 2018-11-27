@@ -17,11 +17,6 @@ class _CheckInPageState extends State<CheckInPage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    double figureLeft = screenWidth * (0.4 - 120 / screenWidth / 2);
-    double figureBottom = screenHeight * 0.01;
-
     return CheckInBlocProvider(
       child: Theme(
         data: Theme.of(context).copyWith(
@@ -86,121 +81,98 @@ class _CheckInPageState extends State<CheckInPage> {
                         ),
                       ),
                       Expanded(
-                        child: StreamBuilder<bool>(
-                          stream: bloc.showCheckInBtn.stream,
-                          builder: (context, snapshot) {
-                            String bgFileName;
-                            String figureFileName;
-                            //Default image
-                            if (!snapshot.hasData) {
-                              bgFileName = "bg_street_day.jpg";
-                            } else {
-                              bool shouldShowCheckIn = snapshot.data;
-                              //Jibbled in
-                              if (!shouldShowCheckIn) {
-                                bgFileName = "bg_working.png";
-                              }
-                              //Jibbled out
-                              else {
-                                DateTime now = DateTime.now();
-                                bool isDayNow = now.hour >= 6 && now.hour < 18;
-                                bgFileName = isDayNow
-                                    ? "bg_street_day.jpg"
-                                    : "bg_street_night.jpg";
-                                figureFileName = isDayNow
-                                    ? "man_on_duty.png"
-                                    : "man_off_duty.png";
-                              }
-                            }
-                            Widget figureImage = figureFileName == null
-                                ? Container()
-                                : Image.asset(
-                                    "assets/images/$figureFileName",
-                                    fit: BoxFit.contain,
-                                    key: ValueKey(Random().nextInt(1000)),
-                                  );
-
-                            return Stack(
-                              fit: StackFit.expand,
-                              children: <Widget>[
-                                AnimatedSwitcher(
-                                  duration: Duration(seconds: 1),
-                                  transitionBuilder:
-                                      (child, Animation<double> animation) =>
-                                          FadeTransition(
-                                            opacity: animation,
-                                            child: child,
-                                          ),
-                                  layoutBuilder:
-                                      (currentChild, previousChildren) {
-                                    List<Widget> children = previousChildren;
-                                    if (currentChild != null) {
-                                      children = children.toList()
-                                        ..add(currentChild);
-                                    }
-                                    return Stack(
-                                      fit: StackFit.expand,
-                                      children: children,
-                                    );
-                                  },
-                                  child: Image.asset(
-                                    "assets/images/$bgFileName",
-                                    key: ValueKey(Random().nextInt(1000)),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Positioned(
-                                  width: 120.0,
-                                  height: 120.0,
-                                  left: figureLeft,
-                                  bottom: figureBottom,
-                                  child: AnimatedSwitcher(
-                                    child: figureImage,
-                                    duration: Duration(seconds: 1),
-                                    transitionBuilder: (child, animation) =>
-                                        FadeTransition(
-                                          opacity: animation,
-                                          child: child,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
+                        child: _buildBackgroundImage(),
                       ),
                     ],
                   );
                 },
               ),
-              floatingActionButton: CheckInFab()
-                  /*floatingActionButton: StreamBuilder<String>(
-                stream: bloc.latestJibbleText,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Container();
-                  }
-                  bool isCheckedIn = snapshot.data.contains("in");
-                  IconData icon = isCheckedIn
-                      ? FontAwesomeIcons.signOutAlt
-                      : FontAwesomeIcons.signInAlt;
-                  String label = isCheckedIn ? "下班啦" : "上班啦";
-
-                  return FloatingActionButton.extended(
-                    backgroundColor: Theme.of(context).accentColor,
-                    onPressed: () {
-                      bloc.checkInOrOut(!isCheckedIn);
-                    },
-                    icon: Icon(icon),
-                    label: Text(label),
-                  );
-                },
-              )*/
-                  ,
+              floatingActionButton: CheckInFab(),
             );
           },
         ),
       ),
+    );
+  }
+
+  Widget _buildBackgroundImage() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double figureLeft = screenWidth * (0.4 - 120 / screenWidth / 2);
+    double figureBottom = screenHeight * 0.01;
+    return StreamBuilder<bool>(
+      stream: bloc.showCheckInBtn.stream,
+      builder: (context, snapshot) {
+        String bgFileName;
+        String figureFileName;
+        //Default image
+        if (!snapshot.hasData) {
+          bgFileName = "bg_street_day.jpg";
+        } else {
+          bool shouldShowCheckIn = snapshot.data;
+          //Jibbled in
+          if (!shouldShowCheckIn) {
+            bgFileName = "bg_working.png";
+          }
+          //Jibbled out
+          else {
+            DateTime now = DateTime.now();
+            bool isDayNow = now.hour >= 6 && now.hour < 18;
+            bgFileName = isDayNow ? "bg_street_day.jpg" : "bg_street_night.jpg";
+            figureFileName = isDayNow ? "man_on_duty.png" : "man_off_duty.png";
+          }
+        }
+        Widget figureImage = figureFileName == null
+            ? Container()
+            : Image.asset(
+                "assets/images/$figureFileName",
+                fit: BoxFit.contain,
+                key: ValueKey(Random().nextInt(1000)),
+              );
+
+        return Stack(
+          fit: StackFit.expand,
+          children: <Widget>[
+            AnimatedSwitcher(
+              duration: Duration(seconds: 1),
+              transitionBuilder: (child, Animation<double> animation) =>
+                  FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  ),
+              layoutBuilder: (currentChild, previousChildren) {
+                List<Widget> children = previousChildren;
+                if (currentChild != null) {
+                  children = children.toList()..add(currentChild);
+                }
+                return Stack(
+                  fit: StackFit.expand,
+                  children: children,
+                );
+              },
+              child: Image.asset(
+                "assets/images/$bgFileName",
+                key: ValueKey(Random().nextInt(1000)),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              width: 120.0,
+              height: 120.0,
+              left: figureLeft,
+              bottom: figureBottom,
+              child: AnimatedSwitcher(
+                child: figureImage,
+                duration: Duration(seconds: 1),
+                transitionBuilder: (child, animation) => FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
