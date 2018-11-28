@@ -12,7 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1455656-8e1f-4cfb-960e-3d9918fb16ff" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -33,8 +33,8 @@
       <file leaf-file-name="check_in_page.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="56" column="18" lean-forward="true" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+            <state relative-caret-position="288">
+              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -45,8 +45,8 @@
       <file leaf-file-name="check_in_bloc.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1166">
-              <caret line="89" column="34" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
+            <state relative-caret-position="648">
+              <caret line="36" column="35" lean-forward="true" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -57,8 +57,8 @@
       <file leaf-file-name="repository.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/repository.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="32" column="59" selection-start-line="32" selection-start-column="59" selection-end-line="32" selection-end-column="59" />
+            <state relative-caret-position="522">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
             </state>
           </provider>
         </entry>
@@ -66,7 +66,7 @@
       <file leaf-file-name="main.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/main.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2">
+            <state relative-caret-position="212">
               <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
@@ -78,20 +78,8 @@
       <file leaf-file-name="app_repository.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="271" column="29" selection-start-line="271" selection-start-column="29" selection-end-line="271" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="notification.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/notification.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="90">
+              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -195,13 +183,13 @@
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/lib/data/local/local_repo.dart" />
-        <option value="$PROJECT_DIR$/lib/data/repository.dart" />
-        <option value="$PROJECT_DIR$/lib/data/app_repository.dart" />
         <option value="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" />
         <option value="$PROJECT_DIR$/lib/notification.dart" />
         <option value="$PROJECT_DIR$/lib/main.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
+        <option value="$PROJECT_DIR$/lib/data/repository.dart" />
+        <option value="$PROJECT_DIR$/lib/data/app_repository.dart" />
       </list>
     </option>
   </component>
@@ -1037,7 +1025,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DART_PUB_BUILD_MODE" value="debug" />
-    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;localre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;appre&#9;null&#9;null&#10;repo&#9;null&#9;null&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;publo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;rotati&#9;null&#9;null&#10;rota&#9;PSI&#9;JAVA://android.view.animation.RotateAnimation&#10;rotatio&#9;null&#9;null&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;scaletra&#9;null&#9;null&#10;scaleani&#9;PSI&#9;JAVA://android.view.animation.ScaleAnimation&#10;curveda&#9;null&#9;null&#10;floatingac&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/floating_action_button.dart&#10;checkinpage&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;provid&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;slacklopr&#9;null&#9;null&#10;orderdr&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;util&#9;null&#9;null&#10;showbott&#9;null&#9;null&#10;checkin&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;pro&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;provi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;inheritedModel&#9;null&#9;null&#10;inheritModel&#9;null&#9;null&#10;inherite&#9;null&#9;null&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;indexsta&#9;null&#9;null&#10;indexs&#9;null&#9;null&#10;cachednet&#9;null&#9;null&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;fadein&#9;null&#9;null&#10;che&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;fittedbo&#9;null&#9;null&#10;checkinblop&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;checkinb&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;tabn&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/tab_navigator.dart&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;local&#9;null&#9;null&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;slack&#9;null&#9;null&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;convers&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;appr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;remoter&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remore&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart" />
+    <property name="SearchEverywhereHistoryKey" value="local&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;localre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;appre&#9;null&#9;null&#10;repo&#9;null&#9;null&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;publo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;rotati&#9;null&#9;null&#10;rota&#9;PSI&#9;JAVA://android.view.animation.RotateAnimation&#10;rotatio&#9;null&#9;null&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;scaletra&#9;null&#9;null&#10;scaleani&#9;PSI&#9;JAVA://android.view.animation.ScaleAnimation&#10;curveda&#9;null&#9;null&#10;floatingac&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/material/floating_action_button.dart&#10;checkinpage&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;provid&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;slacklopr&#9;null&#9;null&#10;orderdr&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;util&#9;null&#9;null&#10;showbott&#9;null&#9;null&#10;checkin&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;pro&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;provi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;inheritedModel&#9;null&#9;null&#10;inheritModel&#9;null&#9;null&#10;inherite&#9;null&#9;null&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;indexsta&#9;null&#9;null&#10;indexs&#9;null&#9;null&#10;cachednet&#9;null&#9;null&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;fadein&#9;null&#9;null&#10;che&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;fittedbo&#9;null&#9;null&#10;checkinblop&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc_provider.dart&#10;checkinb&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;tabn&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/tab_navigator.dart&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;slack&#9;null&#9;null&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;convers&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;appr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;remoter&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remore&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/data" />
@@ -1397,7 +1385,7 @@
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.2628205" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914163" weight="0.2628205" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32820514" />
       <window_info anchor="bottom" id="Terminal" order="13" weight="0.32820514" />
       <window_info id="Captures" order="5" weight="0.32904148" />
@@ -1419,7 +1407,7 @@
       <window_info anchor="bottom" id="FindBugs-IDEA" order="14" />
       <window_info id="Designer" order="3" />
       <window_info anchor="bottom" id="Dart Analysis" order="9" weight="0.32820514" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.2628205" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914163" weight="0.2628205" />
       <window_info id="Build Variants" order="2" side_tool="true" weight="0.3297568" />
       <window_info id="Image Layers" order="4" />
       <window_info anchor="right" id="Fabric" order="6" />
@@ -1448,7 +1436,7 @@
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Structure" order="1" sideWeight="0.50212765" side_tool="true" weight="0.18669528" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" weight="0.44102564" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" visible="true" weight="0.44102564" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -1498,6 +1486,11 @@
           <line>62</line>
           <option name="timeStamp" value="509" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/data/app_repository.dart</url>
+          <line>235</line>
+          <option name="timeStamp" value="565" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
@@ -1507,7 +1500,7 @@
           <properties />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="562" />
+      <option name="time" value="569" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -1873,57 +1866,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="271" column="29" selection-start-line="271" selection-start-column="29" selection-end-line="271" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/repository.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="32" column="59" selection-start-line="32" selection-start-column="59" selection-end-line="32" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/notification.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/main.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2">
-          <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/local/app_local_repo.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4761">
-          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1166">
-          <caret line="89" column="34" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/painting/circle_border.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -1938,10 +1880,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/notification.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-206">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/local/app_local_repo.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/repository.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/main.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="36" column="35" lean-forward="true" selection-start-line="36" selection-start-column="35" selection-end-line="36" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="56" column="18" lean-forward="true" selection-start-line="56" selection-start-column="18" selection-end-line="56" selection-end-column="18" />
+        <state relative-caret-position="288">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>

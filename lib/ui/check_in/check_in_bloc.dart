@@ -35,17 +35,17 @@ class CheckInBloc {
   }
 
   void fetchLatestJibbleMessage() {
-    //isReminderEnabled.stream.listen(_handleReminderStatusChange);
-
     Future.delayed(Duration(milliseconds: 300)).then(
         (_) => repository.fetchLatestJibbleMessage().then((messages) async {
               messages = messages.where((message) {
-                if (message.user == AppRepository.jibbleUserId) {
+                if (message.user == null) {
                   return message.text.contains("*jibbled in*") ||
                       message.text.contains("*jibbled out*");
-                } else {
-                  return message.text == "in" || message.text == "out";
                 }
+                return false;
+                /*else {
+                  return message.text == "in" || message.text == "out";
+                }*/
               }).toList(growable: false);
               _jibbleRecords.sink.add(messages);
 
