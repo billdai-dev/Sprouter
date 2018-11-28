@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sprouter/app_provider.dart';
+import 'package:sprouter/notification.dart';
 import 'package:sprouter/ui/check_in/check_in_page.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
@@ -12,7 +14,7 @@ const int drinkPageIndex = 0;
 const int checkInPageIndex = 1;
 
 void main() {
-  runApp(new MaterialApp(
+  runApp(MaterialApp(
     builder: (context, child) => AppStateContainer(
           child: SlackLoginBlocProvider(
             child: TodayDrinkBlocProvider(
@@ -74,6 +76,12 @@ class _MainPageState extends State<MainPage> {
   int _currentPageIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    initializeNotificationSetting(callback: _onNotificationTapped);
+  }
+
+  @override
   Widget build(BuildContext context) {
     Map<int, GlobalKey<NavigatorState>> navigatorKeys =
         AppStateContainer.of(context).navigatorKeys;
@@ -115,6 +123,11 @@ class _MainPageState extends State<MainPage> {
             ]),
       ),
     );
+  }
+
+  Future<dynamic> _onNotificationTapped(String payload) {
+    setState(() => _currentPageIndex = checkInPageIndex);
+    return null;
   }
 }
 

@@ -34,52 +34,7 @@ class _CheckInPageState extends State<CheckInPage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          showBottomSheet(
-                              context: context,
-                              builder: (context) => DetailRecordsBottomSheet());
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          color: Colors.grey,
-                          height: 80.0,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              StreamBuilder<Map<bool, String>>(
-                                stream: bloc.latestJibbleStatus,
-                                builder: (context, snapshot) {
-                                  if (!snapshot.hasData) {
-                                    return Text("無資料");
-                                  }
-                                  bool latestCheckInStatus =
-                                      snapshot.data.keys.first;
-                                  int timestamp =
-                                      int.parse(snapshot.data.values.first);
-                                  String time = Utils.convertTimestamp(
-                                      seconds: timestamp);
-                                  String latestCheckIn =
-                                      latestCheckInStatus ? "上班" : "下班";
-                                  return Text(
-                                    "上次$latestCheckIn時間：$time",
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .title,
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                width: 4.0,
-                              ),
-                              IconButton(
-                                  icon: Icon(FontAwesomeIcons.bellSlash),
-                                  onPressed: () {})
-                            ],
-                          ),
-                        ),
-                      ),
+                      _buildLastCheckInInfo(),
                       Expanded(
                         child: _buildBackgroundImage(),
                       ),
@@ -90,6 +45,65 @@ class _CheckInPageState extends State<CheckInPage> {
               floatingActionButton: CheckInFab(),
             );
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLastCheckInInfo() {
+    return GestureDetector(
+      onTap: () => showBottomSheet(
+          context: context, builder: (context) => DetailRecordsBottomSheet()),
+      child: Container(
+        alignment: Alignment.center,
+        color: Colors.grey,
+        height: 80.0,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            StreamBuilder<Map<bool, String>>(
+              stream: bloc.latestJibbleStatus,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text("無資料");
+                }
+                bool latestCheckInStatus = snapshot.data.keys.first;
+                int timestamp = int.parse(snapshot.data.values.first);
+                String time = Utils.convertTimestamp(seconds: timestamp);
+                String latestCheckIn = latestCheckInStatus ? "上班" : "下班";
+                return Text(
+                  "上次$latestCheckIn時間：$time",
+                  style: Theme.of(context).primaryTextTheme.title,
+                );
+              },
+            ),
+            SizedBox(
+              width: 4.0,
+            ),
+            StreamBuilder<bool>(
+                stream: bloc.isReminderEnabled,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return SizedBox.shrink();
+                  }
+                  bool isReminderEnabled = snapshot.data;
+                  return IconButton(
+                      icon: Icon(
+                        isReminderEnabled
+                            ? FontAwesomeIcons.solidBell
+                            : FontAwesomeIcons.solidBellSlash,
+                        color: isReminderEnabled ? Colors.yellow : null,
+                      ),
+                      onPressed: () async {
+                        await bloc.changeReminderStatus(!isReminderEnabled);
+                        String snackBarText =
+                            isReminderEnabled ? "打卡提醒已解除" : "打卡提醒已啟動";
+                        Scaffold.of(context).showSnackBar(
+                            SnackBar(content: Text(snackBarText)));
+                      });
+                })
+          ],
         ),
       ),
     );
@@ -270,9 +284,9 @@ class _AnimatedFigureState extends State<AnimatedFigure>
       lastEndAngle = angle;
     }
     Animation<Offset> walkingAnimation =
-        TweenSequence(walkingTweenItems).animate(_controller);
+        TweenSequence(walkingTweenItems).animate(controller);
     Animation<double> rotateAnimation =
-        TweenSequence(rotateTweenItems).animate(_controller);
+        TweenSequence(rotateTweenItems).animate(controller);
     return [walkingAnimation, rotateAnimation];
   }
 }
@@ -367,7 +381,6 @@ class _CheckInFabState extends State<CheckInFab>
                 }
                 bloc.showCheckInBtn.add(!shouldShowCheckIn);
               },
-              //backgroundColor: backgroundColor,
               mini: true,
               child: Icon(anotherIcon),
             ),

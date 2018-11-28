@@ -262,4 +262,14 @@ class AppRepository implements Repository {
         .postMessage(jibbleUserId, message)
         .then((response) => response.ok);
   }
+
+  @override
+  Future<bool> getCheckInReminderStatus() {
+    return _localRepo.loadCheckInReminderStatus();
+  }
+
+  @override
+  Future<void> changeCheckInReminderStatus(bool isEnabled) {
+    return _localRepo.saveCheckInReminderStatus(isEnabled);
+  }
 }

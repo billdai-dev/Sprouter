@@ -18,6 +18,10 @@ abstract class LocalRepo {
 
   Future<void> saveJibbleChannelId(String channelId);
 
+  Future<bool> loadCheckInReminderStatus();
+
+  Future<void> saveCheckInReminderStatus(bool isEnabled);
+
   Future<Database> openDB();
 
   Future<void> addShopToDB(String shopName, String threadTs);

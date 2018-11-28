@@ -13,6 +13,7 @@ class AppLocalRepo implements LocalRepo {
   static const String _keyUserId = "keyUserId";
   static const String _keyUserName = "keyUserName";
   static const String _keyJibbleChannelId = "jibbleChannelId";
+  static const String _keyCheckInReminderStatus = "checkInReminderStatus";
 
   static final AppLocalRepo _repo = new AppLocalRepo.internal();
 
@@ -56,6 +57,18 @@ class AppLocalRepo implements LocalRepo {
   Future<void> saveJibbleChannelId(String channelId) {
     return SharedPreferences.getInstance().then((sharedPreferences) =>
         sharedPreferences.setString(_keyJibbleChannelId, channelId));
+  }
+
+  @override
+  Future<void> saveCheckInReminderStatus(bool isEnabled) {
+    return SharedPreferences.getInstance().then((sharedPreferences) =>
+        sharedPreferences.setBool(_keyCheckInReminderStatus, isEnabled));
+  }
+
+  @override
+  Future<bool> loadCheckInReminderStatus() {
+    return SharedPreferences.getInstance()
+        .then((sp) => sp.getBool(_keyCheckInReminderStatus) ?? false);
   }
 
   @override

@@ -27,4 +27,8 @@ abstract class Repository {
   Future<List<Message>> fetchLatestJibbleMessage();
 
   Future<bool> checkInOrOut(bool checkIn);
+
+  Future<bool> getCheckInReminderStatus();
+
+  Future<void> changeCheckInReminderStatus(bool isEnabled);
 }

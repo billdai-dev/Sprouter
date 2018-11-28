@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/notification.dart';
 
 class CheckInBloc {
   final BehaviorSubject<List<Message>> _jibbleRecords = BehaviorSubject();
@@ -17,10 +18,14 @@ class CheckInBloc {
 
   Stream<bool> get latestCheckInStatus => _latestCheckInStatus.stream;
 
-  final BehaviorSubject<bool> showCheckInBtn = BehaviorSubject();
-
   Observable<Map<bool, String>> get latestJibbleStatus => _latestCheckInStatus
       .zipWith(_latestJibbleTimestamp, (isCheckedIn, ts) => {isCheckedIn: ts});
+
+  final BehaviorSubject<bool> showCheckInBtn = BehaviorSubject();
+
+  final BehaviorSubject<bool> _isReminderEnabled = BehaviorSubject();
+
+  Stream<bool> get isReminderEnabled => _isReminderEnabled.stream;
 
   AppRepository repository;
 
@@ -30,8 +35,10 @@ class CheckInBloc {
   }
 
   void fetchLatestJibbleMessage() {
-    Future.delayed(Duration(milliseconds: 300))
-        .then((_) => repository.fetchLatestJibbleMessage().then((messages) {
+    //isReminderEnabled.stream.listen(_handleReminderStatusChange);
+
+    Future.delayed(Duration(milliseconds: 300)).then(
+        (_) => repository.fetchLatestJibbleMessage().then((messages) async {
               messages = messages.where((message) {
                 if (message.user == AppRepository.jibbleUserId) {
                   return message.text.contains("*jibbled in*") ||
@@ -49,6 +56,11 @@ class CheckInBloc {
               _latestJibbleTimestamp.add(latest?.ts?.split(".")[0]);
               _latestCheckInStatus.add(latestCheckInStatus);
               showCheckInBtn.add(shouldShowCheckInBtn);
+
+              bool isReminderEnabled =
+                  await repository.getCheckInReminderStatus();
+              await _setReminder(isReminderEnabled);
+              _isReminderEnabled.sink.add(isReminderEnabled);
             }));
   }
 
@@ -60,10 +72,40 @@ class CheckInBloc {
     return success;
   }
 
+  Future<void> changeReminderStatus(bool isEnabled) async {
+    await repository.changeCheckInReminderStatus(isEnabled);
+    await _setReminder(isEnabled);
+    _isReminderEnabled.sink.add(isEnabled);
+  }
+
+  Future<void> _setReminder(bool isEnabled) {
+    if (!isEnabled) {
+      return cancelNotification();
+    }
+    bool latestCheckInStatus = _latestCheckInStatus.value;
+    if (latestCheckInStatus == null || !latestCheckInStatus) {
+      return null;
+    }
+    String latestTimestamp = _latestJibbleTimestamp.value;
+    if (latestTimestamp == null) {
+      return null;
+    }
+    DateTime scheduledTime =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(latestTimestamp) * 1000)
+            .add(Duration(hours: 8));
+    DateTime now = DateTime.now();
+    if (now.isAfter(scheduledTime)) {
+      return null;
+    }
+    return scheduleNotification(
+        scheduledTime, "Jibble reminder", "你今天 Jibble 了嗎？");
+  }
+
   void dispose() {
     _jibbleRecords?.close();
     _latestJibbleTimestamp?.close();
     _latestCheckInStatus?.close();
     showCheckInBtn?.close();
+    _isReminderEnabled?.close();
   }
 }
