@@ -184,6 +184,7 @@ class _CheckInPageState extends State<CheckInPage> {
 
 class AnimatedFigure extends StatefulWidget {
   final bool isDayNow;
+  final bool isMale = Random().nextBool();
 
   AnimatedFigure(this.isDayNow);
 
@@ -214,8 +215,16 @@ class _AnimatedFigureState extends State<AnimatedFigure>
     double screenHeight = MediaQuery.of(context).size.height;
     double figureBottom = screenHeight * 0.03;
 
-    String figureFileName =
-        isDayNow != null && isDayNow ? "man_on_duty.png" : "man_off_duty.png";
+    String figureFileName = "man_on_duty.png";
+    if (isDayNow != null) {
+      if (isDayNow) {
+        figureFileName =
+            widget.isMale ? "man_on_duty.png" : "woman_on_duty.png";
+      } else {
+        figureFileName =
+            widget.isMale ? "man_off_duty.png" : "woman_off_duty.png";
+      }
+    }
     Widget figureImage = isDayNow == null || figureFileName == null
         ? Container()
         : Image.asset(
