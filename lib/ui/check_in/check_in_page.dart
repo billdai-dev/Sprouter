@@ -34,7 +34,7 @@ class _CheckInPageState extends State<CheckInPage> {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      _buildLastCheckInInfo(),
+                      _buildLastCheckInInfo(context),
                       Expanded(
                         child: _buildBackgroundImage(),
                       ),
@@ -50,60 +50,76 @@ class _CheckInPageState extends State<CheckInPage> {
     );
   }
 
-  Widget _buildLastCheckInInfo() {
+  Widget _buildLastCheckInInfo(BuildContext context) {
     return GestureDetector(
       onTap: () => showBottomSheet(
           context: context, builder: (context) => DetailRecordsBottomSheet()),
-      child: Container(
-        alignment: Alignment.center,
-        color: Colors.grey,
-        height: 80.0,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            StreamBuilder<Map<bool, String>>(
-              stream: bloc.latestJibbleStatus,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Text("無資料");
-                }
-                bool latestCheckInStatus = snapshot.data.keys.first;
-                int timestamp = int.parse(snapshot.data.values.first);
-                String time = Utils.convertTimestamp(seconds: timestamp);
-                String latestCheckIn = latestCheckInStatus ? "上班" : "下班";
-                return Text(
-                  "上次$latestCheckIn時間：$time",
-                  style: Theme.of(context).primaryTextTheme.title,
-                );
-              },
-            ),
-            SizedBox(
-              width: 4.0,
-            ),
-            StreamBuilder<bool>(
-                stream: bloc.isReminderEnabled,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return SizedBox.shrink();
-                  }
-                  bool isReminderEnabled = snapshot.data;
-                  return IconButton(
-                      icon: Icon(
-                        isReminderEnabled
-                            ? FontAwesomeIcons.solidBell
-                            : FontAwesomeIcons.solidBellSlash,
-                        color: isReminderEnabled ? Colors.yellow : null,
-                      ),
-                      onPressed: () async {
-                        await bloc.changeReminderStatus(!isReminderEnabled);
-                        String snackBarText =
-                            isReminderEnabled ? "打卡提醒已解除" : "打卡提醒已啟動";
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text(snackBarText)));
-                      });
-                })
-          ],
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        elevation: 4.0,
+        margin: EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+        child: Container(
+          alignment: Alignment.center,
+          height: 80.0,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Flexible(
+                child: StreamBuilder<Map<bool, String>>(
+                  stream: bloc.latestJibbleStatus,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text("無資料");
+                    }
+                    bool latestCheckInStatus = snapshot.data.keys.first;
+                    int timestamp = int.parse(snapshot.data.values.first);
+                    String time = Utils.convertTimestamp(seconds: timestamp);
+                    String latestCheckIn = latestCheckInStatus ? "上班" : "下班";
+                    return Text(
+                      "$latestCheckIn時間：$time",
+                      style: Theme.of(context).primaryTextTheme.title,
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 4.0,
+              ),
+              StreamBuilder<bool>(
+                  stream: bloc.isReminderEnabled,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return SizedBox.shrink();
+                    }
+                    bool isReminderEnabled = snapshot.data;
+                    return IconButton(
+                        icon: Icon(
+                          isReminderEnabled
+                              ? FontAwesomeIcons.solidBell
+                              : FontAwesomeIcons.solidBellSlash,
+                          color: isReminderEnabled ? Colors.yellow : null,
+                        ),
+                        onPressed: () async {
+                          await bloc.changeReminderStatus(!isReminderEnabled);
+                          String snackBarText =
+                              isReminderEnabled ? "打卡提醒已解除" : "打卡提醒已啟動";
+                          Scaffold.of(context).showSnackBar(
+                              SnackBar(content: Text(snackBarText)));
+                        });
+                  }),
+              IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.angleDown,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () => showBottomSheet(
+                      context: context,
+                      builder: (context) => DetailRecordsBottomSheet())),
+            ],
+          ),
         ),
       ),
     );
