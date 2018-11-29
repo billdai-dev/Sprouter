@@ -67,7 +67,10 @@ class _CheckInPageState extends State<CheckInPage> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Flexible(
+              SizedBox(
+                width: 8.0,
+              ),
+              Expanded(
                 child: StreamBuilder<Map<bool, String>>(
                   stream: bloc.latestJibbleStatus,
                   builder: (context, snapshot) {
@@ -78,9 +81,24 @@ class _CheckInPageState extends State<CheckInPage> {
                     int timestamp = int.parse(snapshot.data.values.first);
                     String time = Utils.convertTimestamp(seconds: timestamp);
                     String latestCheckIn = latestCheckInStatus ? "上班" : "下班";
-                    return Text(
-                      "$latestCheckIn時間：$time",
-                      style: Theme.of(context).primaryTextTheme.title,
+                    TextStyle title = Theme.of(context).primaryTextTheme.title;
+                    return Text.rich(
+                      TextSpan(
+                        text: "上次",
+                        style: title,
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: latestCheckIn,
+                            style: title.copyWith(fontStyle: FontStyle.italic),
+                          ),
+                          TextSpan(
+                            text: " 時間\n",
+                          ),
+                          TextSpan(
+                            text: time,
+                          ),
+                        ],
+                      ),
                     );
                   },
                 ),
