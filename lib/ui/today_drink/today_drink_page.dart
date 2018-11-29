@@ -174,6 +174,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   Widget _createScrollView() {
     return CustomScrollView(
+      physics: AlwaysScrollableScrollPhysics(),
       controller: _scrollController,
       slivers: <Widget>[
         StreamBuilder<Map<String, dynamic>>(
