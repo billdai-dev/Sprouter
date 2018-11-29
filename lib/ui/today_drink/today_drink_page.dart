@@ -91,10 +91,10 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       body: Stack(
         children: <Widget>[
           Platform.isIOS
-              ? _createScrollView()
+              ? _buildScrollView()
               : RefreshIndicator(
-                  child: _createScrollView(),
-                  onRefresh: () => _createRefreshCallback(),
+                  child: _buildScrollView(),
+                  onRefresh: () => _buildRefreshCallback(),
                 ),
           Positioned(
             child: _buildShowMoreContentButton(),
@@ -172,7 +172,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createScrollView() {
+  Widget _buildScrollView() {
     return CustomScrollView(
       physics: AlwaysScrollableScrollPhysics(),
       controller: _scrollController,
@@ -195,7 +195,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               expandedHeight: 220.0,
               pinned: true,
               floating: false,
-              title: _createTitle(messages),
+              title: _buildTitle(messages),
               actions: <Widget>[
                 _SlackLoginAction(
                   animation: _slackIconAnimation,
@@ -216,24 +216,24 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               flexibleSpace: FlexibleSpaceBar(
                 background: snapshot.hasError
                     ? Container(color: Colors.grey)
-                    : _createShopImage(context, token, messages),
+                    : _buildShopImage(context, token, messages),
               ),
             );
           },
         ),
         CupertinoSliverRefreshControl(
-          onRefresh: () => _createRefreshCallback(),
+          onRefresh: () => _buildRefreshCallback(),
         ),
         StreamBuilder<List<Message>>(
           stream: todayDrinkBloc?.drinkMessage,
           builder: (context, snapshot) =>
-              _createReplyListView(context, snapshot),
+              _buildReplyListView(context, snapshot),
         )
       ],
     );
   }
 
-  Future<void> _createRefreshCallback() async {
+  Future<void> _buildRefreshCallback() async {
     todayDrinkBloc?.fetchMessage?.add(null);
     await todayDrinkBloc.drinkMessage
         .timeout(Duration(seconds: 3), onTimeout: (sink) => sink.close())
@@ -241,7 +241,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     return null;
   }
 
-  Widget _createReplyListView(
+  Widget _buildReplyListView(
       BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
     if (snapshot.hasError) {
       return SliverFillRemaining(child: Center(child: Text("目前尚無資料")));
@@ -267,7 +267,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       delegate: SliverChildBuilderDelegate((context, index) {
         return Column(
           children: <Widget>[
-            _createMessageTile(isOrdering, index, replies[index]),
+            _buildMessageTile(isOrdering, index, replies[index]),
             Divider(height: 2.0)
           ],
         );
@@ -275,7 +275,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createMessageTile(bool isOrdering, int index, Message reply) {
+  Widget _buildMessageTile(bool isOrdering, int index, Message reply) {
     bool isAddedBySprouter = reply?.isAddedBySprouter ?? false;
     bool isFavoriteDrink =
         isAddedBySprouter && (reply?.isFavoriteDrink ?? false);
@@ -300,6 +300,9 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     userName = Utils.isStringNullOrEmpty(userName)
         ? reply?.userProfile?.realName
         : userName;
+    int replyTs = int.parse(reply?.ts?.split(".")[0]) * 1000;
+    String replyTime = Utils.getTimeDeltaStatement(
+        DateTime.fromMillisecondsSinceEpoch(replyTs));
 
     Widget listTile = ListTile(
       key: ValueKey(reply?.ts),
@@ -313,20 +316,30 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                     headers: {"Authorization": "Bearer ${snapshot.data}"},
                   ),
                 )
-              : SizedBox(
-                  width: 0.0,
-                  height: 0.0,
-                );
+              : SizedBox.shrink();
         },
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            userName,
-            style: Theme.of(context).primaryTextTheme.subhead,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                userName,
+                style: Theme.of(context).primaryTextTheme.subhead,
+              ),
+              SizedBox(width: 8.0),
+              Text(
+                replyTime,
+                style: Theme.of(context)
+                    .primaryTextTheme
+                    .body1
+                    .copyWith(color: Colors.grey.shade400),
+              )
+            ],
           ),
-          SizedBox(height: 3.0),
+          SizedBox(height: 4.0),
           Text(
             reply?.text,
             style: Theme.of(context).primaryTextTheme.body2,
@@ -371,7 +384,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         : listTile;
   }
 
-  Widget _createTitle(List<Message> messages) {
+  Widget _buildTitle(List<Message> messages) {
     if (messages == null || messages.isEmpty) {
       return Text("");
     }
@@ -384,7 +397,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _createShopImage(
+  Widget _buildShopImage(
       BuildContext context, String token, List<Message> messages) {
     if (Utils.isListNullOrEmpty(messages)) {
       return Container(
