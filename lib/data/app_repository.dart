@@ -60,9 +60,15 @@ class AppRepository implements Repository {
   Future<List<Message>> fetchLatestDrinkMessages() async {
     const String orderBroadcastKeyword = "今天點的是";
 
+    DateTime now = DateTime.now();
+    int midnightMilliseconds =
+        now.subtract(Duration(days: 1, hours: now.hour)).millisecondsSinceEpoch;
+
     Message thread = await _remoteRepo
         .fetchConversationHistory(
-            _lunchChannel) //1. 抓出 Lunch channel 前 N 筆 message
+      _lunchChannel,
+      oldest: (midnightMilliseconds / 1000).floor().toString(),
+    ) //1. 抓出 Lunch channel "一天內" 的前 N 筆 message
         .then((conversationList) async {
       if (!conversationList.ok) {
         throw ApiError(conversationList.error);
@@ -70,7 +76,8 @@ class AppRepository implements Repository {
       List<Message> messages = conversationList.messages.toList();
       //2. 用關鍵字 parse 出"最新"廣播訊息的 message
       Message orderBroadcastMessage = messages.firstWhere(
-          (message) => message.text.contains(orderBroadcastKeyword));
+          (message) => message.text.contains(orderBroadcastKeyword),
+          orElse: () => null);
       //3. 找出店家名稱
       String shopName = orderBroadcastMessage == null
           ? ""
@@ -81,12 +88,17 @@ class AppRepository implements Repository {
           return false; //點單 thread 必定有 file (菜單圖片)，先過濾一層
         }
         return message.files[0].title.contains(shopName);
-      });
-      await _localRepo.addShopToDB(shopName, drinkMessage.ts); //保存店家資料到DB
+      }, orElse: () => null);
+      if (!Utils.isStringNullOrEmpty(shopName) && drinkMessage != null) {
+        await _localRepo.addShopToDB(shopName, drinkMessage?.ts); //保存店家資料到DB
+      }
       return drinkMessage;
     });
-    String shopName = thread.files[0]?.title?.split(" ")[1];
-    String ts = thread.threadTs;
+    if (thread == null) {
+      return [];
+    }
+    String shopName = thread?.files[0]?.title?.split(" ")[1];
+    String ts = thread?.ts;
 
     //5. 抓 Slack team 中所有成員資料
     Future<List<Members>> getMembersFuture =
@@ -137,10 +149,9 @@ class AppRepository implements Repository {
       if (!(results[3] is List<Message>)) {
         return [];
       }
-      //_userId ??= await _localRepo.loadUserId();
 
       List<Message> drinkMessages = results[3];
-      List<Message> zippedMessages = List();
+      List<Message> zippedMessages = [];
       for (Message message in drinkMessages) {
         int memberIndex =
             _members?.indexWhere((member) => member.id == message.user);

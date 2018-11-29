@@ -65,11 +65,11 @@ class TodayDrinkBloc {
       _drinkShopMessage =
           Utils.isListNullOrEmpty(_drinkMessages) ? null : _drinkMessages[0];
 
-      List<Message> orderKeywords = _drinkMessages.where((message) {
+      List<Message> orderKeywords = _drinkMessages?.where((message) {
         return message.text == "點單" || message.text == "收單";
-      }).toList(growable: false);
+      })?.toList(growable: false);
 
-      _isOrdering.sink.add(orderKeywords.length.isOdd);
+      _isOrdering.sink.add(orderKeywords?.length?.isOdd);
       _drinkMessage.sink.add(_drinkMessages);
 
       String token = await this.repository.getTokenCache();

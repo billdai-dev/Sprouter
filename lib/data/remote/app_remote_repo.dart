@@ -128,6 +128,8 @@ class AppRemoteRepo implements RemoteRepo {
     var query = {
       "channel": channel,
       "limit": limit,
+      "oldest": oldest,
+      "latest": latest,
     };
     query.removeWhere((key, value) => value == null);
     Future<Response> response = dio.get(_conversationHistoryPath, data: query);
@@ -139,7 +141,10 @@ class AppRemoteRepo implements RemoteRepo {
 
   @override
   Future<ConversationHistory> fetchMessageReplies(String channel, String ts) {
-    var query = {"channel": channel, "ts": ts};
+    var query = {
+      "channel": channel,
+      "ts": ts,
+    };
     query.removeWhere((key, value) => value == null);
     Future<Response> response = dio.get(_conversationRepliesPath, data: query);
     return response.then((response) {

@@ -38,7 +38,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   TodayDrinkBloc todayDrinkBloc;
   SlackLoginBloc slackLoginBloc;
 
-  StreamSubscription authErrorHandler;
+  StreamSubscription drinkMessagesErrorHandler;
 
   AnimationController _slackIconController;
   Animation<double> _slackIconAnimation;
@@ -76,7 +76,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   @override
   Widget build(BuildContext context) {
     todayDrinkBloc = TodayDrinkBlocProvider.of(context);
-    authErrorHandler ??=
+    drinkMessagesErrorHandler ??=
         todayDrinkBloc.drinkMessage.listen((_) {}, onError: (e) {
       if (e is AuthError) {
         _scaffoldKey?.currentState?.showSnackBar(SnackBar(
@@ -112,7 +112,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   void dispose() {
     _slackIconController?.dispose();
     _scrollController?.dispose();
-    authErrorHandler?.cancel();
+    drinkMessagesErrorHandler?.cancel();
     super.dispose();
   }
 
@@ -183,7 +183,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               (token, message) => {_ARG_MESSAGES: message, _ARG_TOKEN: token}),
           builder: (context, snapshot) {
             List<Message> messages =
-                snapshot.hasData ? snapshot.data[_ARG_MESSAGES] : [];
+                snapshot.hasData ? snapshot.data[_ARG_MESSAGES] : null;
             String token = snapshot.hasData ? snapshot.data[_ARG_TOKEN] : "";
             if (token == null || token.isEmpty) {
               _slackIconController?.forward();
@@ -247,12 +247,12 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     }
     List<Message> drinkThread = snapshot.data;
     List<Message> replies;
-    if (drinkThread == null ||
-        (replies = drinkThread?.skip(1)?.toList(growable: false)) == null ||
-        replies.isEmpty) {
-      return SliverFillRemaining(
-          child: Center(child: CircularProgressIndicator()));
+    if (Utils.isListNullOrEmpty(drinkThread)) {
+      Widget child =
+          drinkThread == null ? CircularProgressIndicator() : Text("暫無資料");
+      return SliverFillRemaining(child: Center(child: child));
     }
+    replies = drinkThread.skip(1).toList(growable: false);
 
     Message lastOrderKeywords = drinkThread.lastWhere((message) {
       return message.text == "點單" || message.text == "收單";
@@ -385,10 +385,13 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   Widget _createShopImage(
       BuildContext context, String token, List<Message> messages) {
-    if (messages == null || messages.isEmpty) {
+    if (Utils.isListNullOrEmpty(messages)) {
       return Container(
           color: Colors.white,
-          child: Center(child: CircularProgressIndicator()));
+          child: Center(
+              child: messages == null
+                  ? CircularProgressIndicator()
+                  : Text("暫無資料")));
     }
     String imageUrl = messages[0].files[0].thumb800;
     return Container(
