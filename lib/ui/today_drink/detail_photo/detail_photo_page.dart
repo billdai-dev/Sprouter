@@ -13,7 +13,7 @@ class DetailPhotoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(
           _title ?? "",

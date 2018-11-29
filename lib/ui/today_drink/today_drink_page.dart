@@ -144,9 +144,6 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
         stream: todayDrinkBloc?.showMoreContentIndicator?.stream,
         initialData: false,
         builder: (context, snapshot) {
-          /*var scrollPosition = _scrollController.position;
-          bool isInViewport =
-              scrollPosition.pixels - scrollPosition.maxScrollExtent == 0;*/
           return Visibility(
             child: RaisedButton.icon(
               label: Text("查看最新內容"),
@@ -156,11 +153,10 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               ),
               color: Colors.greenAccent,
               onPressed: () {
-                //Hard-coded due to unknown bug with maxScrollExtent
                 _scrollController?.animateTo(
-                  100000.0,
+                  _scrollController.position.maxScrollExtent,
                   duration: Duration(milliseconds: 500),
-                  curve: Curves.easeInOut,
+                  curve: Curves.fastOutSlowIn,
                 );
                 todayDrinkBloc?.showMoreContentIndicator?.add(false);
               },
