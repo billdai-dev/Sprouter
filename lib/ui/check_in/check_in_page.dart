@@ -17,54 +17,56 @@ class _CheckInPageState extends State<CheckInPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CheckInBlocProvider(
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          canvasColor: Colors.transparent,
-        ),
-        child: Builder(
-          builder: (context) {
-            bloc = CheckInBlocProvider.of(context);
-            return Scaffold(
-              appBar: AppBar(
-                title: Text("Sprouter"),
-              ),
-              body: Builder(
-                builder: (context) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      _buildLastCheckInInfo(context),
-                      Expanded(
-                        child: _buildBackgroundImage(),
-                      ),
-                    ],
-                  );
-                },
-              ),
-              floatingActionButton: CheckInFab(),
-            );
-          },
-        ),
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Colors.transparent,
+      ),
+      child: Builder(
+        builder: (context) {
+          bloc = CheckInBlocProvider.of(context);
+          return Scaffold(
+            appBar: AppBar(
+              title: Text("Sprouter"),
+            ),
+            body: Builder(
+              builder: (context) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    _buildLastCheckInInfo(context),
+                    Expanded(
+                      child: _buildBackgroundImage(),
+                    ),
+                  ],
+                );
+              },
+            ),
+            floatingActionButton: CheckInFab(),
+          );
+        },
       ),
     );
   }
 
   Widget _buildLastCheckInInfo(BuildContext context) {
-    return GestureDetector(
-      onTap: () => showBottomSheet(
-          context: context, builder: (context) => DetailRecordsBottomSheet()),
-      child: StreamBuilder(
-        stream: bloc.showCheckInBtn,
-        builder: (context, snapshot) {
-          Color containerColor;
-          bool showCheckIn = snapshot.data;
-          if (showCheckIn != null && showCheckIn) {
-            DateTime now = DateTime.now();
-            bool isDayNow = now.hour >= 6 && now.hour < 18;
-            containerColor = isDayNow ? Color(0xffb4e0fb) : Color(0xff00121E);
-          }
-          return Container(
+    return StreamBuilder(
+      stream: bloc.showCheckInBtn,
+      builder: (context, snapshot) {
+        Color containerColor;
+        bool showCheckIn = snapshot.data;
+        if (showCheckIn != null && showCheckIn) {
+          DateTime now = DateTime.now();
+          bool isDayNow = now.hour >= 6 && now.hour < 18;
+          containerColor = isDayNow ? Color(0xffb4e0fb) : Color(0xff00121E);
+        }
+        return GestureDetector(
+          onTap: () => showCheckIn == null
+              ? null
+              : showBottomSheet(
+                  context: context,
+                  builder: (context) => DetailRecordsBottomSheet(),
+                ),
+          child: Container(
             color: containerColor,
             child: Card(
               shape: RoundedRectangleBorder(
@@ -87,7 +89,12 @@ class _CheckInPageState extends State<CheckInPage> {
                         stream: bloc.latestJibbleStatus,
                         builder: (context, snapshot) {
                           if (!snapshot.hasData) {
-                            return Text("無資料");
+                            return Center(
+                              child: Text(
+                                "暫無資料",
+                                style: Theme.of(context).primaryTextTheme.title,
+                              ),
+                            );
                           }
                           bool latestCheckInStatus = snapshot.data.keys.first;
                           int timestamp = int.parse(snapshot.data.values.first);
@@ -151,21 +158,24 @@ class _CheckInPageState extends State<CheckInPage> {
                                     SnackBar(content: Text(snackBarText)));
                               });
                         }),
-                    IconButton(
-                        icon: Icon(
-                          FontAwesomeIcons.angleDown,
-                          color: Colors.grey,
-                        ),
-                        onPressed: () => showBottomSheet(
-                            context: context,
-                            builder: (context) => DetailRecordsBottomSheet())),
+                    showCheckIn == null
+                        ? SizedBox.shrink()
+                        : IconButton(
+                            icon: Icon(
+                              FontAwesomeIcons.angleDown,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () => showBottomSheet(
+                                context: context,
+                                builder: (context) =>
+                                    DetailRecordsBottomSheet())),
                   ],
                 ),
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

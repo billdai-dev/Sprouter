@@ -4,6 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/notification.dart';
+import 'package:sprouter/util/utils.dart';
 
 class CheckInBloc {
   final BehaviorSubject<List<Message>> _jibbleRecords = BehaviorSubject();
@@ -37,7 +38,10 @@ class CheckInBloc {
   void fetchLatestJibbleMessage() {
     Future.delayed(Duration(milliseconds: 300)).then(
         (_) => repository.fetchLatestJibbleMessage().then((messages) async {
-              messages = messages.where((message) {
+              if (Utils.isListNullOrEmpty(messages)) {
+                return;
+              }
+              messages = messages?.where((message) {
                 if (message.user != null) {
                   return message.text == "in" || message.text == "out";
                 }
@@ -45,14 +49,16 @@ class CheckInBloc {
                 /*else {
                   return message.text == "in" || message.text == "out";
                 }*/
-              }).toList(growable: false);
+              })?.toList(growable: false);
               _jibbleRecords.sink.add(messages);
 
-              Message latest = messages.first;
+              Message latest = messages?.first;
               bool latestCheckInStatus = latest?.text?.contains("in");
-              bool shouldShowCheckInBtn = !latestCheckInStatus;
+              bool shouldShowCheckInBtn =
+                  latestCheckInStatus == null ? null : !latestCheckInStatus;
 
-              _latestJibbleTimestamp.add(latest?.ts?.split(".")[0]);
+              String ts = latest?.ts == null ? null : latest?.ts?.split(".")[0];
+              _latestJibbleTimestamp.add(ts);
               _latestCheckInStatus.add(latestCheckInStatus);
               showCheckInBtn.add(shouldShowCheckInBtn);
 

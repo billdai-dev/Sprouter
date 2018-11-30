@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sprouter/app_provider.dart';
 import 'package:sprouter/notification.dart';
+import 'package:sprouter/ui/check_in/check_in_bloc_provider.dart';
 import 'package:sprouter/ui/check_in/check_in_page.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/today_drink/today_drink_bloc_provider.dart';
@@ -18,7 +19,9 @@ void main() {
     builder: (context, child) => AppStateContainer(
           child: SlackLoginBlocProvider(
             child: TodayDrinkBlocProvider(
-              child: child,
+              child: CheckInBlocProvider(
+                child: child,
+              ),
             ),
           ),
         ),

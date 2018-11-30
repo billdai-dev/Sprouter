@@ -9,6 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/remote/api_error.dart';
+import 'package:sprouter/ui/check_in/check_in_bloc_provider.dart';
+import 'package:sprouter/ui/empty_data_view.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc.dart';
 import 'package:sprouter/ui/slack_login/slack_login_bloc_provider.dart';
 import 'package:sprouter/ui/slack_login/slack_login_web_view_page.dart';
@@ -204,6 +206,8 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                           SlackLoginWebViewPage(),
                     ));
                     if (success != null && success) {
+                      CheckInBlocProvider.of(context)
+                          .fetchLatestJibbleMessage();
                       todayDrinkBloc?.fetchMessage?.add(null);
                     }
                   },
@@ -211,7 +215,10 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               ],
               flexibleSpace: FlexibleSpaceBar(
                 background: snapshot.hasError
-                    ? Container(color: Colors.grey)
+                    ? Container(
+                        color: Colors.grey,
+                        child: EmptyDataView(),
+                      )
                     : _buildShopImage(context, token, messages),
               ),
             );
@@ -240,13 +247,13 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   Widget _buildReplyListView(
       BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
     if (snapshot.hasError) {
-      return SliverFillRemaining(child: Center(child: Text("目前尚無資料")));
+      return SliverFillRemaining(child: EmptyDataView());
     }
     List<Message> drinkThread = snapshot.data;
     List<Message> replies;
     if (Utils.isListNullOrEmpty(drinkThread)) {
       Widget child =
-          drinkThread == null ? CircularProgressIndicator() : Text("暫無資料");
+          drinkThread == null ? CircularProgressIndicator() : EmptyDataView();
       return SliverFillRemaining(child: Center(child: child));
     }
     replies = drinkThread.skip(1).toList(growable: false);
@@ -382,7 +389,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   Widget _buildTitle(List<Message> messages) {
     if (messages == null || messages.isEmpty) {
-      return Text("");
+      return Text("Sprouter");
     }
     List<String> parsedTitle = messages[0]?.files[0]?.title?.split(" ");
     String shopName =
@@ -397,11 +404,10 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       BuildContext context, String token, List<Message> messages) {
     if (Utils.isListNullOrEmpty(messages)) {
       return Container(
-          color: Colors.white,
-          child: Center(
-              child: messages == null
-                  ? CircularProgressIndicator()
-                  : Text("暫無資料")));
+          alignment: Alignment.center,
+          color: Colors.grey,
+          child:
+              messages == null ? CircularProgressIndicator() : EmptyDataView());
     }
     String imageUrl = messages[0].files[0].thumb800;
     return Container(

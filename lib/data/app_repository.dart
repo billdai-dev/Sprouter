@@ -263,7 +263,7 @@ class AppRepository implements Repository {
     return jibbleChannelIdFuture
         .then((jibbleChannelId) =>
             _remoteRepo.fetchConversationHistory(jibbleChannelId, limit: 10))
-        .then((conversationHistory) => conversationHistory.messages.toList());
+        .then((conversationHistory) => conversationHistory?.messages?.toList());
   }
 
   @override
