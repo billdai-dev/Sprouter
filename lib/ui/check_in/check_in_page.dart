@@ -54,91 +54,111 @@ class _CheckInPageState extends State<CheckInPage> {
     return GestureDetector(
       onTap: () => showBottomSheet(
           context: context, builder: (context) => DetailRecordsBottomSheet()),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        elevation: 4.0,
-        margin: EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
-        child: Container(
-          alignment: Alignment.center,
-          height: 80.0,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: 8.0,
+      child: StreamBuilder(
+        stream: bloc.showCheckInBtn,
+        builder: (context, snapshot) {
+          Color containerColor;
+          bool showCheckIn = snapshot.data;
+          if (showCheckIn != null && showCheckIn) {
+            DateTime now = DateTime.now();
+            bool isDayNow = now.hour >= 6 && now.hour < 18;
+            containerColor = isDayNow ? Color(0xffb4e0fb) : Color(0xff00121E);
+          }
+          return Container(
+            color: containerColor,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
               ),
-              Expanded(
-                child: StreamBuilder<Map<bool, String>>(
-                  stream: bloc.latestJibbleStatus,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return Text("無資料");
-                    }
-                    bool latestCheckInStatus = snapshot.data.keys.first;
-                    int timestamp = int.parse(snapshot.data.values.first);
-                    String time = Utils.convertTimestamp(seconds: timestamp);
-                    String latestCheckIn = latestCheckInStatus ? "上班" : "下班";
-                    TextStyle title = Theme.of(context).primaryTextTheme.title;
-                    return Text.rich(
-                      TextSpan(
-                        text: "上次",
-                        style: title,
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: latestCheckIn,
-                            style: title.copyWith(fontStyle: FontStyle.italic),
-                          ),
-                          TextSpan(
-                            text: " 時間\n",
-                          ),
-                          TextSpan(
-                            text: time,
-                          ),
-                        ],
+              elevation: 4.0,
+              margin: EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 8.0),
+              child: Container(
+                alignment: Alignment.center,
+                height: 80.0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      width: 8.0,
+                    ),
+                    Expanded(
+                      child: StreamBuilder<Map<bool, String>>(
+                        stream: bloc.latestJibbleStatus,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Text("無資料");
+                          }
+                          bool latestCheckInStatus = snapshot.data.keys.first;
+                          int timestamp = int.parse(snapshot.data.values.first);
+                          String time =
+                              Utils.convertTimestamp(seconds: timestamp);
+                          String latestCheckIn =
+                              latestCheckInStatus ? "上班" : "下班";
+                          TextStyle title =
+                              Theme.of(context).primaryTextTheme.title;
+                          return Text.rich(
+                            TextSpan(
+                              text: "上次",
+                              style: title,
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: latestCheckIn,
+                                  style: title.copyWith(
+                                      fontStyle: FontStyle.italic),
+                                ),
+                                TextSpan(
+                                  text: " 時間\n",
+                                ),
+                                TextSpan(
+                                  text: time,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
+                    ),
+                    SizedBox(
+                      width: 4.0,
+                    ),
+                    StreamBuilder<bool>(
+                        stream: bloc.isReminderEnabled,
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return SizedBox.shrink();
+                          }
+                          bool isReminderEnabled = snapshot.data;
+                          return IconButton(
+                              icon: Icon(
+                                isReminderEnabled
+                                    ? FontAwesomeIcons.solidBell
+                                    : FontAwesomeIcons.solidBellSlash,
+                                color: isReminderEnabled ? Colors.yellow : null,
+                              ),
+                              onPressed: () async {
+                                await bloc
+                                    .changeReminderStatus(!isReminderEnabled);
+                                String snackBarText =
+                                    isReminderEnabled ? "打卡提醒已解除" : "打卡提醒已啟動";
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text(snackBarText)));
+                              });
+                        }),
+                    IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.angleDown,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () => showBottomSheet(
+                            context: context,
+                            builder: (context) => DetailRecordsBottomSheet())),
+                  ],
                 ),
               ),
-              SizedBox(
-                width: 4.0,
-              ),
-              StreamBuilder<bool>(
-                  stream: bloc.isReminderEnabled,
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return SizedBox.shrink();
-                    }
-                    bool isReminderEnabled = snapshot.data;
-                    return IconButton(
-                        icon: Icon(
-                          isReminderEnabled
-                              ? FontAwesomeIcons.solidBell
-                              : FontAwesomeIcons.solidBellSlash,
-                          color: isReminderEnabled ? Colors.yellow : null,
-                        ),
-                        onPressed: () async {
-                          await bloc.changeReminderStatus(!isReminderEnabled);
-                          String snackBarText =
-                              isReminderEnabled ? "打卡提醒已解除" : "打卡提醒已啟動";
-                          Scaffold.of(context).showSnackBar(
-                              SnackBar(content: Text(snackBarText)));
-                        });
-                  }),
-              IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.angleDown,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () => showBottomSheet(
-                      context: context,
-                      builder: (context) => DetailRecordsBottomSheet())),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
