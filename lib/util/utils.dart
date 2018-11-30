@@ -33,4 +33,28 @@ class Utils {
     }
     return "";
   }
+
+  static String parseShopName(String fileTitle) {
+    if (fileTitle == null) {
+      return "";
+    }
+    String title = fileTitle?.split(" ")[1];
+    String modifiedTitle = title.toLowerCase();
+    final String gap = "門檻";
+    int gapIndex = modifiedTitle.indexOf(gap);
+    final String tel = modifiedTitle.contains("電話") ? "電話" : "tel";
+    int telIndex = modifiedTitle.indexOf(tel);
+    String shopName;
+    if (gapIndex == -1 && gapIndex == -1) {
+      shopName = title;
+    } else if (gapIndex != -1 && telIndex == -1) {
+      shopName = title.replaceRange(gapIndex, title.length, "");
+    } else if (gapIndex == -1 && telIndex != -1) {
+      shopName = title.replaceRange(telIndex, title.length, "");
+    } else {
+      int index = gapIndex < telIndex ? gapIndex : telIndex;
+      shopName = title.replaceRange(index, title.length, "");
+    }
+    return shopName;
+  }
 }

@@ -97,7 +97,8 @@ class AppRepository implements Repository {
     if (thread == null) {
       return [];
     }
-    String shopName = thread?.files[0]?.title?.split(" ")[1];
+
+    String shopName = Utils.parseShopName(thread?.files[0]?.title);
     String ts = thread?.ts;
 
     //5. 抓 Slack team 中所有成員資料
