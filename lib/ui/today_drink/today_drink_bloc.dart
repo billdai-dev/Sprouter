@@ -68,8 +68,9 @@ class TodayDrinkBloc {
       List<Message> orderKeywords = _drinkMessages?.where((message) {
         return message.text == "點單" || message.text == "收單";
       })?.toList(growable: false);
-      bool isNowOrdering =
-          orderKeywords.isNotEmpty && orderKeywords.last.text == "點單";
+      bool isNowOrdering = orderKeywords != null &&
+          orderKeywords.isNotEmpty &&
+          orderKeywords.last.text == "點單";
       _isOrdering.sink.add(isNowOrdering);
       _drinkMessage.sink.add(_drinkMessages);
 

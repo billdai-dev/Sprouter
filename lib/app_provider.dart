@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'main.dart';
+import 'package:sprouter/ui/main_app.dart';
 
 class AppStateContainer extends StatefulWidget {
   final Widget child;

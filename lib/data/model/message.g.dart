@@ -190,12 +190,19 @@ class _$ReplySerializer implements StructuredSerializer<Reply> {
   @override
   Iterable serialize(Serializers serializers, Reply object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'user',
-      serializers.serialize(object.user, specifiedType: const FullType(String)),
-      'ts',
-      serializers.serialize(object.ts, specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
+    if (object.user != null) {
+      result
+        ..add('user')
+        ..add(serializers.serialize(object.user,
+            specifiedType: const FullType(String)));
+    }
+    if (object.ts != null) {
+      result
+        ..add('ts')
+        ..add(serializers.serialize(object.ts,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -235,122 +242,247 @@ class _$FileSerializer implements StructuredSerializer<File> {
   @override
   Iterable serialize(Serializers serializers, File object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'created',
-      serializers.serialize(object.created, specifiedType: const FullType(int)),
-      'timestamp',
-      serializers.serialize(object.timestamp,
-          specifiedType: const FullType(int)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'title',
-      serializers.serialize(object.title,
-          specifiedType: const FullType(String)),
-      'mimetype',
-      serializers.serialize(object.mimetype,
-          specifiedType: const FullType(String)),
-      'filetype',
-      serializers.serialize(object.filetype,
-          specifiedType: const FullType(String)),
-      'pretty_type',
-      serializers.serialize(object.prettyType,
-          specifiedType: const FullType(String)),
-      'user',
-      serializers.serialize(object.user, specifiedType: const FullType(String)),
-      'editable',
-      serializers.serialize(object.editable,
-          specifiedType: const FullType(bool)),
-      'size',
-      serializers.serialize(object.size, specifiedType: const FullType(int)),
-      'mode',
-      serializers.serialize(object.mode, specifiedType: const FullType(String)),
-      'is_external',
-      serializers.serialize(object.isExternal,
-          specifiedType: const FullType(bool)),
-      'external_type',
-      serializers.serialize(object.externalType,
-          specifiedType: const FullType(String)),
-      'is_public',
-      serializers.serialize(object.isPublic,
-          specifiedType: const FullType(bool)),
-      'public_url_shared',
-      serializers.serialize(object.publicUrlShared,
-          specifiedType: const FullType(bool)),
-      'display_as_bot',
-      serializers.serialize(object.displayAsBot,
-          specifiedType: const FullType(bool)),
-      'username',
-      serializers.serialize(object.username,
-          specifiedType: const FullType(String)),
-      'url_private',
-      serializers.serialize(object.urlPrivate,
-          specifiedType: const FullType(String)),
-      'url_private_download',
-      serializers.serialize(object.urlPrivateDownload,
-          specifiedType: const FullType(String)),
-      'thumb_64',
-      serializers.serialize(object.thumb64,
-          specifiedType: const FullType(String)),
-      'thumb_80',
-      serializers.serialize(object.thumb80,
-          specifiedType: const FullType(String)),
-      'thumb_360',
-      serializers.serialize(object.thumb360,
-          specifiedType: const FullType(String)),
-      'thumb_360_w',
-      serializers.serialize(object.thumb360W,
-          specifiedType: const FullType(int)),
-      'thumb_360_h',
-      serializers.serialize(object.thumb360H,
-          specifiedType: const FullType(int)),
-      'thumb_480',
-      serializers.serialize(object.thumb480,
-          specifiedType: const FullType(String)),
-      'thumb_480_w',
-      serializers.serialize(object.thumb480W,
-          specifiedType: const FullType(int)),
-      'thumb_480_h',
-      serializers.serialize(object.thumb480H,
-          specifiedType: const FullType(int)),
-      'thumb_160',
-      serializers.serialize(object.thumb160,
-          specifiedType: const FullType(String)),
-      'thumb_720',
-      serializers.serialize(object.thumb720,
-          specifiedType: const FullType(String)),
-      'thumb_720_w',
-      serializers.serialize(object.thumb720W,
-          specifiedType: const FullType(int)),
-      'thumb_720_h',
-      serializers.serialize(object.thumb720H,
-          specifiedType: const FullType(int)),
-      'thumb_800',
-      serializers.serialize(object.thumb800,
-          specifiedType: const FullType(String)),
-      'thumb_800_w',
-      serializers.serialize(object.thumb800W,
-          specifiedType: const FullType(int)),
-      'thumb_800_h',
-      serializers.serialize(object.thumb800H,
-          specifiedType: const FullType(int)),
-      'image_exif_rotation',
-      serializers.serialize(object.imageExifRotation,
-          specifiedType: const FullType(int)),
-      'original_w',
-      serializers.serialize(object.originalW,
-          specifiedType: const FullType(int)),
-      'original_h',
-      serializers.serialize(object.originalH,
-          specifiedType: const FullType(int)),
-      'permalink',
-      serializers.serialize(object.permalink,
-          specifiedType: const FullType(String)),
-      'permalink_public',
-      serializers.serialize(object.permalinkPublic,
-          specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
+    if (object.created != null) {
+      result
+        ..add('created')
+        ..add(serializers.serialize(object.created,
+            specifiedType: const FullType(int)));
+    }
+    if (object.timestamp != null) {
+      result
+        ..add('timestamp')
+        ..add(serializers.serialize(object.timestamp,
+            specifiedType: const FullType(int)));
+    }
+    if (object.name != null) {
+      result
+        ..add('name')
+        ..add(serializers.serialize(object.name,
+            specifiedType: const FullType(String)));
+    }
+    if (object.title != null) {
+      result
+        ..add('title')
+        ..add(serializers.serialize(object.title,
+            specifiedType: const FullType(String)));
+    }
+    if (object.mimetype != null) {
+      result
+        ..add('mimetype')
+        ..add(serializers.serialize(object.mimetype,
+            specifiedType: const FullType(String)));
+    }
+    if (object.filetype != null) {
+      result
+        ..add('filetype')
+        ..add(serializers.serialize(object.filetype,
+            specifiedType: const FullType(String)));
+    }
+    if (object.prettyType != null) {
+      result
+        ..add('pretty_type')
+        ..add(serializers.serialize(object.prettyType,
+            specifiedType: const FullType(String)));
+    }
+    if (object.user != null) {
+      result
+        ..add('user')
+        ..add(serializers.serialize(object.user,
+            specifiedType: const FullType(String)));
+    }
+    if (object.editable != null) {
+      result
+        ..add('editable')
+        ..add(serializers.serialize(object.editable,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.size != null) {
+      result
+        ..add('size')
+        ..add(serializers.serialize(object.size,
+            specifiedType: const FullType(int)));
+    }
+    if (object.mode != null) {
+      result
+        ..add('mode')
+        ..add(serializers.serialize(object.mode,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isExternal != null) {
+      result
+        ..add('is_external')
+        ..add(serializers.serialize(object.isExternal,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.externalType != null) {
+      result
+        ..add('external_type')
+        ..add(serializers.serialize(object.externalType,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isPublic != null) {
+      result
+        ..add('is_public')
+        ..add(serializers.serialize(object.isPublic,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.publicUrlShared != null) {
+      result
+        ..add('public_url_shared')
+        ..add(serializers.serialize(object.publicUrlShared,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.displayAsBot != null) {
+      result
+        ..add('display_as_bot')
+        ..add(serializers.serialize(object.displayAsBot,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.username != null) {
+      result
+        ..add('username')
+        ..add(serializers.serialize(object.username,
+            specifiedType: const FullType(String)));
+    }
+    if (object.urlPrivate != null) {
+      result
+        ..add('url_private')
+        ..add(serializers.serialize(object.urlPrivate,
+            specifiedType: const FullType(String)));
+    }
+    if (object.urlPrivateDownload != null) {
+      result
+        ..add('url_private_download')
+        ..add(serializers.serialize(object.urlPrivateDownload,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb64 != null) {
+      result
+        ..add('thumb_64')
+        ..add(serializers.serialize(object.thumb64,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb80 != null) {
+      result
+        ..add('thumb_80')
+        ..add(serializers.serialize(object.thumb80,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb360 != null) {
+      result
+        ..add('thumb_360')
+        ..add(serializers.serialize(object.thumb360,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb360W != null) {
+      result
+        ..add('thumb_360_w')
+        ..add(serializers.serialize(object.thumb360W,
+            specifiedType: const FullType(int)));
+    }
+    if (object.thumb360H != null) {
+      result
+        ..add('thumb_360_h')
+        ..add(serializers.serialize(object.thumb360H,
+            specifiedType: const FullType(int)));
+    }
+    if (object.thumb480 != null) {
+      result
+        ..add('thumb_480')
+        ..add(serializers.serialize(object.thumb480,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb480W != null) {
+      result
+        ..add('thumb_480_w')
+        ..add(serializers.serialize(object.thumb480W,
+            specifiedType: const FullType(int)));
+    }
+    if (object.thumb480H != null) {
+      result
+        ..add('thumb_480_h')
+        ..add(serializers.serialize(object.thumb480H,
+            specifiedType: const FullType(int)));
+    }
+    if (object.thumb160 != null) {
+      result
+        ..add('thumb_160')
+        ..add(serializers.serialize(object.thumb160,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb720 != null) {
+      result
+        ..add('thumb_720')
+        ..add(serializers.serialize(object.thumb720,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb720W != null) {
+      result
+        ..add('thumb_720_w')
+        ..add(serializers.serialize(object.thumb720W,
+            specifiedType: const FullType(int)));
+    }
+    if (object.thumb720H != null) {
+      result
+        ..add('thumb_720_h')
+        ..add(serializers.serialize(object.thumb720H,
+            specifiedType: const FullType(int)));
+    }
+    if (object.thumb800 != null) {
+      result
+        ..add('thumb_800')
+        ..add(serializers.serialize(object.thumb800,
+            specifiedType: const FullType(String)));
+    }
+    if (object.thumb800W != null) {
+      result
+        ..add('thumb_800_w')
+        ..add(serializers.serialize(object.thumb800W,
+            specifiedType: const FullType(int)));
+    }
+    if (object.thumb800H != null) {
+      result
+        ..add('thumb_800_h')
+        ..add(serializers.serialize(object.thumb800H,
+            specifiedType: const FullType(int)));
+    }
+    if (object.imageExifRotation != null) {
+      result
+        ..add('image_exif_rotation')
+        ..add(serializers.serialize(object.imageExifRotation,
+            specifiedType: const FullType(int)));
+    }
+    if (object.originalW != null) {
+      result
+        ..add('original_w')
+        ..add(serializers.serialize(object.originalW,
+            specifiedType: const FullType(int)));
+    }
+    if (object.originalH != null) {
+      result
+        ..add('original_h')
+        ..add(serializers.serialize(object.originalH,
+            specifiedType: const FullType(int)));
+    }
+    if (object.permalink != null) {
+      result
+        ..add('permalink')
+        ..add(serializers.serialize(object.permalink,
+            specifiedType: const FullType(String)));
+    }
+    if (object.permalinkPublic != null) {
+      result
+        ..add('permalink_public')
+        ..add(serializers.serialize(object.permalinkPublic,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -815,14 +947,7 @@ class _$Reply extends Reply {
   factory _$Reply([void updates(ReplyBuilder b)]) =>
       (new ReplyBuilder()..update(updates)).build();
 
-  _$Reply._({this.user, this.ts}) : super._() {
-    if (user == null) {
-      throw new BuiltValueNullFieldError('Reply', 'user');
-    }
-    if (ts == null) {
-      throw new BuiltValueNullFieldError('Reply', 'ts');
-    }
-  }
+  _$Reply._({this.user, this.ts}) : super._();
 
   @override
   Reply rebuild(void updates(ReplyBuilder b)) =>
@@ -1020,128 +1145,7 @@ class _$File extends File {
       this.originalH,
       this.permalink,
       this.permalinkPublic})
-      : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('File', 'id');
-    }
-    if (created == null) {
-      throw new BuiltValueNullFieldError('File', 'created');
-    }
-    if (timestamp == null) {
-      throw new BuiltValueNullFieldError('File', 'timestamp');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('File', 'name');
-    }
-    if (title == null) {
-      throw new BuiltValueNullFieldError('File', 'title');
-    }
-    if (mimetype == null) {
-      throw new BuiltValueNullFieldError('File', 'mimetype');
-    }
-    if (filetype == null) {
-      throw new BuiltValueNullFieldError('File', 'filetype');
-    }
-    if (prettyType == null) {
-      throw new BuiltValueNullFieldError('File', 'prettyType');
-    }
-    if (user == null) {
-      throw new BuiltValueNullFieldError('File', 'user');
-    }
-    if (editable == null) {
-      throw new BuiltValueNullFieldError('File', 'editable');
-    }
-    if (size == null) {
-      throw new BuiltValueNullFieldError('File', 'size');
-    }
-    if (mode == null) {
-      throw new BuiltValueNullFieldError('File', 'mode');
-    }
-    if (isExternal == null) {
-      throw new BuiltValueNullFieldError('File', 'isExternal');
-    }
-    if (externalType == null) {
-      throw new BuiltValueNullFieldError('File', 'externalType');
-    }
-    if (isPublic == null) {
-      throw new BuiltValueNullFieldError('File', 'isPublic');
-    }
-    if (publicUrlShared == null) {
-      throw new BuiltValueNullFieldError('File', 'publicUrlShared');
-    }
-    if (displayAsBot == null) {
-      throw new BuiltValueNullFieldError('File', 'displayAsBot');
-    }
-    if (username == null) {
-      throw new BuiltValueNullFieldError('File', 'username');
-    }
-    if (urlPrivate == null) {
-      throw new BuiltValueNullFieldError('File', 'urlPrivate');
-    }
-    if (urlPrivateDownload == null) {
-      throw new BuiltValueNullFieldError('File', 'urlPrivateDownload');
-    }
-    if (thumb64 == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb64');
-    }
-    if (thumb80 == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb80');
-    }
-    if (thumb360 == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb360');
-    }
-    if (thumb360W == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb360W');
-    }
-    if (thumb360H == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb360H');
-    }
-    if (thumb480 == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb480');
-    }
-    if (thumb480W == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb480W');
-    }
-    if (thumb480H == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb480H');
-    }
-    if (thumb160 == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb160');
-    }
-    if (thumb720 == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb720');
-    }
-    if (thumb720W == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb720W');
-    }
-    if (thumb720H == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb720H');
-    }
-    if (thumb800 == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb800');
-    }
-    if (thumb800W == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb800W');
-    }
-    if (thumb800H == null) {
-      throw new BuiltValueNullFieldError('File', 'thumb800H');
-    }
-    if (imageExifRotation == null) {
-      throw new BuiltValueNullFieldError('File', 'imageExifRotation');
-    }
-    if (originalW == null) {
-      throw new BuiltValueNullFieldError('File', 'originalW');
-    }
-    if (originalH == null) {
-      throw new BuiltValueNullFieldError('File', 'originalH');
-    }
-    if (permalink == null) {
-      throw new BuiltValueNullFieldError('File', 'permalink');
-    }
-    if (permalinkPublic == null) {
-      throw new BuiltValueNullFieldError('File', 'permalinkPublic');
-    }
-  }
+      : super._();
 
   @override
   File rebuild(void updates(FileBuilder b)) =>

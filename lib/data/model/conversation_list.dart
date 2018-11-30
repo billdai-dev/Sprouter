@@ -32,8 +32,13 @@ abstract class ConversationList
   }
 
   static ConversationList fromJson(String jsonString) {
-    return serializers.deserializeWith(
-        ConversationList.serializer, json.decode(jsonString));
+    try {
+      return serializers.deserializeWith(
+          ConversationList.serializer, json.decode(jsonString));
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   static Serializer<ConversationList> get serializer =>
@@ -71,7 +76,7 @@ abstract class Channel implements Built<Channel, ChannelBuilder> {
 
   @nullable
   @BuiltValueField(wireName: 'priority')
-  int get priority;
+  double get priority;
 
   String toJson() {
     return json.encode(serializers.serializeWith(Channel.serializer, this));

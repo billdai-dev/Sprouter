@@ -11,10 +11,11 @@ import 'package:sprouter/data/model/slack/slack_token.dart';
 import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
+import 'package:sprouter/env_config.dart';
 
 class AppRemoteRepo implements RemoteRepo {
-  static const String slackClientId = "373821001234.373821382898";
-  static const String slackClientSecret = "f0ce30315c4689da519c5281883c0667";
+  static String slackClientId = EnvConfig.slackClientId;
+  static String slackClientSecret = EnvConfig.slackClientSecret;
   static const String slackRedirectUrl =
       "https://kunstmaan.github.io/flutter_slack_oauth/success.html";
 
@@ -115,7 +116,11 @@ class AppRemoteRepo implements RemoteRepo {
       "limit": limit,
       "types": conversationType ?? "im",
     };
-    Future<Response> response = dio.get(_conversationListPath, data: params);
+    Future<Response> response = dio.get(
+      _conversationListPath,
+      data: params,
+      options: Options(contentType: xWwwFormUrlencoded),
+    );
     Future<ConversationList> conversationList = response.then((response) {
       return ConversationList.fromJson(jsonEncode(response.data));
     });

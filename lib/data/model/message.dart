@@ -93,9 +93,11 @@ abstract class Reply implements Built<Reply, ReplyBuilder> {
 
   factory Reply([updates(ReplyBuilder b)]) = _$Reply;
 
+  @nullable
   @BuiltValueField(wireName: 'user')
   String get user;
 
+  @nullable
   @BuiltValueField(wireName: 'ts')
   String get ts;
 
@@ -116,123 +118,163 @@ abstract class File implements Built<File, FileBuilder> {
 
   factory File([updates(FileBuilder b)]) = _$File;
 
+  @nullable
   @BuiltValueField(wireName: 'id')
   String get id;
 
+  @nullable
   @BuiltValueField(wireName: 'created')
   int get created;
 
+  @nullable
   @BuiltValueField(wireName: 'timestamp')
   int get timestamp;
 
+  @nullable
   @BuiltValueField(wireName: 'name')
   String get name;
 
+  @nullable
   @BuiltValueField(wireName: 'title')
   String get title;
 
+  @nullable
   @BuiltValueField(wireName: 'mimetype')
   String get mimetype;
 
+  @nullable
   @BuiltValueField(wireName: 'filetype')
   String get filetype;
 
+  @nullable
   @BuiltValueField(wireName: 'pretty_type')
   String get prettyType;
 
+  @nullable
   @BuiltValueField(wireName: 'user')
   String get user;
 
+  @nullable
   @BuiltValueField(wireName: 'editable')
   bool get editable;
 
+  @nullable
   @BuiltValueField(wireName: 'size')
   int get size;
 
+  @nullable
   @BuiltValueField(wireName: 'mode')
   String get mode;
 
+  @nullable
   @BuiltValueField(wireName: 'is_external')
   bool get isExternal;
 
+  @nullable
   @BuiltValueField(wireName: 'external_type')
   String get externalType;
 
+  @nullable
   @BuiltValueField(wireName: 'is_public')
   bool get isPublic;
 
+  @nullable
   @BuiltValueField(wireName: 'public_url_shared')
   bool get publicUrlShared;
 
+  @nullable
   @BuiltValueField(wireName: 'display_as_bot')
   bool get displayAsBot;
 
+  @nullable
   @BuiltValueField(wireName: 'username')
   String get username;
 
+  @nullable
   @BuiltValueField(wireName: 'url_private')
   String get urlPrivate;
 
+  @nullable
   @BuiltValueField(wireName: 'url_private_download')
   String get urlPrivateDownload;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_64')
   String get thumb64;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_80')
   String get thumb80;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_360')
   String get thumb360;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_360_w')
   int get thumb360W;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_360_h')
   int get thumb360H;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_480')
   String get thumb480;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_480_w')
   int get thumb480W;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_480_h')
   int get thumb480H;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_160')
   String get thumb160;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_720')
   String get thumb720;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_720_w')
   int get thumb720W;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_720_h')
   int get thumb720H;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_800')
   String get thumb800;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_800_w')
   int get thumb800W;
 
+  @nullable
   @BuiltValueField(wireName: 'thumb_800_h')
   int get thumb800H;
 
+  @nullable
   @BuiltValueField(wireName: 'image_exif_rotation')
   int get imageExifRotation;
 
+  @nullable
   @BuiltValueField(wireName: 'original_w')
   int get originalW;
 
+  @nullable
   @BuiltValueField(wireName: 'original_h')
   int get originalH;
 
+  @nullable
   @BuiltValueField(wireName: 'permalink')
   String get permalink;
 
+  @nullable
   @BuiltValueField(wireName: 'permalink_public')
   String get permalinkPublic;
 

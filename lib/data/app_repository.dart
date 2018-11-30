@@ -12,15 +12,16 @@ import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/data/remote/app_remote_repo.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/data/repository.dart';
+import 'package:sprouter/env_config.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sprouter/util/utils.dart';
 
 class AppRepository implements Repository {
-  static const String clientId = AppRemoteRepo.slackClientId;
   static const String redirectUrl = AppRemoteRepo.slackRedirectUrl;
-  static const String jibbleUserId = "UB0APDPFT";
-  static const String _lunchChannel = "CAZQ503L2"; //TODO: Change to 25sprout's
   static const String _conversationType_im = "im";
+  static String clientId = AppRemoteRepo.slackClientId;
+  static String jibbleUserId = EnvConfig.jibbleUserId;
+  static String _lunchChannel = EnvConfig.lunchChannelId;
 
   static final AppRepository _repo = AppRepository._internal();
 

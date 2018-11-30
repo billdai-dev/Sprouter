@@ -141,7 +141,7 @@ class _$ChannelSerializer implements StructuredSerializer<Channel> {
       result
         ..add('priority')
         ..add(serializers.serialize(object.priority,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(double)));
     }
 
     return result;
@@ -184,7 +184,7 @@ class _$ChannelSerializer implements StructuredSerializer<Channel> {
           break;
         case 'priority':
           result.priority = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(double)) as double;
           break;
       }
     }
@@ -368,7 +368,7 @@ class _$Channel extends Channel {
   @override
   final bool isUserDeleted;
   @override
-  final int priority;
+  final double priority;
 
   factory _$Channel([void updates(ChannelBuilder b)]) =>
       (new ChannelBuilder()..update(updates)).build();
@@ -459,9 +459,9 @@ class ChannelBuilder implements Builder<Channel, ChannelBuilder> {
   set isUserDeleted(bool isUserDeleted) =>
       _$this._isUserDeleted = isUserDeleted;
 
-  int _priority;
-  int get priority => _$this._priority;
-  set priority(int priority) => _$this._priority = priority;
+  double _priority;
+  double get priority => _$this._priority;
+  set priority(double priority) => _$this._priority = priority;
 
   ChannelBuilder();
 
