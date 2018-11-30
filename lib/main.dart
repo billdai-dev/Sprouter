@@ -40,6 +40,7 @@ void main() {
                   ? TargetPlatform.android
                   : TargetPlatform.iOS)
           .white,
+      fontFamily: "GenSenMaruGothicTW",
     ),
     home: MainPageContainer(),
   ));
