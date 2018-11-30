@@ -93,28 +93,34 @@ class _CheckInPageState extends State<CheckInPage> {
                           int timestamp = int.parse(snapshot.data.values.first);
                           String time =
                               Utils.convertTimestamp(seconds: timestamp);
-                          String latestCheckIn =
+                          String checkInStatement =
                               latestCheckInStatus ? "上班" : "下班";
-                          TextStyle title =
-                              Theme.of(context).primaryTextTheme.title;
-                          return Text.rich(
-                            TextSpan(
-                              text: "上次",
-                              style: title,
-                              children: <TextSpan>[
+                          TextStyle title = Theme.of(context)
+                              .primaryTextTheme
+                              .title
+                              .copyWith(letterSpacing: 0.8);
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Text.rich(
                                 TextSpan(
-                                  text: latestCheckIn,
-                                  style: title.copyWith(
-                                      fontStyle: FontStyle.italic),
+                                  text: "上次",
+                                  style: title,
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: checkInStatement,
+                                      style: title.copyWith(
+                                          decoration: TextDecoration.underline),
+                                    ),
+                                    TextSpan(
+                                      text: "時間",
+                                    ),
+                                  ],
                                 ),
-                                TextSpan(
-                                  text: " 時間\n",
-                                ),
-                                TextSpan(
-                                  text: time,
-                                ),
-                              ],
-                            ),
+                              ),
+                              Text(time, style: title),
+                            ],
                           );
                         },
                       ),
