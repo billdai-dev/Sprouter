@@ -217,7 +217,7 @@ class _AnimatedFigureState extends State<AnimatedFigure>
   @override
   void initState() {
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 5));
+        AnimationController(vsync: this, duration: Duration(seconds: 4));
     super.initState();
   }
 
@@ -273,10 +273,10 @@ class _AnimatedFigureState extends State<AnimatedFigure>
         transitionBuilder: (child, animation) => FadeTransition(
               opacity: animation,
               child: isDayNow != null
-                  ? RotationTransition(
-                      turns: rotateAnimation,
-                      child: SlideTransition(
-                        position: walkingAnimation,
+                  ? SlideTransition(
+                      position: walkingAnimation,
+                      child: RotationTransition(
+                        turns: rotateAnimation,
                         child: child,
                       ),
                     )
@@ -296,7 +296,7 @@ class _AnimatedFigureState extends State<AnimatedFigure>
     int steps = (screenWidth / figureWidth).ceil() + 1;
 
     double step = isDayNow ? 1.0 : -1.0;
-    final double rotateAngle = 0.01;
+    final double rotateAngle = 0.04;
 
     List<TweenSequenceItem<Offset>> walkingTweenItems = [];
     List<TweenSequenceItem<double>> rotateTweenItems = [];
@@ -320,7 +320,7 @@ class _AnimatedFigureState extends State<AnimatedFigure>
       double angle = i.isEven ? rotateAngle : -rotateAngle;
       TweenSequenceItem<double> rotateTweenItem = TweenSequenceItem(
         tween: Tween<double>(begin: lastEndAngle ?? -rotateAngle, end: angle)
-            .chain(CurveTween(curve: Curves.fastOutSlowIn)),
+            .chain(CurveTween(curve: Curves.ease)),
         weight: 1.0,
       );
       rotateTweenItems.add(rotateTweenItem);

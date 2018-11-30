@@ -38,9 +38,8 @@ class CheckInBloc {
     Future.delayed(Duration(milliseconds: 300)).then(
         (_) => repository.fetchLatestJibbleMessage().then((messages) async {
               messages = messages.where((message) {
-                if (message.user == null) {
-                  return message.text.contains("*jibbled in*") ||
-                      message.text.contains("*jibbled out*");
+                if (message.user != null) {
+                  return message.text == "in" || message.text == "out";
                 }
                 return false;
                 /*else {
@@ -84,7 +83,7 @@ class CheckInBloc {
     }
     bool latestCheckInStatus = _latestCheckInStatus.value;
     if (latestCheckInStatus == null || !latestCheckInStatus) {
-      return null;
+      return cancelNotification();
     }
     String latestTimestamp = _latestJibbleTimestamp.value;
     if (latestTimestamp == null) {
