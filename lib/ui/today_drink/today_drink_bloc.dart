@@ -36,6 +36,10 @@ class TodayDrinkBloc {
 
   Sink<void> get fetchMessage => _fetchMessage.sink;
 
+  final StreamController<void> _forceFetchMessage = StreamController();
+
+  Sink<void> get forceFetchMessage => _forceFetchMessage.sink;
+
   final PublishSubject<bool> _showMoreContentIndicator = PublishSubject();
 
   StreamController<bool> get showMoreContentIndicator =>
@@ -44,56 +48,58 @@ class TodayDrinkBloc {
   TodayDrinkBloc({AppRepository repository})
       : this.repository = repository ?? AppRepository.repo {
     _fetchMessage.stream
-        .transform(ThrottleStreamTransformer(Duration(seconds: 3)))
-        .listen((_) async {
-      List<Message> newDrinkMessages;
-      try {
-        newDrinkMessages = await this.repository.fetchLatestDrinkMessages();
-      } catch (error) {
-        if (error is ApiError && ApiError.authErrors.contains(error.errorMsg)) {
-          _drinkMessage.addError(AuthError(error.errorMsg));
-          return;
-        }
-      }
-      bool showNewContentIndicator =
-          !Utils.isListNullOrEmpty(newDrinkMessages) &&
-              !Utils.isListNullOrEmpty(_drinkMessages) &&
-              newDrinkMessages.length > _drinkMessages.length;
-      _showMoreContentIndicator.add(showNewContentIndicator);
-
-      _drinkMessages = newDrinkMessages;
-      _drinkShopMessage =
-          Utils.isListNullOrEmpty(_drinkMessages) ? null : _drinkMessages[0];
-
-      List<Message> orderKeywords = _drinkMessages?.where((message) {
-        return message.text == "點單" || message.text == "收單";
-      })?.toList(growable: false);
-      bool isNowOrdering = orderKeywords != null &&
-          orderKeywords.isNotEmpty &&
-          orderKeywords.last.text == "點單";
-      _isOrdering.sink.add(isNowOrdering);
-      _drinkMessage.sink.add(_drinkMessages);
-
-      String token = await this.repository.getTokenCache();
-      _slackToken.sink.add(token);
-    });
-    _deleteMessage.stream.listen((index) {
-      this
-          .repository
-          .deleteDrinkOrder(
-            _drinkShopMessage?.getShopName,
-            _drinkShopMessage?.threadTs,
-            _drinkMessages?.skip(1)?.elementAt(index)?.ts,
-          )
-          .then((response) {
-        //index+1 because we exclude first item when displaying message list
-        _drinkMessages?.removeAt(index + 1);
-        _drinkMessage.sink.add(_drinkMessages);
-      });
-    });
+        .transform(ThrottleStreamTransformer(Duration(seconds: 15)))
+        .listen(_handleFetchingMessages);
+    _forceFetchMessage.stream.listen(_handleFetchingMessages);
+    _deleteMessage.stream.listen(_handleDeletingMessage);
 
     //Initialization
     _fetchMessage.add(null);
+  }
+
+  void _handleFetchingMessages(void _) async {
+    List<Message> newDrinkMessages;
+    try {
+      newDrinkMessages = await repository.fetchLatestDrinkMessages();
+    } catch (error) {
+      if (error is ApiError && ApiError.authErrors.contains(error.errorMsg)) {
+        _drinkMessage.addError(AuthError(error.errorMsg));
+        return;
+      }
+    }
+    bool showNewContentIndicator = !Utils.isListNullOrEmpty(newDrinkMessages) &&
+        !Utils.isListNullOrEmpty(_drinkMessages) &&
+        newDrinkMessages.length > _drinkMessages.length;
+    _showMoreContentIndicator.add(showNewContentIndicator);
+
+    _drinkMessages = newDrinkMessages;
+    _drinkShopMessage =
+        Utils.isListNullOrEmpty(_drinkMessages) ? null : _drinkMessages[0];
+
+    List<Message> orderKeywords = _drinkMessages?.where((message) {
+      return message.text == "點單" || message.text == "收單";
+    })?.toList(growable: false);
+    bool isNowOrdering = orderKeywords != null &&
+        orderKeywords.isNotEmpty &&
+        orderKeywords.last.text == "點單";
+    _isOrdering.sink.add(isNowOrdering);
+    _drinkMessage.sink.add(_drinkMessages);
+
+    String token = await repository.getTokenCache();
+    _slackToken.sink.add(token);
+  }
+
+  void _handleDeletingMessage(int index) {
+    repository
+        .deleteDrinkOrder(
+            _drinkShopMessage?.getShopName,
+            _drinkShopMessage?.threadTs,
+            _drinkMessages?.skip(1)?.elementAt(index)?.ts)
+        .then((response) {
+      //index+1 because we exclude first item when displaying message list
+      _drinkMessages?.removeAt(index + 1);
+      _drinkMessage.sink.add(_drinkMessages);
+    });
   }
 
   void dispose() {
@@ -102,6 +108,7 @@ class TodayDrinkBloc {
     _drinkMessage?.close();
     _deleteMessage?.close();
     _fetchMessage?.close();
+    _forceFetchMessage?.close();
     _showMoreContentIndicator?.close();
   }
 }

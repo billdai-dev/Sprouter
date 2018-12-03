@@ -131,7 +131,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     if (!isDrinkOrdered) {
       return;
     }
-    todayDrinkBloc?.fetchMessage?.add(null);
+    todayDrinkBloc?.forceFetchMessage?.add(null);
     Scaffold.of(context).showSnackBar(SnackBar(
       content: Text(message == null ? "訂單已送出" : "訂單已編輯"),
       duration: Duration(seconds: 2),
@@ -208,7 +208,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                     if (success != null && success) {
                       CheckInBlocProvider.of(context)
                           .fetchLatestJibbleMessage();
-                      todayDrinkBloc?.fetchMessage?.add(null);
+                      todayDrinkBloc?.forceFetchMessage?.add(null);
                     }
                   },
                 ),
@@ -237,7 +237,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   }
 
   Future<void> _buildRefreshCallback() async {
-    todayDrinkBloc?.fetchMessage?.add(null);
+    todayDrinkBloc?.forceFetchMessage?.add(null);
     await todayDrinkBloc.drinkMessage
         .timeout(Duration(seconds: 3), onTimeout: (sink) => sink.close())
         .forEach((messages) {});
