@@ -54,10 +54,15 @@ class _CheckInPageState extends State<CheckInPage> {
       builder: (context, snapshot) {
         Color containerColor;
         bool showCheckIn = snapshot.data;
-        if (showCheckIn != null && showCheckIn) {
-          DateTime now = DateTime.now();
-          bool isDayNow = now.hour >= 6 && now.hour < 18;
-          containerColor = isDayNow ? Color(0xffb4e0fb) : Color(0xff00121E);
+        if (showCheckIn == null) {
+          containerColor = Color(0xffb4e0fb);
+        } else {
+          //User is not on duty now
+          if (showCheckIn) {
+            DateTime now = DateTime.now();
+            bool isDayNow = now.hour >= 6 && now.hour < 18;
+            containerColor = isDayNow ? Color(0xffb4e0fb) : Color(0xff00121E);
+          }
         }
         return GestureDetector(
           onTap: () => showCheckIn == null
@@ -503,6 +508,9 @@ class DetailRecordsBottomSheet extends StatelessWidget {
           ),
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: 4.0,
+              ),
               Text(
                 "最近打卡記錄",
                 style: Theme.of(context).primaryTextTheme.title,

@@ -11,8 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="49aa6c1c-098f-474e-bcad-6c3fb146f3a1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/remote/api_error.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/api_error.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -69,11 +69,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app_repository.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app_repository.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="157">
-              <caret line="250" column="39" lean-forward="true" selection-start-line="250" selection-start-column="39" selection-end-line="250" selection-end-column="39" />
+              <caret line="250" column="39" selection-start-line="250" selection-start-column="39" selection-end-line="250" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="check_in_page.dart" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-7959">
+              <caret line="54" column="29" lean-forward="true" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,7 +124,7 @@
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="205">
-              <caret line="60" column="35" lean-forward="true" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
+              <caret line="60" column="35" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -120,8 +132,8 @@
       <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-159">
-              <caret line="261" column="7" selection-start-line="261" selection-start-column="7" selection-end-line="261" selection-end-column="7" />
+            <state relative-caret-position="-72">
+              <caret line="416" column="29" selection-start-line="416" selection-start-column="29" selection-end-line="416" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -130,7 +142,7 @@
         <entry file="file://$PROJECT_DIR$/lib/ui/empty_data_view.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="432">
-              <caret line="24" column="19" lean-forward="true" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+              <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -142,7 +154,7 @@
         <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="101">
-              <caret line="38" column="36" lean-forward="true" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+              <caret line="38" column="36" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -160,8 +172,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>wordspacing</find>
-      <find>notosans</find>
       <find>無資料</find>
       <find>buildtit</find>
       <find>back</find>
@@ -190,6 +200,8 @@
       <find>emptyda</find>
       <find>adderror</find>
       <find>fetch</find>
+      <find>card</find>
+      <find>沒ㄧ</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -201,7 +213,6 @@
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart" />
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" />
         <option value="$PROJECT_DIR$/lib/util/utils.dart" />
         <option value="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_bloc.dart" />
@@ -215,16 +226,17 @@
         <option value="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/conversation_list.dart" />
         <option value="$PROJECT_DIR$/lib/data/app_repository.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" />
         <option value="$PROJECT_DIR$/lib/ui/empty_data_view.dart" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/lib/data/remote/api_error.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="203" />
     <option name="width" value="1440" />
     <option name="height" value="877" />
   </component>
@@ -239,7 +251,7 @@
     <panes />
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;.gi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/.gitignore&#10;todrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;empt&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/empty_data_view.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;todaydrblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todayblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;builtjson&#9;null&#9;null&#10;conversli&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;env&#9;null&#9;null&#10;ma&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main_dev.dart&#10;todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;orderdrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;apploca&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;uti&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/util/utils.dart&#10;orderblo&#9;null&#9;null&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;tod&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;manifes&#9;ACTION&#9;template.create.OtherAndroid Manifest File&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;fontwe&#9;null&#9;null&#10;pubspec&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;pubsp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock" />
+    <property name="SearchEverywhereHistoryKey" value="todayd&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;.gi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/.gitignore&#10;todrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;empt&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/empty_data_view.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;todaydrblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todayblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;builtjson&#9;null&#9;null&#10;conversli&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;env&#9;null&#9;null&#10;ma&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main_dev.dart&#10;todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;orderdrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;apploca&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;uti&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/util/utils.dart&#10;orderblo&#9;null&#9;null&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;tod&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;manifes&#9;ACTION&#9;template.create.OtherAndroid Manifest File&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;fontwe&#9;null&#9;null&#10;pubspec&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;pubsp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -340,7 +352,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="877" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" show_stripe_button="false" />
@@ -591,13 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-288">
-          <caret column="19" selection-start-column="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter/flutter/bin/cache/pkg/sky_engine/lib/core/list.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="251">
@@ -800,7 +805,7 @@
     <entry file="file://$PROJECT_DIR$/lib/ui/empty_data_view.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
-          <caret line="24" column="19" lean-forward="true" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
+          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -814,13 +819,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-159">
-          <caret line="261" column="7" selection-start-line="261" selection-start-column="7" selection-end-line="261" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/data/remote/api_error.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -831,14 +829,14 @@
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="205">
-          <caret line="60" column="35" lean-forward="true" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
+          <caret line="60" column="35" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="101">
-          <caret line="38" column="36" lean-forward="true" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+          <caret line="38" column="36" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -849,10 +847,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-72">
+          <caret line="416" column="29" selection-start-line="416" selection-start-column="29" selection-end-line="416" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
-          <caret line="250" column="39" lean-forward="true" selection-start-line="250" selection-start-column="39" selection-end-line="250" selection-end-column="39" />
+          <caret line="250" column="39" selection-start-line="250" selection-start-column="39" selection-end-line="250" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7959">
+          <caret line="54" column="29" lean-forward="true" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

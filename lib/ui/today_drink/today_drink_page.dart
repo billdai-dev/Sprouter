@@ -417,7 +417,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           color: Colors.grey,
           child: messages == null
               ? CircularProgressIndicator()
-              : EmptyDataView("沒有訂單，沒有菜單\n(╯‵□′)╯︵┴─┴"));
+              : EmptyDataView("沒有訂單，沒有菜單\n╮(╯_╰)╭"));
     }
     String imageUrl = messages[0].files[0].thumb800;
     return Container(
