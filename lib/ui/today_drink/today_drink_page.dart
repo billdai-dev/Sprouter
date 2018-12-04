@@ -217,7 +217,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                 background: snapshot.hasError
                     ? Container(
                         color: Colors.grey,
-                        child: EmptyDataView(),
+                        child: EmptyDataView("登入 Slack 以查看最新飲料訂單"),
                       )
                     : _buildShopImage(context, token, messages),
               ),
@@ -247,14 +247,19 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
   Widget _buildReplyListView(
       BuildContext context, AsyncSnapshot<List<Message>> snapshot) {
     if (snapshot.hasError) {
-      return SliverFillRemaining(child: EmptyDataView());
+      return SliverFillRemaining(
+        child: EmptyDataView("登入 Slack 以查看最新飲料訂單"),
+      );
     }
     List<Message> drinkThread = snapshot.data;
     List<Message> replies;
     if (Utils.isListNullOrEmpty(drinkThread)) {
-      Widget child =
-          drinkThread == null ? CircularProgressIndicator() : EmptyDataView();
-      return SliverFillRemaining(child: Center(child: child));
+      Widget child = drinkThread == null
+          ? CircularProgressIndicator()
+          : EmptyDataView("快叫 peipei 開單\n ლ(•ω •ლ)");
+      return SliverFillRemaining(
+        child: Center(child: child),
+      );
     }
     replies = drinkThread.skip(1).toList(growable: false);
 
@@ -262,7 +267,11 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       return message.text == "點單" || message.text == "收單";
     }, orElse: () => null);
     if (lastOrderKeywords == null) {
-      return SliverFillRemaining(child: Center(child: Text("無法取得訊息")));
+      return SliverFillRemaining(
+        child: Center(
+          child: Text("無法取得訂單狀態"),
+        ),
+      );
     }
     bool isOrdering = lastOrderKeywords.text == "點單";
 
@@ -406,8 +415,9 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       return Container(
           alignment: Alignment.center,
           color: Colors.grey,
-          child:
-              messages == null ? CircularProgressIndicator() : EmptyDataView());
+          child: messages == null
+              ? CircularProgressIndicator()
+              : EmptyDataView("沒有訂單，沒有菜單\n(╯‵□′)╯︵┴─┴"));
     }
     String imageUrl = messages[0].files[0].thumb800;
     return Container(

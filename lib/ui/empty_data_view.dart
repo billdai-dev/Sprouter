@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class EmptyDataView extends StatelessWidget {
+  final String hintText;
+
+  EmptyDataView(this.hintText);
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -9,8 +13,6 @@ class EmptyDataView extends StatelessWidget {
         double imgWidth = constraints.maxWidth * 0.33;
         double imgHeight = imgWidth * 3 / 4;
         return Container(
-          width: imgWidth,
-          height: constraints.maxHeight,
           alignment: Alignment.center,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -21,9 +23,10 @@ class EmptyDataView extends StatelessWidget {
                 height: imgHeight,
               ),
               Text(
-                "暫無資料",
+                hintText ?? "暫無資料",
                 style: Theme.of(context).primaryTextTheme.title,
-              )
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         );

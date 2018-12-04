@@ -79,10 +79,11 @@ class AppRepository implements Repository {
       Message orderBroadcastMessage = messages.firstWhere(
           (message) => message.text.contains(orderBroadcastKeyword),
           orElse: () => null);
+      if (orderBroadcastMessage == null) {
+        return null;
+      }
       //3. 找出店家名稱
-      String shopName = orderBroadcastMessage == null
-          ? ""
-          : (orderBroadcastMessage.text.split("："))[1];
+      String shopName = orderBroadcastMessage.text.split("：")[1];
       //4. 用店家名稱 parse 出"最新"點單 thread 的 message
       Message drinkMessage = messages.firstWhere((message) {
         if (message.files == null) {
