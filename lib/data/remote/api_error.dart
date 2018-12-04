@@ -6,11 +6,18 @@ class ApiError implements Exception {
 
   final String _errorMsg;
 
-  ApiError(this._errorMsg);
+  ApiError._internal(this._errorMsg);
+
+  factory ApiError(String errorMsg) {
+    if (authErrors.contains(errorMsg)) {
+      return AuthError(errorMsg);
+    }
+    return ApiError._internal(errorMsg);
+  }
 
   String get errorMsg => _errorMsg;
 }
 
 class AuthError extends ApiError {
-  AuthError(String error) : super(error);
+  AuthError(String error) : super._internal(error);
 }

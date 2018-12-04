@@ -62,7 +62,7 @@ class TodayDrinkBloc {
     try {
       newDrinkMessages = await repository.fetchLatestDrinkMessages();
     } catch (error) {
-      if (error is ApiError && ApiError.authErrors.contains(error.errorMsg)) {
+      if (error is AuthError) {
         _drinkMessage.addError(AuthError(error.errorMsg));
         return;
       }
