@@ -473,7 +473,10 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           borderRadius: BorderRadius.circular(10.0),
         ),
         padding: EdgeInsets.zero,
-        onPressed: () {},
+        onPressed: () => showDialog(
+              context: context,
+              builder: (context) => _ComingSoonDialog(),
+            ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -1112,5 +1115,116 @@ class _DrinkMenuImageState extends State<_DrinkMenuImage> {
         httpHeaders: {"Authorization": "Bearer ${widget.token}"},
       ),
     );
+  }
+}
+
+class _ComingSoonDialog extends StatefulWidget {
+  @override
+  _ComingSoonDialogState createState() => _ComingSoonDialogState();
+}
+
+class _ComingSoonDialogState extends State<_ComingSoonDialog>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+
+  Animation<Offset> slideInFromTopLeftAnim;
+  Animation<Offset> slideInFromTopRightAnim;
+  Animation<TextStyle> styleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 2000),
+      vsync: this,
+    );
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(Duration(milliseconds: 300), () {
+          if (mounted) {
+            return Navigator.of(context, rootNavigator: true).maybePop();
+          }
+        });
+      }
+    });
+    slideInFromTopLeftAnim = Tween<Offset>(
+      begin: Offset(-1.0, -0.5),
+      end: Offset(0.0, 0.0),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Interval(0.0, 0.4, curve: Curves.bounceOut),
+    ));
+    slideInFromTopRightAnim = Tween<Offset>(
+      begin: Offset(1.0, 0.0),
+      end: Offset(0.0, 0.0),
+    ).chain(CurveTween(curve: Curves.bounceOut)).animate(CurvedAnimation(
+          parent: _controller,
+          curve: Interval(0.4, 0.9, curve: Curves.bounceOut),
+        ));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle style = Theme.of(context).accentTextTheme.headline;
+    _controller.forward();
+    //TextStyle style = Theme.of(context).accentTextTheme.headline;
+    return Container(
+      alignment: Alignment.center,
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: SlideTransition(
+              position: slideInFromTopLeftAnim,
+              child: Container(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  "Coming",
+                  style: style,
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: SlideTransition(
+              position: slideInFromTopRightAnim,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: DefaultTextStyleTransition(
+                  style: _createStyleAnimation(context, _controller),
+                  child: Text(
+                    " soon",
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Animation<TextStyle> _createStyleAnimation(
+      BuildContext context, AnimationController controller) {
+    TextStyle style = Theme.of(context).accentTextTheme.headline;
+    TextStyle biggerStyle = style.copyWith(fontSize: 38.0);
+    Tween<TextStyle> tween = TextStyleTween(begin: style, end: biggerStyle);
+    List<TweenSequenceItem<TextStyle>> tweens = [
+      TweenSequenceItem<TextStyle>(tween: tween, weight: 1.0),
+      TweenSequenceItem<TextStyle>(
+          tween: TextStyleTween(begin: biggerStyle, end: style), weight: 0.3),
+    ];
+
+    Animation<TextStyle> animation =
+        TweenSequence(tweens).animate(CurvedAnimation(
+      parent: controller,
+      curve: Interval(0.9, 1.0),
+    ));
+    return animation;
   }
 }
