@@ -442,22 +442,24 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
                 Scaffold.of(context)
                     .showSnackBar(SnackBar(content: Text(snackBarText)));
               },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "最愛喝的",
-                    style: Theme.of(context).accentTextTheme.button,
-                  ),
-                  SizedBox(
-                    width: 2.0,
-                  ),
-                  Icon(
-                    FontAwesomeIcons.solidHeart,
-                    color: Colors.white,
-                    size: 16.0,
-                  ),
-                ],
+              child: FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "最愛喝的",
+                      style: Theme.of(context).accentTextTheme.button,
+                    ),
+                    SizedBox(
+                      width: 4.0,
+                    ),
+                    Icon(
+                      FontAwesomeIcons.solidHeart,
+                      color: Colors.white,
+                      size: 16.0,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -475,21 +477,27 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
         padding: EdgeInsets.zero,
         onPressed: () => showDialog(
               context: context,
+              barrierDismissible: false,
               builder: (context) => _ComingSoonDialog(),
             ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "為我推薦",
-              style: Theme.of(context).accentTextTheme.button,
-            ),
-            Icon(
-              Icons.arrow_forward,
-              size: 16.0,
-              color: Colors.white,
-            ),
-          ],
+        child: FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "為我推薦",
+                style: Theme.of(context).accentTextTheme.button,
+              ),
+              SizedBox(
+                width: 4.0,
+              ),
+              Icon(
+                Icons.arrow_forward,
+                size: 16.0,
+                color: Colors.white,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -801,18 +809,20 @@ class _DraggableIngredientGridState extends State<_DraggableIngredientGrid> {
       data: ingredient,
       dragAnchor: DragAnchor.pointer,
       feedback: _createIngredientImage(ingredient),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          _createIngredientImage(ingredient),
-          SizedBox(
-            height: 2.0,
-          ),
-          Text(
-            getIngredientMapping(ingredient),
-            style: TextStyle(fontSize: 12.0),
-          ),
-        ],
+      child: FittedBox(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            _createIngredientImage(ingredient),
+            SizedBox(
+              height: 4.0,
+            ),
+            Text(
+              getIngredientMapping(ingredient),
+              style: TextStyle(fontSize: 12.0),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1125,6 +1135,8 @@ class _ComingSoonDialog extends StatefulWidget {
 
 class _ComingSoonDialogState extends State<_ComingSoonDialog>
     with SingleTickerProviderStateMixin {
+  bool _isDisposed = false;
+
   AnimationController _controller;
 
   Animation<Offset> slideInFromTopLeftAnim;
@@ -1141,7 +1153,7 @@ class _ComingSoonDialogState extends State<_ComingSoonDialog>
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Future.delayed(Duration(milliseconds: 300), () {
-          if (mounted) {
+          if (mounted && !_isDisposed) {
             return Navigator.of(context, rootNavigator: true).maybePop();
           }
         });
@@ -1166,6 +1178,7 @@ class _ComingSoonDialogState extends State<_ComingSoonDialog>
   @override
   void dispose() {
     _controller.dispose();
+    _isDisposed = true;
     super.dispose();
   }
 
@@ -1173,7 +1186,6 @@ class _ComingSoonDialogState extends State<_ComingSoonDialog>
   Widget build(BuildContext context) {
     TextStyle style = Theme.of(context).accentTextTheme.headline;
     _controller.forward();
-    //TextStyle style = Theme.of(context).accentTextTheme.headline;
     return Container(
       alignment: Alignment.center,
       child: Row(
@@ -1215,9 +1227,9 @@ class _ComingSoonDialogState extends State<_ComingSoonDialog>
     TextStyle biggerStyle = style.copyWith(fontSize: 38.0);
     Tween<TextStyle> tween = TextStyleTween(begin: style, end: biggerStyle);
     List<TweenSequenceItem<TextStyle>> tweens = [
-      TweenSequenceItem<TextStyle>(tween: tween, weight: 1.0),
+      TweenSequenceItem<TextStyle>(tween: tween, weight: 0.3),
       TweenSequenceItem<TextStyle>(
-          tween: TextStyleTween(begin: biggerStyle, end: style), weight: 0.3),
+          tween: TextStyleTween(begin: biggerStyle, end: style), weight: 0.7),
     ];
 
     Animation<TextStyle> animation =
