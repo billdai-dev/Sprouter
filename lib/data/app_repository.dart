@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/conversation_list.dart';
@@ -86,12 +87,13 @@ class AppRepository implements Repository {
       String shopName = orderBroadcastMessage.text.split("：")[1];
       //4. 用店家名稱 parse 出"最新"點單 thread 的 message
       Message drinkMessage = messages.firstWhere((message) {
-        if (message.files == null) {
-          return false; //點單 thread 必定有 file (菜單圖片)，先過濾一層
+        File parsedFile = message.parseFile;
+        if (parsedFile == null) {
+          return false; //點單 thread 的 (菜單圖片) 必定在 files 或 attachment -> files，先過濾一層
         }
-        return message.files[0].title.contains(shopName);
+        return parsedFile.title.contains(shopName);
       }, orElse: () => null);
-      if (!Utils.isStringNullOrEmpty(shopName) && drinkMessage != null) {
+      if (!Utils.isStringEmpty(shopName) && drinkMessage != null) {
         await _localRepo.addShopToDB(shopName, drinkMessage?.ts); //保存店家資料到DB
       }
       return drinkMessage;
@@ -100,7 +102,7 @@ class AppRepository implements Repository {
       return [];
     }
 
-    String shopName = Utils.parseShopName(thread?.files[0]?.title);
+    String shopName = thread.getShopName;
     String ts = thread?.ts;
 
     //5. 抓 Slack team 中所有成員資料
@@ -178,7 +180,7 @@ class AppRepository implements Repository {
   Future<int> orderDrink(String shopName, String threadTs, Drink drink,
       {String orderTs}) async {
     String completeDrinkName = drink?.completeDrinkName;
-    PostMessageResponse response = Utils.isStringNullOrEmpty(orderTs)
+    PostMessageResponse response = Utils.isStringEmpty(orderTs)
         ? await _remoteRepo.postMessage(_lunchChannel, completeDrinkName,
             ts: threadTs)
         : await _remoteRepo.updateMessage(
@@ -245,7 +247,7 @@ class AppRepository implements Repository {
   Future<List<Message>> fetchLatestJibbleMessage() async {
     String jibbleChannelId = await _localRepo.loadJibbleChannelId();
     Future<String> jibbleChannelIdFuture;
-    if (Utils.isStringNullOrEmpty(jibbleChannelId)) {
+    if (Utils.isStringEmpty(jibbleChannelId)) {
       jibbleChannelIdFuture = _remoteRepo
           .fetchConversationList(_conversationType_im)
           .then((conversations) async {

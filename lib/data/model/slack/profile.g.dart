@@ -73,6 +73,12 @@ class _$ProfileSerializer implements StructuredSerializer<Profile> {
         ..add(serializers.serialize(object.email,
             specifiedType: const FullType(String)));
     }
+    if (object.imageOriginal != null) {
+      result
+        ..add('image_original')
+        ..add(serializers.serialize(object.imageOriginal,
+            specifiedType: const FullType(String)));
+    }
     if (object.image24 != null) {
       result
         ..add('image_24')
@@ -158,6 +164,10 @@ class _$ProfileSerializer implements StructuredSerializer<Profile> {
           result.email = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'image_original':
+          result.imageOriginal = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'image_24':
           result.image24 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -209,6 +219,8 @@ class _$Profile extends Profile {
   @override
   final String email;
   @override
+  final String imageOriginal;
+  @override
   final String image24;
   @override
   final String image32;
@@ -234,6 +246,7 @@ class _$Profile extends Profile {
       this.displayNameNormalized,
       this.avatarHash,
       this.email,
+      this.imageOriginal,
       this.image24,
       this.image32,
       this.image48,
@@ -261,6 +274,7 @@ class _$Profile extends Profile {
         displayNameNormalized == other.displayNameNormalized &&
         avatarHash == other.avatarHash &&
         email == other.email &&
+        imageOriginal == other.imageOriginal &&
         image24 == other.image24 &&
         image32 == other.image32 &&
         image48 == other.image48 &&
@@ -284,14 +298,18 @@ class _$Profile extends Profile {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, title.hashCode),
-                                                        realName.hashCode),
-                                                    realNameNormalized
-                                                        .hashCode),
-                                                displayName.hashCode),
-                                            displayNameNormalized.hashCode),
-                                        avatarHash.hashCode),
-                                    email.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(0,
+                                                                title.hashCode),
+                                                            realName.hashCode),
+                                                        realNameNormalized
+                                                            .hashCode),
+                                                    displayName.hashCode),
+                                                displayNameNormalized.hashCode),
+                                            avatarHash.hashCode),
+                                        email.hashCode),
+                                    imageOriginal.hashCode),
                                 image24.hashCode),
                             image32.hashCode),
                         image48.hashCode),
@@ -311,6 +329,7 @@ class _$Profile extends Profile {
           ..add('displayNameNormalized', displayNameNormalized)
           ..add('avatarHash', avatarHash)
           ..add('email', email)
+          ..add('imageOriginal', imageOriginal)
           ..add('image24', image24)
           ..add('image32', image32)
           ..add('image48', image48)
@@ -355,6 +374,11 @@ class ProfileBuilder implements Builder<Profile, ProfileBuilder> {
   String get email => _$this._email;
   set email(String email) => _$this._email = email;
 
+  String _imageOriginal;
+  String get imageOriginal => _$this._imageOriginal;
+  set imageOriginal(String imageOriginal) =>
+      _$this._imageOriginal = imageOriginal;
+
   String _image24;
   String get image24 => _$this._image24;
   set image24(String image24) => _$this._image24 = image24;
@@ -395,6 +419,7 @@ class ProfileBuilder implements Builder<Profile, ProfileBuilder> {
       _displayNameNormalized = _$v.displayNameNormalized;
       _avatarHash = _$v.avatarHash;
       _email = _$v.email;
+      _imageOriginal = _$v.imageOriginal;
       _image24 = _$v.image24;
       _image32 = _$v.image32;
       _image48 = _$v.image48;
@@ -431,6 +456,7 @@ class ProfileBuilder implements Builder<Profile, ProfileBuilder> {
             displayNameNormalized: displayNameNormalized,
             avatarHash: avatarHash,
             email: email,
+            imageOriginal: imageOriginal,
             image24: image24,
             image32: image32,
             image48: image48,

@@ -5,7 +5,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
-import 'package:sprouter/util/utils.dart';
 
 class OrderDrinkBloc {
   AppRepository repository;
@@ -14,7 +13,7 @@ class OrderDrinkBloc {
   final Message selectedOrder;
   Drink _drink = Drink();
 
-  String get shopName => Utils.parseShopName(drinkShop?.files[0]?.title);
+  String get shopName => drinkShop?.getShopName;
 
   final StreamController<Ingredient> _addIngredient = StreamController();
 

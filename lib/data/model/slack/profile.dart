@@ -40,6 +40,10 @@ abstract class Profile implements Built<Profile, ProfileBuilder> {
   String get email;
 
   @nullable
+  @BuiltValueField(wireName: 'image_original')
+  String get imageOriginal;
+
+  @nullable
   @BuiltValueField(wireName: 'image_24')
   String get image24;
 

@@ -91,7 +91,7 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
             title: Text("登入 25Sprout Slack"),
           ),
           url:
-              "https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.email&team=$_teamId&client_id=$clientId&redirect_uri=$redirectUrl",
+              "https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.email,identity.avatar&team=$_teamId&client_id=$clientId&redirect_uri=$redirectUrl",
         );
       },
     );

@@ -21,6 +21,7 @@ part of 'message.dart';
 
 Serializer<Message> _$messageSerializer = new _$MessageSerializer();
 Serializer<Reply> _$replySerializer = new _$ReplySerializer();
+Serializer<Attachment> _$attachmentSerializer = new _$AttachmentSerializer();
 Serializer<File> _$fileSerializer = new _$FileSerializer();
 
 class _$MessageSerializer implements StructuredSerializer<Message> {
@@ -107,6 +108,13 @@ class _$MessageSerializer implements StructuredSerializer<Message> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(File)])));
     }
+    if (object.attachments != null) {
+      result
+        ..add('attachments')
+        ..add(serializers.serialize(object.attachments,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(Attachment)])));
+    }
 
     return result;
   }
@@ -174,6 +182,11 @@ class _$MessageSerializer implements StructuredSerializer<Message> {
                       const FullType(BuiltList, const [const FullType(File)]))
               as BuiltList);
           break;
+        case 'attachments':
+          result.attachments.replace(serializers.deserialize(value,
+              specifiedType: const FullType(
+                  BuiltList, const [const FullType(Attachment)])) as BuiltList);
+          break;
       }
     }
 
@@ -225,6 +238,51 @@ class _$ReplySerializer implements StructuredSerializer<Reply> {
         case 'ts':
           result.ts = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$AttachmentSerializer implements StructuredSerializer<Attachment> {
+  @override
+  final Iterable<Type> types = const [Attachment, _$Attachment];
+  @override
+  final String wireName = 'Attachment';
+
+  @override
+  Iterable serialize(Serializers serializers, Attachment object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[];
+    if (object.files != null) {
+      result
+        ..add('files')
+        ..add(serializers.serialize(object.files,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(File)])));
+    }
+
+    return result;
+  }
+
+  @override
+  Attachment deserialize(Serializers serializers, Iterable serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new AttachmentBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'files':
+          result.files.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(File)]))
+              as BuiltList);
           break;
       }
     }
@@ -691,6 +749,8 @@ class _$Message extends Message {
   @override
   final BuiltList<File> files;
   @override
+  final BuiltList<Attachment> attachments;
+  @override
   final Profile userProfile;
   @override
   final bool isAddedBySprouter;
@@ -713,6 +773,7 @@ class _$Message extends Message {
       this.unreadCount,
       this.ts,
       this.files,
+      this.attachments,
       this.userProfile,
       this.isAddedBySprouter,
       this.isFavoriteDrink})
@@ -740,7 +801,8 @@ class _$Message extends Message {
         lastRead == other.lastRead &&
         unreadCount == other.unreadCount &&
         ts == other.ts &&
-        files == other.files;
+        files == other.files &&
+        attachments == other.attachments;
   }
 
   @override
@@ -755,18 +817,20 @@ class _$Message extends Message {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, type.hashCode),
-                                                user.hashCode),
-                                            text.hashCode),
-                                        clientMsgId.hashCode),
-                                    threadTs.hashCode),
-                                replyCount.hashCode),
-                            replies.hashCode),
-                        subscribed.hashCode),
-                    lastRead.hashCode),
-                unreadCount.hashCode),
-            ts.hashCode),
-        files.hashCode));
+                                            $jc(
+                                                $jc($jc(0, type.hashCode),
+                                                    user.hashCode),
+                                                text.hashCode),
+                                            clientMsgId.hashCode),
+                                        threadTs.hashCode),
+                                    replyCount.hashCode),
+                                replies.hashCode),
+                            subscribed.hashCode),
+                        lastRead.hashCode),
+                    unreadCount.hashCode),
+                ts.hashCode),
+            files.hashCode),
+        attachments.hashCode));
   }
 
   @override
@@ -784,6 +848,7 @@ class _$Message extends Message {
           ..add('unreadCount', unreadCount)
           ..add('ts', ts)
           ..add('files', files)
+          ..add('attachments', attachments)
           ..add('userProfile', userProfile)
           ..add('isAddedBySprouter', isAddedBySprouter)
           ..add('isFavoriteDrink', isFavoriteDrink))
@@ -843,6 +908,12 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
   ListBuilder<File> get files => _$this._files ??= new ListBuilder<File>();
   set files(ListBuilder<File> files) => _$this._files = files;
 
+  ListBuilder<Attachment> _attachments;
+  ListBuilder<Attachment> get attachments =>
+      _$this._attachments ??= new ListBuilder<Attachment>();
+  set attachments(ListBuilder<Attachment> attachments) =>
+      _$this._attachments = attachments;
+
   ProfileBuilder _userProfile;
   ProfileBuilder get userProfile =>
       _$this._userProfile ??= new ProfileBuilder();
@@ -875,6 +946,7 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
       _unreadCount = _$v.unreadCount;
       _ts = _$v.ts;
       _files = _$v.files?.toBuilder();
+      _attachments = _$v.attachments?.toBuilder();
       _userProfile = _$v.userProfile?.toBuilder();
       _isAddedBySprouter = _$v.isAddedBySprouter;
       _isFavoriteDrink = _$v.isFavoriteDrink;
@@ -914,6 +986,7 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
               unreadCount: unreadCount,
               ts: ts,
               files: _files?.build(),
+              attachments: _attachments?.build(),
               userProfile: _userProfile?.build(),
               isAddedBySprouter: isAddedBySprouter,
               isFavoriteDrink: isFavoriteDrink);
@@ -925,6 +998,8 @@ class MessageBuilder implements Builder<Message, MessageBuilder> {
 
         _$failedField = 'files';
         _files?.build();
+        _$failedField = 'attachments';
+        _attachments?.build();
         _$failedField = 'userProfile';
         _userProfile?.build();
       } catch (e) {
@@ -1014,6 +1089,91 @@ class ReplyBuilder implements Builder<Reply, ReplyBuilder> {
   @override
   _$Reply build() {
     final _$result = _$v ?? new _$Reply._(user: user, ts: ts);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$Attachment extends Attachment {
+  @override
+  final BuiltList<File> files;
+
+  factory _$Attachment([void updates(AttachmentBuilder b)]) =>
+      (new AttachmentBuilder()..update(updates)).build();
+
+  _$Attachment._({this.files}) : super._();
+
+  @override
+  Attachment rebuild(void updates(AttachmentBuilder b)) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  AttachmentBuilder toBuilder() => new AttachmentBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is Attachment && files == other.files;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, files.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('Attachment')..add('files', files))
+        .toString();
+  }
+}
+
+class AttachmentBuilder implements Builder<Attachment, AttachmentBuilder> {
+  _$Attachment _$v;
+
+  ListBuilder<File> _files;
+  ListBuilder<File> get files => _$this._files ??= new ListBuilder<File>();
+  set files(ListBuilder<File> files) => _$this._files = files;
+
+  AttachmentBuilder();
+
+  AttachmentBuilder get _$this {
+    if (_$v != null) {
+      _files = _$v.files?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(Attachment other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$Attachment;
+  }
+
+  @override
+  void update(void updates(AttachmentBuilder b)) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$Attachment build() {
+    _$Attachment _$result;
+    try {
+      _$result = _$v ?? new _$Attachment._(files: _files?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'files';
+        _files?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'Attachment', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

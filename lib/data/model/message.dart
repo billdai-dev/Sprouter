@@ -62,6 +62,10 @@ abstract class Message implements Built<Message, MessageBuilder> {
   BuiltList<File> get files;
 
   @nullable
+  @BuiltValueField(wireName: 'attachments')
+  BuiltList<Attachment> get attachments;
+
+  @nullable
   @BuiltValueField(compare: false, serialize: false)
   Profile get userProfile;
 
@@ -77,8 +81,52 @@ abstract class Message implements Built<Message, MessageBuilder> {
     return json.encode(serializers.serializeWith(Message.serializer, this));
   }
 
-  String get getShopName =>
-      files?.elementAt(0)?.title?.split(" ")?.elementAt(1);
+  File get parseFile {
+    //優先取用 files 的資料 (Slack 透過 "Share file...")
+    if (files != null && files.isNotEmpty) {
+      return files.first;
+    }
+    //次優取用 attachments 裡的 files 的資料 (Slack 透過 "Share messages...")
+    if (attachments != null && attachments.isNotEmpty) {
+      if (attachments.first.files != null &&
+          attachments.first.files.isNotEmpty) {
+        return attachments.first.files.first;
+      }
+    }
+    return null;
+  }
+
+  String get getShopName {
+    File file = parseFile;
+    if (file == null) {
+      return "";
+    }
+    String fileTitle = file.title;
+
+    String title = fileTitle?.split(" ")[1];
+    String lowerCasedTitle = title.toLowerCase();
+    final String gap = "門檻";
+    int gapIndex = lowerCasedTitle.indexOf(gap);
+    final String tel = lowerCasedTitle.contains("電話") ? "電話" : "tel";
+    int telIndex = lowerCasedTitle.indexOf(tel);
+    String shopName;
+    if (gapIndex == -1 && gapIndex == -1) {
+      shopName = title;
+    } else if (gapIndex != -1 && telIndex == -1) {
+      shopName = title.replaceRange(gapIndex, title.length, "");
+    } else if (gapIndex == -1 && telIndex != -1) {
+      shopName = title.replaceRange(telIndex, title.length, "");
+    } else {
+      int index = gapIndex < telIndex ? gapIndex : telIndex;
+      shopName = title.replaceRange(index, title.length, "");
+    }
+    return shopName;
+  }
+
+  String get getPhotoUrl {
+    File file = parseFile;
+    return file != null ? file.thumb800 : "";
+  }
 
   static Message fromJson(String jsonString) {
     return serializers.deserializeWith(
@@ -111,6 +159,27 @@ abstract class Reply implements Built<Reply, ReplyBuilder> {
   }
 
   static Serializer<Reply> get serializer => _$replySerializer;
+}
+
+abstract class Attachment implements Built<Attachment, AttachmentBuilder> {
+  Attachment._();
+
+  factory Attachment([updates(AttachmentBuilder b)]) = _$Attachment;
+
+  @nullable
+  @BuiltValueField(wireName: 'files')
+  BuiltList<File> get files;
+
+  String toJson() {
+    return json.encode(serializers.serializeWith(Attachment.serializer, this));
+  }
+
+  static Attachment fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        Attachment.serializer, json.decode(jsonString));
+  }
+
+  static Serializer<Attachment> get serializer => _$attachmentSerializer;
 }
 
 abstract class File implements Built<File, FileBuilder> {

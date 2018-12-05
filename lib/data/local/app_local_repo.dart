@@ -98,8 +98,7 @@ class AppLocalRepo implements LocalRepo {
 
   @override
   Future<void> addShopToDB(String shopName, String threadTs) async {
-    if (Utils.isStringNullOrEmpty(shopName) ||
-        Utils.isStringNullOrEmpty(threadTs)) {
+    if (Utils.isStringEmpty(shopName) || Utils.isStringEmpty(threadTs)) {
       return;
     }
     Database db = await openDB();
@@ -146,8 +145,7 @@ class AppLocalRepo implements LocalRepo {
     userId ??= await loadUserId();
 
     Map<String, dynamic> drinkId;
-    if (Utils.isStringNullOrEmpty(threadTs) ||
-        Utils.isStringNullOrEmpty(orderTs)) {
+    if (Utils.isStringEmpty(threadTs) || Utils.isStringEmpty(orderTs)) {
       return null;
     }
 
@@ -155,8 +153,8 @@ class AppLocalRepo implements LocalRepo {
     SELECT Drink.drink_id FROM Drink JOIN DrinkOrder ON Drink.drink_id = DrinkOrder.drink_id
     WHERE DrinkOrder.user_id = ? AND DrinkOrder.shop_name = ? AND DrinkOrder.thread_ts = ? AND DrinkOrder.order_ts = ?;
     """, [userId, shopName, threadTs, orderTs]);
-    drinkId = Utils.isListNullOrEmpty(drinkIds) ? null : drinkIds.first;
-    return Utils.isMapNullOrEmpty(drinkId) ? null : drinkId["drink_id"];
+    drinkId = Utils.isListEmpty(drinkIds) ? null : drinkIds.first;
+    return Utils.isMapEmpty(drinkId) ? null : drinkId["drink_id"];
   }
 
   @override
@@ -176,7 +174,7 @@ class AppLocalRepo implements LocalRepo {
     Database db = await openDB();
     List<Map<String, dynamic>> results = await db.query("DrinkOrder",
         columns: ["order_ts"], where: "drink_id = ?", whereArgs: [drinkId]);
-    return Utils.isListNullOrEmpty(results) ? null : results.first["order_ts"];
+    return Utils.isListEmpty(results) ? null : results.first["order_ts"];
   }
 
   @override
@@ -211,7 +209,7 @@ class AppLocalRepo implements LocalRepo {
     DrinkOrder.shop_name = ? AND DrinkOrder.thread_ts = ? AND DrinkOrder.order_ts = ?;
     """, [shopName, threadTs, orderTs]);
     }
-    result = Utils.isListNullOrEmpty(results) ? null : results.first;
+    result = Utils.isListEmpty(results) ? null : results.first;
     return result;
   }
 
@@ -267,11 +265,11 @@ class AppLocalRepo implements LocalRepo {
       where: "user_id = ? AND shop_name = ?",
       whereArgs: [userId, shopName],
     );
-    if (Utils.isListNullOrEmpty(results)) {
+    if (Utils.isListEmpty(results)) {
       return 0;
     }
     result = results.first;
-    if (Utils.isMapNullOrEmpty(result)) {
+    if (Utils.isMapEmpty(result)) {
       return 0;
     }
     return result["drink_id"];

@@ -253,7 +253,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     }
     List<Message> drinkThread = snapshot.data;
     List<Message> replies;
-    if (Utils.isListNullOrEmpty(drinkThread)) {
+    if (Utils.isListEmpty(drinkThread)) {
       Widget child = drinkThread == null
           ? CircularProgressIndicator()
           : EmptyDataView("快叫 peipei 開單\n ლ(•ω •ლ)");
@@ -279,7 +279,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
       delegate: SliverChildBuilderDelegate((context, index) {
         return Column(
           children: <Widget>[
-            _buildMessageTile(isOrdering, index, replies[index]),
+            _buildReplyTile(isOrdering, index, replies[index]),
             Divider(height: 2.0)
           ],
         );
@@ -287,7 +287,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     );
   }
 
-  Widget _buildMessageTile(bool isOrdering, int index, Message reply) {
+  Widget _buildReplyTile(bool isOrdering, int index, Message reply) {
     bool isAddedBySprouter = reply?.isAddedBySprouter ?? false;
     bool isFavoriteDrink =
         isAddedBySprouter && (reply?.isFavoriteDrink ?? false);
@@ -309,27 +309,18 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     }
 
     String userName = reply?.userProfile?.displayName;
-    userName = Utils.isStringNullOrEmpty(userName)
-        ? reply?.userProfile?.realName
-        : userName;
+    userName =
+        Utils.isStringEmpty(userName) ? reply?.userProfile?.realName : userName;
     int replyTs = int.parse(reply?.ts?.split(".")[0]) * 1000;
     String replyTime = Utils.getTimeDeltaStatement(
         DateTime.fromMillisecondsSinceEpoch(replyTs));
 
     Widget listTile = ListTile(
       key: ValueKey(reply?.ts),
-      leading: StreamBuilder(
-        stream: todayDrinkBloc?.slackToken,
-        builder: (context, snapshot) {
-          return snapshot.hasData
-              ? CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    reply?.userProfile?.image48,
-                    headers: {"Authorization": "Bearer ${snapshot.data}"},
-                  ),
-                )
-              : SizedBox.shrink();
-        },
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(
+          reply?.userProfile?.image72,
+        ),
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,9 +391,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     if (messages == null || messages.isEmpty) {
       return Text("Sprouter");
     }
-    List<String> parsedTitle = messages[0]?.files[0]?.title?.split(" ");
-    String shopName =
-        parsedTitle.isEmpty || parsedTitle.length < 2 ? "" : parsedTitle[1];
+    String shopName = messages.first?.getShopName;
     return Text(
       shopName,
       style: Theme.of(context).primaryTextTheme.title,
@@ -411,7 +400,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
 
   Widget _buildShopImage(
       BuildContext context, String token, List<Message> messages) {
-    if (Utils.isListNullOrEmpty(messages)) {
+    if (Utils.isListEmpty(messages)) {
       return Container(
           alignment: Alignment.center,
           color: Colors.grey,
@@ -419,7 +408,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               ? CircularProgressIndicator()
               : EmptyDataView("沒有訂單，沒有菜單\n╮(╯_╰)╭"));
     }
-    String imageUrl = messages[0].files[0].thumb800;
+    String imageUrl = messages?.first?.getPhotoUrl;
     return Container(
       color: Colors.grey.shade300,
       child: GestureDetector(

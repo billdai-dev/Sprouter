@@ -152,23 +152,23 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
     return StreamBuilder<Drink>(
       stream: bloc.currentDrink,
       builder: (context, snapshot) {
-        List<Widget> chips = snapshot.hasData &&
-                !Utils.isListNullOrEmpty(snapshot.data.ingredients)
-            ? snapshot.data.ingredients.map((ingredient) {
-                ValueKey key = ValueKey(ingredient is OtherIngredient
-                    ? ingredient.ingredientName
-                    : getIngredientMapping(ingredient));
-                return _IngredientChip(
-                  key: key,
-                  ingredient: ingredient,
-                );
-              }).toList(growable: false)
-            : [
-                InputChip(
-                    disabledColor: Colors.grey.shade300,
-                    avatar: Image.asset("assets/images/bulb.png"),
-                    label: Text("試著將配料丟進杯子..")),
-              ];
+        List<Widget> chips =
+            snapshot.hasData && !Utils.isListEmpty(snapshot.data.ingredients)
+                ? snapshot.data.ingredients.map((ingredient) {
+                    ValueKey key = ValueKey(ingredient is OtherIngredient
+                        ? ingredient.ingredientName
+                        : getIngredientMapping(ingredient));
+                    return _IngredientChip(
+                      key: key,
+                      ingredient: ingredient,
+                    );
+                  }).toList(growable: false)
+                : [
+                    InputChip(
+                        disabledColor: Colors.grey.shade300,
+                        avatar: Image.asset("assets/images/bulb.png"),
+                        label: Text("試著將配料丟進杯子..")),
+                  ];
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ListView.builder(
@@ -195,7 +195,7 @@ class _OrderDrinkPageState extends State<OrderDrinkPage>
           String imageFile =
               _useMaleImage ? "thirsty_man.png" : "thirsty_woman.png";
           bool isEmptyDrink = !snapshot.hasData ||
-              Utils.isStringNullOrEmpty(snapshot.data.completeDrinkName);
+              Utils.isStringEmpty(snapshot.data.completeDrinkName);
           return Row(
             children: <Widget>[
               Spacer(flex: 3),
