@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 const String androidChannelId = "0";
 const String androidChannelName = "下班打卡提醒";
 const String androidChannelDesc = "於 App 內開啟通知鈴鐺以啟用打卡提醒";
-const String notificationIcon = "ic_launcher";
+const String notificationIcon = "ic_notification";
 const int jibbleNotificationId = 1;
 const List<String> facialExpressions = [
   "(ﾟ∀ﾟ)",
@@ -21,7 +21,7 @@ Future<bool> initializeNotificationSetting(
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   var initializationSettingsAndroid =
-      AndroidInitializationSettings('ic_launcher');
+      AndroidInitializationSettings(notificationIcon);
   var initializationSettingsIOS = IOSInitializationSettings();
   var initializationSettings = InitializationSettings(
       initializationSettingsAndroid, initializationSettingsIOS);
