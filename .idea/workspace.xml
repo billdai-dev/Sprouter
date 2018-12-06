@@ -10,12 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49aa6c1c-098f-474e-bcad-6c3fb146f3a1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/GenSenMaruGothicTW-ExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/GenSenMaruGothicTW-Heavy.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/fonts/GenSenMaruGothicTW-Light.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -96,11 +91,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="209" column="54" lean-forward="true" selection-start-line="209" selection-start-column="54" selection-end-line="209" selection-end-column="54" />
+            <state relative-caret-position="466">
+              <caret line="218" column="30" lean-forward="true" selection-start-line="218" selection-start-column="30" selection-end-line="218" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="check_in_bloc.dart" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="102" column="34" lean-forward="true" selection-start-line="102" selection-start-column="34" selection-end-line="102" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -156,7 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" />
         <option value="$PROJECT_DIR$/lib/app_provider.dart" />
         <option value="$PROJECT_DIR$/lib/main_dev.dart" />
@@ -181,6 +184,7 @@
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/lib/ui/main_app.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
       </list>
     </option>
   </component>
@@ -673,7 +677,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="medi&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/media_query.dart&#10;nestedscr&#9;null&#9;null&#10;todaypa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;slisa&#9;null&#9;null&#10;safe&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/safe_area.dart&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;safeare&#9;null&#9;null&#10;mainap&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/main_app.dart&#10;main&#9;null&#9;null&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;webviewpa&#9;null&#9;null&#10;_httphead&#9;null&#9;null&#10;httpclireq&#9;null&#9;null&#10;util&#9;null&#9;null&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;conversa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;message&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;envco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;textstylet&#9;null&#9;null&#10;styletra&#9;null&#9;null&#10;Flex&#9;null&#9;null&#10;flex&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/rendering/flex.dart&#10;positioned&#9;null&#9;null&#10;orderpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;todayd&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;.gi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/.gitignore&#10;todrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;empt&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/empty_data_view.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;todaydrblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todayblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;builtjson&#9;null&#9;null&#10;conversli&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;env&#9;null&#9;null&#10;ma&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main_dev.dart&#10;todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;orderdrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;apploca&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;uti&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/util/utils.dart&#10;orderblo&#9;null&#9;null&#10;tod&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;manifes&#9;ACTION&#9;template.create.OtherAndroid Manifest File" />
+    <property name="SearchEverywhereHistoryKey" value="checkinblo&#9;null&#9;null&#10;medi&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/media_query.dart&#10;nestedscr&#9;null&#9;null&#10;todaypa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;slisa&#9;null&#9;null&#10;safe&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/safe_area.dart&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;safeare&#9;null&#9;null&#10;mainap&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/main_app.dart&#10;main&#9;null&#9;null&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;webviewpa&#9;null&#9;null&#10;_httphead&#9;null&#9;null&#10;httpclireq&#9;null&#9;null&#10;util&#9;null&#9;null&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;conversa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;message&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;envco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;textstylet&#9;null&#9;null&#10;styletra&#9;null&#9;null&#10;Flex&#9;null&#9;null&#10;flex&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/rendering/flex.dart&#10;positioned&#9;null&#9;null&#10;orderpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;todayd&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;.gi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/.gitignore&#10;todrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;empt&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/empty_data_view.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;todaydrblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todayblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;builtjson&#9;null&#9;null&#10;conversli&#9;null&#9;null&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;env&#9;null&#9;null&#10;ma&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main_dev.dart&#10;todo&#9;ACTION&#9;ActivateTODOToolWindow&#10;orderdrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;apploca&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;uti&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/util/utils.dart&#10;orderblo&#9;null&#9;null&#10;tod&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;manifes&#9;ACTION&#9;template.create.OtherAndroid Manifest File" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -965,13 +969,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/animation/curves.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="404" column="11" selection-start-line="404" selection-start-column="11" selection-end-line="404" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter/flutter/bin/cache/pkg/sky_engine/lib/core/duration.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -1326,8 +1323,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="209" column="54" lean-forward="true" selection-start-line="209" selection-start-column="54" selection-end-line="209" selection-end-column="54" />
+        <state relative-caret-position="466">
+          <caret line="218" column="30" lean-forward="true" selection-start-line="218" selection-start-column="30" selection-end-line="218" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="102" column="34" lean-forward="true" selection-start-line="102" selection-start-column="34" selection-end-line="102" selection-end-column="34" />
         </state>
       </provider>
     </entry>

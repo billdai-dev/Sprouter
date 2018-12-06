@@ -100,7 +100,7 @@ class CheckInBloc {
             .add(Duration(hours: 8));
     DateTime now = DateTime.now();
     if (now.isAfter(scheduledTime)) {
-      return null;
+      return cancelNotification();
     }
     return scheduleNotification(
         scheduledTime, "Jibble reminder", "你今天 Jibble 了嗎？");
