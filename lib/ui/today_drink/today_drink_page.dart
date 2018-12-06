@@ -213,13 +213,18 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
                   },
                 ),
               ],
-              flexibleSpace: FlexibleSpaceBar(
-                background: snapshot.hasError
-                    ? Container(
-                        color: Colors.grey,
-                        child: EmptyDataView("登入 Slack 以查看最新飲料訂單"),
-                      )
-                    : _buildShopImage(context, token, messages),
+              flexibleSpace: SafeArea(
+                left: false,
+                right: false,
+                bottom: false,
+                child: FlexibleSpaceBar(
+                  background: snapshot.hasError
+                      ? Container(
+                          color: Colors.grey,
+                          child: EmptyDataView("登入 Slack 以查看最新飲料訂單"),
+                        )
+                      : _buildShopImage(context, token, messages),
+                ),
               ),
             );
           },
