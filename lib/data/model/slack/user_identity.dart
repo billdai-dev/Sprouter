@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:sprouter/data/model/serializers.dart';
+import 'package:sprouter/data/model/slack/profile.dart';
 
 part 'user_identity.g.dart';
 
@@ -41,11 +42,29 @@ abstract class User implements Built<User, UserBuilder> {
 
   factory User([updates(UserBuilder b)]) = _$User;
 
+  @nullable
   @BuiltValueField(wireName: 'name')
   String get name;
 
+  @nullable
   @BuiltValueField(wireName: 'id')
   String get id;
+
+  @nullable
+  @BuiltValueField(wireName: 'image_24')
+  String get image24;
+
+  @nullable
+  @BuiltValueField(wireName: 'image_32')
+  String get image32;
+
+  @nullable
+  @BuiltValueField(wireName: 'image_48')
+  String get image48;
+
+  @nullable
+  @BuiltValueField(wireName: 'image_72')
+  String get image72;
 
   String toJson() {
     return json.encode(serializers.serializeWith(User.serializer, this));
@@ -64,6 +83,7 @@ abstract class Team implements Built<Team, TeamBuilder> {
 
   factory Team([updates(TeamBuilder b)]) = _$Team;
 
+  @nullable
   @BuiltValueField(wireName: 'id')
   String get id;
 

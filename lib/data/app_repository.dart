@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:built_collection/built_collection.dart';
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/conversation_list.dart';
@@ -38,6 +37,11 @@ class AppRepository implements Repository {
   AppRepository._internal() {
     _remoteRepo = AppRemoteRepo.repo;
     _localRepo = AppLocalRepo.repo;
+  }
+
+  @override
+  Future<User> getUser() {
+    return _remoteRepo.getUserIdentity().then((identity) => identity?.user);
   }
 
   @override

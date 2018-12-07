@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/model/message.dart';
+import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/ui/check_in/check_in_bloc_provider.dart';
 import 'package:sprouter/ui/empty_data_view.dart';
@@ -195,9 +196,8 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               floating: false,
               title: _buildTitle(messages),
               actions: <Widget>[
-                _SlackLoginAction(
-                  animation: _slackIconAnimation,
-                  onPressed: () async {
+                _SlackLoginButton(
+                  () async {
                     bool success = await Navigator.of(
                       context,
                       rootNavigator: true,
@@ -505,22 +505,100 @@ class _AddDrinkFabState extends State<_AddDrinkFab>
   }
 }
 
-class _SlackLoginAction extends AnimatedWidget {
+class _SlackLoginButton extends StatefulWidget {
   final VoidCallback onPressed;
 
-  _SlackLoginAction(
-      {Key key, Animation<double> animation, @required this.onPressed})
-      : super(key: key, listenable: animation);
+  _SlackLoginButton(this.onPressed);
+
+  @override
+  _SlackLoginButtonState createState() => _SlackLoginButtonState();
+}
+
+class _SlackLoginButtonState extends State<_SlackLoginButton>
+    with SingleTickerProviderStateMixin {
+  Timer stateChangeTimer;
+  AnimationController _controller;
+  Animation<double> _slackIconAnimation;
+  bool isIconSwitched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+    _slackIconAnimation = Tween(begin: 1.0, end: 1.3).animate(_controller);
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _controller.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return IconButton(
-      icon: Icon(
-        FontAwesomeIcons.slack,
-        size: animation?.value ?? 24.0,
-      ),
-      onPressed: onPressed,
+    SlackLoginBloc slackLoginBloc = SlackLoginBlocProvider.of(context);
+    return StreamBuilder<User>(
+      stream: slackLoginBloc.getUser,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          _controller.reset();
+          _controller.forward();
+          if (stateChangeTimer != null && stateChangeTimer.isActive) {
+            stateChangeTimer.cancel();
+          }
+          return ScaleTransition(
+            scale: _slackIconAnimation,
+            child: IconButton(
+              icon: Icon(
+                FontAwesomeIcons.slack,
+                size: 24.0,
+              ),
+              onPressed: widget.onPressed,
+            ),
+          );
+        }
+        _controller.stop();
+        if (stateChangeTimer == null || !stateChangeTimer.isActive) {
+          stateChangeTimer = Timer.periodic(
+            Duration(seconds: 3),
+            (timer) => setState(() => isIconSwitched = !isIconSwitched),
+          );
+        }
+        return GestureDetector(
+          onTap: widget.onPressed,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              right: 8.0,
+            ),
+            child: AnimatedSwitcher(
+              child: SizedBox(
+                width: 40.0,
+                height: 40.0,
+                key: UniqueKey(),
+                child: isIconSwitched
+                    ? CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(snapshot.data.image72),
+                      )
+                    : Icon(
+                        FontAwesomeIcons.slack,
+                      ),
+              ),
+              duration: Duration(seconds: 1),
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -92,12 +92,43 @@ class _$UserSerializer implements StructuredSerializer<User> {
   @override
   Iterable serialize(Serializers serializers, User object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
+    if (object.name != null) {
+      result
+        ..add('name')
+        ..add(serializers.serialize(object.name,
+            specifiedType: const FullType(String)));
+    }
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
+    if (object.image24 != null) {
+      result
+        ..add('image_24')
+        ..add(serializers.serialize(object.image24,
+            specifiedType: const FullType(String)));
+    }
+    if (object.image32 != null) {
+      result
+        ..add('image_32')
+        ..add(serializers.serialize(object.image32,
+            specifiedType: const FullType(String)));
+    }
+    if (object.image48 != null) {
+      result
+        ..add('image_48')
+        ..add(serializers.serialize(object.image48,
+            specifiedType: const FullType(String)));
+    }
+    if (object.image72 != null) {
+      result
+        ..add('image_72')
+        ..add(serializers.serialize(object.image72,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -121,6 +152,22 @@ class _$UserSerializer implements StructuredSerializer<User> {
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'image_24':
+          result.image24 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'image_32':
+          result.image32 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'image_48':
+          result.image48 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'image_72':
+          result.image72 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -137,10 +184,13 @@ class _$TeamSerializer implements StructuredSerializer<Team> {
   @override
   Iterable serialize(Serializers serializers, Team object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-    ];
+    final result = <Object>[];
+    if (object.id != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(object.id,
+            specifiedType: const FullType(String)));
+    }
 
     return result;
   }
@@ -286,18 +336,26 @@ class _$User extends User {
   final String name;
   @override
   final String id;
+  @override
+  final String image24;
+  @override
+  final String image32;
+  @override
+  final String image48;
+  @override
+  final String image72;
 
   factory _$User([void updates(UserBuilder b)]) =>
       (new UserBuilder()..update(updates)).build();
 
-  _$User._({this.name, this.id}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('User', 'name');
-    }
-    if (id == null) {
-      throw new BuiltValueNullFieldError('User', 'id');
-    }
-  }
+  _$User._(
+      {this.name,
+      this.id,
+      this.image24,
+      this.image32,
+      this.image48,
+      this.image72})
+      : super._();
 
   @override
   User rebuild(void updates(UserBuilder b)) =>
@@ -309,19 +367,34 @@ class _$User extends User {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is User && name == other.name && id == other.id;
+    return other is User &&
+        name == other.name &&
+        id == other.id &&
+        image24 == other.image24 &&
+        image32 == other.image32 &&
+        image48 == other.image48 &&
+        image72 == other.image72;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), id.hashCode));
+    return $jf($jc(
+        $jc(
+            $jc($jc($jc($jc(0, name.hashCode), id.hashCode), image24.hashCode),
+                image32.hashCode),
+            image48.hashCode),
+        image72.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('User')
           ..add('name', name)
-          ..add('id', id))
+          ..add('id', id)
+          ..add('image24', image24)
+          ..add('image32', image32)
+          ..add('image48', image48)
+          ..add('image72', image72))
         .toString();
   }
 }
@@ -337,12 +410,32 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
+  String _image24;
+  String get image24 => _$this._image24;
+  set image24(String image24) => _$this._image24 = image24;
+
+  String _image32;
+  String get image32 => _$this._image32;
+  set image32(String image32) => _$this._image32 = image32;
+
+  String _image48;
+  String get image48 => _$this._image48;
+  set image48(String image48) => _$this._image48 = image48;
+
+  String _image72;
+  String get image72 => _$this._image72;
+  set image72(String image72) => _$this._image72 = image72;
+
   UserBuilder();
 
   UserBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
       _id = _$v.id;
+      _image24 = _$v.image24;
+      _image32 = _$v.image32;
+      _image48 = _$v.image48;
+      _image72 = _$v.image72;
       _$v = null;
     }
     return this;
@@ -363,7 +456,14 @@ class UserBuilder implements Builder<User, UserBuilder> {
 
   @override
   _$User build() {
-    final _$result = _$v ?? new _$User._(name: name, id: id);
+    final _$result = _$v ??
+        new _$User._(
+            name: name,
+            id: id,
+            image24: image24,
+            image32: image32,
+            image48: image48,
+            image72: image72);
     replace(_$result);
     return _$result;
   }
@@ -376,11 +476,7 @@ class _$Team extends Team {
   factory _$Team([void updates(TeamBuilder b)]) =>
       (new TeamBuilder()..update(updates)).build();
 
-  _$Team._({this.id}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('Team', 'id');
-    }
-  }
+  _$Team._({this.id}) : super._();
 
   @override
   Team rebuild(void updates(TeamBuilder b)) =>
