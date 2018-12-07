@@ -292,4 +292,9 @@ class AppRepository implements Repository {
   Future<void> changeCheckInReminderStatus(bool isEnabled) {
     return _localRepo.saveCheckInReminderStatus(isEnabled);
   }
+
+  @override
+  Future<void> clearLocalCache() {
+    return _localRepo.saveJibbleChannelId(null);
+  }
 }

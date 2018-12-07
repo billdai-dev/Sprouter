@@ -34,4 +34,6 @@ abstract class Repository {
   Future<bool> getCheckInReminderStatus();
 
   Future<void> changeCheckInReminderStatus(bool isEnabled);
+
+  Future<void> clearLocalCache();
 }

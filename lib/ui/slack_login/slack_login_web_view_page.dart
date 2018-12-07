@@ -49,6 +49,8 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
         }
         Uri uri = Uri().resolve(changedUrl);
         String code = uri.queryParameters["code"];
+
+        await bloc?.clearLocalCache();
         String token = await bloc?.getSlackOauthToken(code);
 
         Navigator.of(context).pop(token != null);
@@ -90,6 +92,7 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
           appBar: AppBar(
             title: Text("登入 25Sprout Slack"),
           ),
+          clearCookies: true,
           url:
               "https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.email,identity.avatar&team=$_teamId&client_id=$clientId&redirect_uri=$redirectUrl",
         );

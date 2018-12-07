@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
-import 'package:sprouter/data/model/slack/profile.dart';
 import 'package:sprouter/data/model/slack/user_identity.dart';
 
 class SlackLoginBloc {
@@ -36,6 +35,10 @@ class SlackLoginBloc {
     this.token = token;
     _getTokenCache.sink.add(token);
     return token;
+  }
+
+  Future<void> clearLocalCache() {
+    return repository.clearLocalCache();
   }
 
   String getSlackClientId() => AppRepository.clientId;
