@@ -13,37 +13,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49aa6c1c-098f-474e-bcad-6c3fb146f3a1" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/icon_sprout (2).png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/data/model/slack/simple_identity_response.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x-1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x-1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x-1.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x-1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/ItunesArtwork@2x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/app_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/app_repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/message.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/message.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/serializers.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/serializers.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/serializers.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/serializers.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_identity.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/model/slack/profile_response.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/model/slack/user_identity.g.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/data/repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/data/repository.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/main_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/main_app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
@@ -122,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="false">
+      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="599">
-              <caret line="569" column="9" selection-start-line="569" selection-start-column="9" selection-end-line="569" selection-end-column="9" />
+            <state relative-caret-position="312">
+              <caret line="363" column="22" lean-forward="true" selection-start-line="363" selection-start-column="22" selection-end-line="363" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -167,20 +136,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="slack_login_bloc.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="slack_login_bloc.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="24" column="64" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="profile.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/data/model/slack/profile.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="774">
-              <caret line="47" column="13" selection-start-line="47" selection-start-column="13" selection-end-line="47" selection-end-column="13" />
+            <state relative-caret-position="214">
+              <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -201,7 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>body</find>
       <find>weight</find>
       <find>推薦</find>
       <find>grid</find>
@@ -231,6 +190,7 @@
       <find>indentity</find>
       <find>get_pro</find>
       <find>getuser</find>
+      <find>dismis</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -270,8 +230,8 @@
         <option value="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" />
         <option value="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" />
         <option value="$PROJECT_DIR$/lib/data/app_repository.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" />
         <option value="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" />
       </list>
     </option>
   </component>
@@ -849,7 +809,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="slackblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;webvi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;slacklogi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;slacklo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;repo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;profil&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/slack/profile.dart&#10;web&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;appremote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;env&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;enco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;slacklog&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackwe&#9;null&#9;null&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;applo&#9;null&#9;null&#10;apps&#9;null&#9;null&#10;flavo&#9;null&#9;null&#10;timer&#9;null&#9;null&#10;dura&#9;null&#9;null&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;sl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;todp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slack&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;remo&#9;null&#9;null&#10;profile&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/slack/profile.dart&#10;animsw&#9;null&#9;null&#10;animatedcro&#9;null&#9;null&#10;medi&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/media_query.dart&#10;nestedscr&#9;null&#9;null&#10;todaypa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;slisa&#9;null&#9;null&#10;safe&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/safe_area.dart&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;safeare&#9;null&#9;null&#10;mainap&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/main_app.dart&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;webviewpa&#9;null&#9;null&#10;_httphead&#9;null&#9;null&#10;httpclireq&#9;null&#9;null&#10;util&#9;null&#9;null&#10;conversa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;message&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;envco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart" />
+    <property name="SearchEverywhereHistoryKey" value="todaydrip&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;webvi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;slacklogi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;slacklo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;repo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/repository.dart&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;profil&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/slack/profile.dart&#10;web&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;appremote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;env&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;enco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;slacklog&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackwe&#9;null&#9;null&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;applo&#9;null&#9;null&#10;apps&#9;null&#9;null&#10;flavo&#9;null&#9;null&#10;timer&#9;null&#9;null&#10;dura&#9;null&#9;null&#10;checkinblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;remot&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;sl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;todp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slack&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;remo&#9;null&#9;null&#10;profile&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/slack/profile.dart&#10;animsw&#9;null&#9;null&#10;animatedcro&#9;null&#9;null&#10;medi&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/media_query.dart&#10;nestedscr&#9;null&#9;null&#10;todaypa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;pubspec.yaml&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;slisa&#9;null&#9;null&#10;safe&#9;FILE&#9;file:///Users/bill/Flutter/flutter/packages/flutter/lib/src/widgets/safe_area.dart&#10;today&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;safeare&#9;null&#9;null&#10;mainap&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/main_app.dart&#10;order&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;webviewpa&#9;null&#9;null&#10;_httphead&#9;null&#9;null&#10;httpclireq&#9;null&#9;null&#10;util&#9;null&#9;null&#10;conversa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/conversation_list.dart&#10;message&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -877,7 +837,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Flutter.main_release.dart">
+  <component name="RunManager" selected="Flutter.main.dart">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -965,12 +925,12 @@
       <window_info id="Designer" order="10" />
       <window_info id="Structure" order="4" sideWeight="0.50212765" side_tool="true" weight="0.18669528" />
       <window_info anchor="right" id="Device File Explorer" order="9" sideWeight="0.5035842" side_tool="true" weight="0.20958512" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" weight="0.44102564" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" visible="true" weight="0.44102564" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="12" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.2628205" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914163" weight="0.2628205" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32820514" />
       <window_info anchor="bottom" id="Terminal" order="13" weight="0.32820514" />
       <window_info id="Captures" order="9" weight="0.25" />
@@ -1056,13 +1016,18 @@
           <line>116</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart</url>
+          <line>362</line>
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="dart-exception">
           <properties />
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="85" />
+      <option name="time" value="86" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -1147,13 +1112,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/painting/image_provider.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="489" column="72" selection-start-line="489" selection-start-column="72" selection-end-line="489" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -1494,13 +1452,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="569" column="9" selection-start-line="569" selection-start-column="9" selection-end-line="569" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -1510,8 +1461,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="24" column="64" selection-start-line="24" selection-start-column="64" selection-end-line="24" selection-end-column="64" />
+        <state relative-caret-position="214">
+          <caret line="30" column="3" selection-start-line="30" selection-start-column="3" selection-end-line="30" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/widgets/framework.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="53" column="2" selection-start-line="53" selection-start-column="2" selection-end-line="53" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="363" column="22" lean-forward="true" selection-start-line="363" selection-start-column="22" selection-end-line="363" selection-end-column="22" />
         </state>
       </provider>
     </entry>

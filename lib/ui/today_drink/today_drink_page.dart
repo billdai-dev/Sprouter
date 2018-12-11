@@ -360,7 +360,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
           : null,
     );
 
-    return isAddedBySprouter
+    return isOrdering && isAddedBySprouter
         ? Dismissible(
             key: ValueKey(reply?.ts),
             background: Container(
