@@ -2,11 +2,12 @@ import 'dart:async';
 
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/model/post_message.dart';
-import 'package:sprouter/data/model/slack/user_identity.dart';
+import 'package:sprouter/data/model/slack/profile.dart';
+import 'package:sprouter/data/model/slack/profile_response.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 
 abstract class Repository {
-  Future<User> getUser();
+  Future<Profile> getUserProfile();
 
   Future<String> getTokenCache();
 

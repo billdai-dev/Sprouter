@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_identity.dart';
+part of 'profile_response.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -19,19 +19,20 @@ part of 'user_identity.dart';
 // ignore_for_file: unnecessary_new
 // ignore_for_file: test_types_in_equals
 
-Serializer<UserIdentity> _$userIdentitySerializer =
-    new _$UserIdentitySerializer();
+Serializer<ProfileResponse> _$profileResponseSerializer =
+    new _$ProfileResponseSerializer();
 Serializer<User> _$userSerializer = new _$UserSerializer();
 Serializer<Team> _$teamSerializer = new _$TeamSerializer();
 
-class _$UserIdentitySerializer implements StructuredSerializer<UserIdentity> {
+class _$ProfileResponseSerializer
+    implements StructuredSerializer<ProfileResponse> {
   @override
-  final Iterable<Type> types = const [UserIdentity, _$UserIdentity];
+  final Iterable<Type> types = const [ProfileResponse, _$ProfileResponse];
   @override
-  final String wireName = 'UserIdentity';
+  final String wireName = 'ProfileResponse';
 
   @override
-  Iterable serialize(Serializers serializers, UserIdentity object,
+  Iterable serialize(Serializers serializers, ProfileResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'ok',
@@ -43,20 +44,20 @@ class _$UserIdentitySerializer implements StructuredSerializer<UserIdentity> {
         ..add(serializers.serialize(object.user,
             specifiedType: const FullType(User)));
     }
-    if (object.team != null) {
+    if (object.profile != null) {
       result
-        ..add('team')
-        ..add(serializers.serialize(object.team,
-            specifiedType: const FullType(Team)));
+        ..add('profile')
+        ..add(serializers.serialize(object.profile,
+            specifiedType: const FullType(Profile)));
     }
 
     return result;
   }
 
   @override
-  UserIdentity deserialize(Serializers serializers, Iterable serialized,
+  ProfileResponse deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserIdentityBuilder();
+    final result = new ProfileResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -72,9 +73,9 @@ class _$UserIdentitySerializer implements StructuredSerializer<UserIdentity> {
           result.user.replace(serializers.deserialize(value,
               specifiedType: const FullType(User)) as User);
           break;
-        case 'team':
-          result.team.replace(serializers.deserialize(value,
-              specifiedType: const FullType(Team)) as Team);
+        case 'profile':
+          result.profile.replace(serializers.deserialize(value,
+              specifiedType: const FullType(Profile)) as Profile);
           break;
       }
     }
@@ -217,57 +218,58 @@ class _$TeamSerializer implements StructuredSerializer<Team> {
   }
 }
 
-class _$UserIdentity extends UserIdentity {
+class _$ProfileResponse extends ProfileResponse {
   @override
   final bool ok;
   @override
   final User user;
   @override
-  final Team team;
+  final Profile profile;
 
-  factory _$UserIdentity([void updates(UserIdentityBuilder b)]) =>
-      (new UserIdentityBuilder()..update(updates)).build();
+  factory _$ProfileResponse([void updates(ProfileResponseBuilder b)]) =>
+      (new ProfileResponseBuilder()..update(updates)).build();
 
-  _$UserIdentity._({this.ok, this.user, this.team}) : super._() {
+  _$ProfileResponse._({this.ok, this.user, this.profile}) : super._() {
     if (ok == null) {
-      throw new BuiltValueNullFieldError('UserIdentity', 'ok');
+      throw new BuiltValueNullFieldError('ProfileResponse', 'ok');
     }
   }
 
   @override
-  UserIdentity rebuild(void updates(UserIdentityBuilder b)) =>
+  ProfileResponse rebuild(void updates(ProfileResponseBuilder b)) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UserIdentityBuilder toBuilder() => new UserIdentityBuilder()..replace(this);
+  ProfileResponseBuilder toBuilder() =>
+      new ProfileResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is UserIdentity &&
+    return other is ProfileResponse &&
         ok == other.ok &&
         user == other.user &&
-        team == other.team;
+        profile == other.profile;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, ok.hashCode), user.hashCode), team.hashCode));
+    return $jf($jc($jc($jc(0, ok.hashCode), user.hashCode), profile.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('UserIdentity')
+    return (newBuiltValueToStringHelper('ProfileResponse')
           ..add('ok', ok)
           ..add('user', user)
-          ..add('team', team))
+          ..add('profile', profile))
         .toString();
   }
 }
 
-class UserIdentityBuilder
-    implements Builder<UserIdentity, UserIdentityBuilder> {
-  _$UserIdentity _$v;
+class ProfileResponseBuilder
+    implements Builder<ProfileResponse, ProfileResponseBuilder> {
+  _$ProfileResponse _$v;
 
   bool _ok;
   bool get ok => _$this._ok;
@@ -277,52 +279,52 @@ class UserIdentityBuilder
   UserBuilder get user => _$this._user ??= new UserBuilder();
   set user(UserBuilder user) => _$this._user = user;
 
-  TeamBuilder _team;
-  TeamBuilder get team => _$this._team ??= new TeamBuilder();
-  set team(TeamBuilder team) => _$this._team = team;
+  ProfileBuilder _profile;
+  ProfileBuilder get profile => _$this._profile ??= new ProfileBuilder();
+  set profile(ProfileBuilder profile) => _$this._profile = profile;
 
-  UserIdentityBuilder();
+  ProfileResponseBuilder();
 
-  UserIdentityBuilder get _$this {
+  ProfileResponseBuilder get _$this {
     if (_$v != null) {
       _ok = _$v.ok;
       _user = _$v.user?.toBuilder();
-      _team = _$v.team?.toBuilder();
+      _profile = _$v.profile?.toBuilder();
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(UserIdentity other) {
+  void replace(ProfileResponse other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$UserIdentity;
+    _$v = other as _$ProfileResponse;
   }
 
   @override
-  void update(void updates(UserIdentityBuilder b)) {
+  void update(void updates(ProfileResponseBuilder b)) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$UserIdentity build() {
-    _$UserIdentity _$result;
+  _$ProfileResponse build() {
+    _$ProfileResponse _$result;
     try {
       _$result = _$v ??
-          new _$UserIdentity._(
-              ok: ok, user: _user?.build(), team: _team?.build());
+          new _$ProfileResponse._(
+              ok: ok, user: _user?.build(), profile: _profile?.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'user';
         _user?.build();
-        _$failedField = 'team';
-        _team?.build();
+        _$failedField = 'profile';
+        _profile?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'UserIdentity', _$failedField, e.toString());
+            'ProfileResponse', _$failedField, e.toString());
       }
       rethrow;
     }

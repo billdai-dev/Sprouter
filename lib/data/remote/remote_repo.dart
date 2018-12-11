@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:sprouter/data/model/conversation_history.dart';
 import 'package:sprouter/data/model/conversation_list.dart';
 import 'package:sprouter/data/model/post_message.dart';
+import 'package:sprouter/data/model/slack/simple_identity_response.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
-import 'package:sprouter/data/model/slack/user_identity.dart';
+import 'package:sprouter/data/model/slack/profile_response.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
 
 abstract class RemoteRepo {
@@ -12,7 +13,9 @@ abstract class RemoteRepo {
 
   Future<SlackToken> getSlackOauthToken(String code);
 
-  Future<UserIdentity> getUserIdentity({String accessToken});
+  Future<ProfileResponse> getUserProfile({String accessToken});
+
+  Future<SimpleIdentityResponse> getSimpleIdentity({String accessToken});
 
   Future<UserListResponse> getUsers({String accessToken});
 

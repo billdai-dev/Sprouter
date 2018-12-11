@@ -5,13 +5,14 @@ import 'package:built_value/serializer.dart';
 import 'package:sprouter/data/model/serializers.dart';
 import 'package:sprouter/data/model/slack/profile.dart';
 
-part 'user_identity.g.dart';
+part 'profile_response.g.dart';
 
-abstract class UserIdentity
-    implements Built<UserIdentity, UserIdentityBuilder> {
-  UserIdentity._();
+abstract class ProfileResponse
+    implements Built<ProfileResponse, ProfileResponseBuilder> {
+  ProfileResponse._();
 
-  factory UserIdentity([updates(UserIdentityBuilder b)]) = _$UserIdentity;
+  factory ProfileResponse([updates(ProfileResponseBuilder b)]) =
+      _$ProfileResponse;
 
   @BuiltValueField(wireName: 'ok')
   bool get ok;
@@ -21,20 +22,21 @@ abstract class UserIdentity
   User get user;
 
   @nullable
-  @BuiltValueField(wireName: 'team')
-  Team get team;
+  @BuiltValueField(wireName: 'profile')
+  Profile get profile;
 
   String toJson() {
     return json
-        .encode(serializers.serializeWith(UserIdentity.serializer, this));
+        .encode(serializers.serializeWith(ProfileResponse.serializer, this));
   }
 
-  static UserIdentity fromJson(String jsonString) {
+  static ProfileResponse fromJson(String jsonString) {
     return serializers.deserializeWith(
-        UserIdentity.serializer, json.decode(jsonString));
+        ProfileResponse.serializer, json.decode(jsonString));
   }
 
-  static Serializer<UserIdentity> get serializer => _$userIdentitySerializer;
+  static Serializer<ProfileResponse> get serializer =>
+      _$profileResponseSerializer;
 }
 
 abstract class User implements Built<User, UserBuilder> {

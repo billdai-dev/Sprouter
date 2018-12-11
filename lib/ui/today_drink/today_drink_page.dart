@@ -8,7 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/model/message.dart';
-import 'package:sprouter/data/model/slack/user_identity.dart';
+import 'package:sprouter/data/model/slack/profile_response.dart';
 import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/ui/check_in/check_in_bloc_provider.dart';
 import 'package:sprouter/ui/empty_data_view.dart';
@@ -414,6 +414,7 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
               : EmptyDataView("沒有訂單，沒有菜單\n╮(╯_╰)╭"));
     }
     String imageUrl = messages?.first?.getPhotoUrl;
+    imageUrl ??= "";
     return Container(
       color: Colors.grey.shade300,
       child: GestureDetector(
@@ -547,8 +548,8 @@ class _SlackLoginButtonState extends State<_SlackLoginButton>
   @override
   Widget build(BuildContext context) {
     SlackLoginBloc slackLoginBloc = SlackLoginBlocProvider.of(context);
-    return StreamBuilder<User>(
-      stream: slackLoginBloc.getUser,
+    return StreamBuilder<String>(
+      stream: slackLoginBloc.getUserAvatarUrl,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           _controller.reset();
@@ -574,6 +575,7 @@ class _SlackLoginButtonState extends State<_SlackLoginButton>
             (timer) => setState(() => isIconSwitched = !isIconSwitched),
           );
         }
+        String imageUrl = snapshot.data;
         return GestureDetector(
           onTap: widget.onPressed,
           child: Padding(
@@ -588,7 +590,7 @@ class _SlackLoginButtonState extends State<_SlackLoginButton>
                 child: isIconSwitched
                     ? CircleAvatar(
                         backgroundColor: Colors.transparent,
-                        backgroundImage: NetworkImage(snapshot.data.image72),
+                        backgroundImage: NetworkImage(imageUrl),
                       )
                     : Icon(
                         FontAwesomeIcons.slack,

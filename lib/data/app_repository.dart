@@ -6,7 +6,8 @@ import 'package:sprouter/data/model/conversation_list.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/profile.dart';
-import 'package:sprouter/data/model/slack/user_identity.dart';
+import 'package:sprouter/data/model/slack/profile_response.dart';
+import 'package:sprouter/data/model/slack/simple_identity_response.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/data/remote/app_remote_repo.dart';
@@ -31,7 +32,7 @@ class AppRepository implements Repository {
   LocalRepo _localRepo;
 
   List<Members> _members;
-  User _currentUser;
+  SimpleIdentityResponse _currentUser;
   String _userId;
 
   AppRepository._internal() {
@@ -40,8 +41,8 @@ class AppRepository implements Repository {
   }
 
   @override
-  Future<User> getUser() {
-    return _remoteRepo.getUserIdentity().then((identity) => identity?.user);
+  Future<Profile> getUserProfile() {
+    return _remoteRepo.getUserProfile().then((response) => response?.profile);
   }
 
   @override
@@ -54,10 +55,10 @@ class AppRepository implements Repository {
     String token = (await _remoteRepo.getSlackOauthToken(code))?.accessToken;
     _remoteRepo.setSlackTokenCache(token);
     await _localRepo.saveSlackToken(token);
-    _currentUser =
-        (await _remoteRepo.getUserIdentity(accessToken: token))?.user;
+    _currentUser = (await _remoteRepo.getSimpleIdentity(accessToken: token));
     if (_currentUser != null) {
-      await _localRepo.saveUserData(_currentUser.id, _currentUser.name, token);
+      await _localRepo.saveUserData(
+          _currentUser.userId, _currentUser.user, token);
     }
     return token;
   }

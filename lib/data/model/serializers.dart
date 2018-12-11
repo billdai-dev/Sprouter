@@ -6,8 +6,9 @@ import 'package:sprouter/data/model/conversation_history.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/profile.dart';
+import 'package:sprouter/data/model/slack/simple_identity_response.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
-import 'package:sprouter/data/model/slack/user_identity.dart';
+import 'package:sprouter/data/model/slack/profile_response.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
 
 part 'serializers.g.dart';
@@ -17,7 +18,8 @@ part 'serializers.g.dart';
   ConversationList,
   UserListResponse,
   Profile,
-  UserIdentity,
+  ProfileResponse,
+  SimpleIdentityResponse,
   SlackToken,
   PostMessageRequest,
   PostMessageResponse,

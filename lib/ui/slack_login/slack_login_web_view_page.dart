@@ -94,7 +94,7 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
           ),
           clearCookies: true,
           url:
-              "https://slack.com/oauth/authorize?scope=identity.basic,identity.team,identity.email,identity.avatar&team=$_teamId&client_id=$clientId&redirect_uri=$redirectUrl",
+              "https://slack.com/oauth/authorize?scope=channels:history,chat:write:user,im:history,im:read,files:read,users:read,users.profile:read&team=$_teamId&client_id=$clientId&redirect_uri=$redirectUrl",
         );
       },
     );

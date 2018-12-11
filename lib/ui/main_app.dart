@@ -121,10 +121,7 @@ class _MainPageState extends State<MainPage> {
                 title: Text('Drink'),
               ),
               BottomNavigationBarItem(
-                icon: const Icon(
-                  Icons.access_time,
-                  color: Colors.orange,
-                ),
+                icon: const Icon(Icons.access_time),
                 title: Text('Jibbler'),
               )
             ]),

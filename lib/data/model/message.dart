@@ -125,6 +125,14 @@ abstract class Message implements Built<Message, MessageBuilder> {
 
   String get getPhotoUrl {
     File file = parseFile;
+    if (file == null) {
+      return "";
+    }
+    String url = file.thumb800;
+    url ??= file.thumb720;
+    url ??= file.thumb480;
+    url ??= file.thumb360;
+    url ??= file.thumb160;
     return file != null ? file.thumb800 : "";
   }
 

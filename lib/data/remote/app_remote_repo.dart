@@ -7,8 +7,9 @@ import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/model/conversation_history.dart';
 import 'package:sprouter/data/model/conversation_list.dart';
 import 'package:sprouter/data/model/post_message.dart';
+import 'package:sprouter/data/model/slack/profile_response.dart';
+import 'package:sprouter/data/model/slack/simple_identity_response.dart';
 import 'package:sprouter/data/model/slack/slack_token.dart';
-import 'package:sprouter/data/model/slack/user_identity.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/remote_repo.dart';
 import 'package:sprouter/env_config.dart';
@@ -23,9 +24,10 @@ class AppRemoteRepo implements RemoteRepo {
 
   static const String _slackApiBaseUrl = "https://slack.com";
 
+  static const String _authTest = "/api/auth.test";
   static const String _oauthAccessPath = "/api/oauth.access";
   static const String _usersListPath = "/api/users.list";
-  static const String _usersIdentityPath = "/api/users.identity";
+  static const String _usersProfile = "/api/users.profile.get";
   static const String _conversationListPath = "/api/conversations.list";
   static const String _conversationHistoryPath = "/api/conversations.history";
   static const String _conversationRepliesPath = "/api/conversations.replies";
@@ -91,10 +93,22 @@ class AppRemoteRepo implements RemoteRepo {
   }
 
   @override
-  Future<UserIdentity> getUserIdentity({String accessToken}) async {
-    Future<Response> response = dio.get(_usersIdentityPath);
-    Future<UserIdentity> userIdentity = response.then((response) {
-      return UserIdentity.fromJson(jsonEncode(response.data));
+  Future<ProfileResponse> getUserProfile({String accessToken}) async {
+    Future<Response> response = dio.get(
+      _usersProfile,
+      options: Options(contentType: xWwwFormUrlencoded),
+    );
+    Future<ProfileResponse> userIdentity = response.then((response) {
+      return ProfileResponse.fromJson(jsonEncode(response.data));
+    });
+    return userIdentity;
+  }
+
+  @override
+  Future<SimpleIdentityResponse> getSimpleIdentity({String accessToken}) {
+    Future<Response> response = dio.get(_authTest);
+    Future<SimpleIdentityResponse> userIdentity = response.then((response) {
+      return SimpleIdentityResponse.fromJson(jsonEncode(response.data));
     });
     return userIdentity;
   }
