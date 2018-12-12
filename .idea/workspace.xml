@@ -12,9 +12,7 @@
     <configurations />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49aa6c1c-098f-474e-bcad-6c3fb146f3a1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" afterDir="false" />
-    </list>
+    <list default="true" id="49aa6c1c-098f-474e-bcad-6c3fb146f3a1" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
     <ignored path="$PROJECT_DIR$/.pub/" />
@@ -94,8 +92,8 @@
       <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="363" column="22" lean-forward="true" selection-start-line="363" selection-start-column="22" selection-end-line="363" selection-end-column="22" />
+            <state relative-caret-position="342">
+              <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -912,7 +910,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="Android Profiler" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="FindBugs-IDEA" order="14" />
@@ -925,12 +922,12 @@
       <window_info id="Designer" order="10" />
       <window_info id="Structure" order="4" sideWeight="0.50212765" side_tool="true" weight="0.18669528" />
       <window_info anchor="right" id="Device File Explorer" order="9" sideWeight="0.5035842" side_tool="true" weight="0.20958512" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" visible="true" weight="0.44102564" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" weight="0.44102564" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="12" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914163" weight="0.2628205" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.2628205" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32820514" />
       <window_info anchor="bottom" id="Terminal" order="13" weight="0.32820514" />
       <window_info id="Captures" order="9" weight="0.25" />
@@ -940,22 +937,47 @@
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Favorites" order="13" side_tool="true" weight="0.3297568" />
       <window_info anchor="right" id="Flutter Inspector" order="8" sideWeight="0.49641576" weight="0.20958512" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.32692307" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4914163" weight="0.2628205" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50858366" side_tool="true" weight="0.2628205" />
+      <window_info content_ui="combo" id="Project" order="2" sideWeight="0.49787235" visible="true" weight="0.18669528" />
+      <window_info id="Favorites" order="13" side_tool="true" weight="0.3297568" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Dart Analysis" order="9" weight="0.32820514" />
+      <window_info anchor="right" id="Flutter Inspector" order="8" sideWeight="0.49641576" weight="0.20958512" />
+      <window_info id="Build Variants" order="8" side_tool="true" weight="0.3297568" />
+      <window_info id="Structure" order="4" sideWeight="0.50212765" side_tool="true" weight="0.18669528" />
+      <window_info anchor="bottom" id="Logcat" order="10" sideWeight="0.49284694" weight="0.2846154" />
+      <window_info anchor="right" id="Palette&#9;" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32820514" />
+      <window_info anchor="bottom" id="FindBugs-IDEA" order="14" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="Image Layers" order="12" />
+      <window_info anchor="right" id="Theme Preview" order="7" />
+      <window_info anchor="bottom" id="Android Profiler" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Flutter Outline" order="3" weight="0.3297568" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.32820514" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info id="Capture Tool" order="15" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Terminal" order="13" weight="0.32820514" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Device File Explorer" order="9" sideWeight="0.5035842" side_tool="true" weight="0.20958512" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" visible="true" weight="0.44102564" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32692307" />
+      <window_info id="Captures" order="9" weight="0.25" />
+      <window_info anchor="right" id="Fabric" order="6" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info id="Designer" order="10" />
     </layout>
     <layout-to-restore>
       <window_info anchor="bottom" id="FindBugs-IDEA" order="14" />
       <window_info id="Designer" order="4" />
       <window_info anchor="bottom" id="Dart Analysis" order="9" weight="0.32820514" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.2628205" />
       <window_info id="Build Variants" order="2" side_tool="true" weight="0.3297568" />
       <window_info id="Image Layers" order="5" />
-      <window_info anchor="right" id="Fabric" order="6" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4914163" visible="true" weight="0.2628205" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" id="Flutter Inspector" order="8" sideWeight="0.49641576" weight="0.20958512" />
@@ -967,12 +989,12 @@
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50858366" side_tool="true" weight="0.2628205" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Fabric" order="6" />
       <window_info anchor="right" id="Device File Explorer" order="9" sideWeight="0.5035842" side_tool="true" weight="0.20958512" />
       <window_info anchor="right" id="Flutter Outline" order="3" weight="0.3297568" />
       <window_info anchor="bottom" id="Logcat" order="10" sideWeight="0.49284694" weight="0.2846154" />
       <window_info anchor="bottom" id="Version Control" order="12" weight="0.32820514" />
       <window_info anchor="bottom" id="Terminal" order="13" weight="0.32820514" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32820514" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49787235" visible="true" weight="0.18669528" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32692307" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -981,6 +1003,7 @@
       <window_info anchor="right" id="Theme Preview" order="7" />
       <window_info id="Structure" order="1" sideWeight="0.50212765" side_tool="true" weight="0.18669528" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32820514" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49356222" weight="0.44102564" />
     </layout-to-restore>
   </component>
@@ -1224,13 +1247,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/model/slack/user_identity.g.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1611">
-          <caret line="275" column="39" selection-start-line="275" selection-start-column="39" selection-end-line="275" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/model/slack/user_identity.g.dart" />
     <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/widgets/transitions.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="407">
@@ -1475,8 +1492,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="363" column="22" lean-forward="true" selection-start-line="363" selection-start-column="22" selection-end-line="363" selection-end-column="22" />
+        <state relative-caret-position="342">
+          <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
         </state>
       </provider>
     </entry>
