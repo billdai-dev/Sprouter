@@ -61,7 +61,6 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
       stream: _rebuildController.stream,
       initialData: false,
       builder: (context, snapshot) {
-        print(snapshot.connectionState);
         if (!snapshot.hasData || !snapshot.data) {
           return Scaffold(
             appBar: AppBar(
@@ -92,7 +91,10 @@ class _SlackLoginWebViewPageState extends State<SlackLoginWebViewPage> {
           appBar: AppBar(
             title: Text("登入 25Sprout Slack"),
           ),
+          clearCache: true,
           clearCookies: true,
+          appCacheEnabled: false,
+          hidden: true,
           url:
               "https://slack.com/oauth/authorize?scope=channels:history,chat:write:user,im:history,im:read,files:read,users:read,users.profile:read&team=$_teamId&client_id=$clientId&redirect_uri=$redirectUrl",
         );

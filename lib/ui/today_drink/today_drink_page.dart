@@ -491,6 +491,7 @@ class _AddDrinkFabState extends State<_AddDrinkFab>
             animation: anim,
             builder: (context, child) {
               return FloatingActionButton(
+                heroTag: null,
                 child: Icon(
                   FontAwesomeIcons.plus,
                   size: anim?.value ?? 24.0,

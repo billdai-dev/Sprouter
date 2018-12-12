@@ -438,6 +438,7 @@ class _CheckInFabState extends State<CheckInFab>
         Widget extendedFab = GestureDetector(
           onLongPress: () => bloc.checkInOrOut(shouldShowCheckIn),
           child: FloatingActionButton.extended(
+            heroTag: null,
             onPressed: () {
               if (_controller.isDismissed) {
                 _controller.forward();
