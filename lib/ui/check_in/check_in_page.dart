@@ -490,12 +490,8 @@ class DetailRecordsBottomSheet extends StatelessWidget {
     CheckInBloc bloc = CheckInBlocProvider.of(context);
     return StreamBuilder<List<Message>>(
       stream: bloc.jibbleRecords,
+      initialData: [],
       builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Container(
-            child: CircularProgressIndicator(),
-          );
-        }
         double bottomSheetHeight = MediaQuery.of(context).size.height * 0.3;
         return Container(
           height: bottomSheetHeight,

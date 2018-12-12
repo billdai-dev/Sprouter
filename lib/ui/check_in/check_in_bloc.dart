@@ -39,6 +39,7 @@ class CheckInBloc {
     Future.delayed(Duration(milliseconds: 300)).then(
         (_) => repository.fetchLatestJibbleMessage().then((messages) async {
               if (Utils.isListEmpty(messages)) {
+                showCheckInBtn.add(true);
                 return;
               }
               messages = messages?.where((message) {
