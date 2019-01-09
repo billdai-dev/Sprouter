@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:sprouter/data/local/app_local_repo.dart';
 import 'package:sprouter/data/local/local_repo.dart';
 import 'package:sprouter/data/model/conversation_list.dart';
+import 'package:sprouter/data/model/drink_order.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/model/post_message.dart';
 import 'package:sprouter/data/model/slack/profile.dart';
-import 'package:sprouter/data/model/slack/profile_response.dart';
 import 'package:sprouter/data/model/slack/simple_identity_response.dart';
 import 'package:sprouter/data/model/slack/user_list.dart';
 import 'package:sprouter/data/remote/api_error.dart';
@@ -120,8 +120,8 @@ class AppRepository implements Repository {
             : Future.value(_members);
 
     //6. 抓 Database 中有儲存的 order
-    Future<List<String>> getOrderTsListFuture =
-        _localRepo.getOrderTsList(shopName, ts);
+    Future<List<DrinkOrder>> getOrderTsListFuture =
+        _localRepo.getDrinkOrderList(shopName, ts);
 
     //7. 抓 Database 中的最愛飲料
     _userId ??= await _localRepo.loadUserId();
@@ -146,16 +146,16 @@ class AppRepository implements Repository {
       if (results[0] is List<Members>) {
         _members ??= results[0];
       }
-      List<String> orderTsList;
-      if (results[1] is List<String>) {
-        orderTsList = results[1];
+      List<DrinkOrder> drinkOrderList;
+      if (results[1] is List<DrinkOrder>) {
+        drinkOrderList = results[1];
       }
       String favoriteDrinkOrderTs;
       if (results[2] is String) {
         favoriteDrinkOrderTs = results[2];
       }
 
-      orderTsList ??= List<String>();
+      drinkOrderList ??= List<DrinkOrder>();
       if (!(results[3] is List<Message>)) {
         return [];
       }
@@ -166,14 +166,19 @@ class AppRepository implements Repository {
         int memberIndex =
             _members?.indexWhere((member) => member.id == message.user);
         int orderTsIndex =
-            orderTsList?.indexWhere((orderTs) => orderTs == message.ts);
+            drinkOrderList?.indexWhere((order) => order.orderTs == message.ts);
         Message zippedMessage = Message((b) {
           b.replace(message);
           b.userProfile = memberIndex == -1 ? null : ProfileBuilder()
             ..replace(_members[memberIndex]?.profile);
-          b.isAddedBySprouter = orderTsIndex != -1 && _userId == message.user;
+          bool isAddedBySprouter =
+              orderTsIndex != -1 && _userId == message.user;
+          b.isAddedBySprouter = isAddedBySprouter;
           b.isFavoriteDrink = favoriteDrinkOrderTs != null &&
               favoriteDrinkOrderTs == message.ts;
+          if (isAddedBySprouter) {
+            b.paid = drinkOrderList[orderTsIndex].paid;
+          }
         });
         zippedMessages.add(zippedMessage);
       }
@@ -297,5 +302,17 @@ class AppRepository implements Repository {
   @override
   Future<void> clearLocalCache() {
     return _localRepo.saveJibbleChannelId(null);
+  }
+
+  @override
+  Future<bool> hasDrinkOrderPaid(
+      String shopName, String threadTs, String orderTs) {
+    return _localRepo.hasDrinkOrderPaid(_userId, shopName, threadTs, orderTs);
+  }
+
+  @override
+  Future<void> setDrinkOrderPaid(
+      String shopName, String threadTs, String orderTs) {
+    return _localRepo.setDrinkOrderPaid(_userId, shopName, threadTs, orderTs);
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:sprouter/data/model/drink_order.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -32,7 +33,7 @@ abstract class LocalRepo {
   Future<int> queryDrinkId(String shopName, String threadTs, String orderTs,
       {String userId});
 
-  Future<List<String>> getOrderTsList(String shopName, String threadTs,
+  Future<List<DrinkOrder>> getDrinkOrderList(String shopName, String threadTs,
       {String orderTs});
 
   Future<String> getOrderTs({int drinkId});
@@ -46,4 +47,10 @@ abstract class LocalRepo {
   Future<void> addFavoriteDrink(String userId, String shopName, int drinkId);
 
   Future<int> getFavoriteDrinkId(String userId, String shopName);
+
+  Future<bool> hasDrinkOrderPaid(
+      String userId, String shopName, String threadTs, String orderTs);
+
+  Future<void> setDrinkOrderPaid(
+      String userId, String shopName, String threadTs, String orderTs);
 }

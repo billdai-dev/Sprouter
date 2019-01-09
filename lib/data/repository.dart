@@ -37,4 +37,10 @@ abstract class Repository {
   Future<void> changeCheckInReminderStatus(bool isEnabled);
 
   Future<void> clearLocalCache();
+
+  Future<bool> hasDrinkOrderPaid(
+      String shopName, String threadTs, String orderTs);
+
+  Future<void> setDrinkOrderPaid(
+      String shopName, String threadTs, String orderTs);
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sprouter/data/local/local_repo.dart';
+import 'package:sprouter/data/model/drink_order.dart';
 import 'package:sprouter/ui/today_drink/order_drink/model/drink_data.dart';
 import 'package:sprouter/util/utils.dart';
 import 'package:sqflite/sqflite.dart';
@@ -158,15 +159,16 @@ class AppLocalRepo implements LocalRepo {
   }
 
   @override
-  Future<List<String>> getOrderTsList(String shopName, String threadTs,
+  Future<List<DrinkOrder>> getDrinkOrderList(String shopName, String threadTs,
       {String orderTs}) async {
     Database db = await openDB();
     List<Map<String, dynamic>> results = await db.query("DrinkOrder",
-        columns: ["order_ts"],
+        columns: ["id", "user_id", "thread_ts", "drink_id", "order_ts", "paid"],
         where: "shop_name = ? AND thread_ts = ?",
         whereArgs: [shopName, threadTs]);
-    List<String> orderTsList = List.from(results?.expand((map) => map.values));
-    return orderTsList;
+    List<DrinkOrder> drinkOrderList = List();
+    results.forEach((map) => drinkOrderList.add(DrinkOrder.fromMap(map)));
+    return drinkOrderList;
   }
 
   @override
@@ -275,6 +277,40 @@ class AppLocalRepo implements LocalRepo {
     return result["drink_id"];
   }
 
+  @override
+  Future<bool> hasDrinkOrderPaid(
+      String userId, String shopName, String threadTs, String orderTs) async {
+    Database db = await openDB();
+    Map<String, dynamic> result;
+    List<Map<String, dynamic>> results;
+    results = await db.query(
+      "DrinkOrder",
+      columns: ["paid"],
+      where: "user_id = ? AND shop_name = ? AND thread_ts = ? AND order_ts = ?",
+      whereArgs: [userId, shopName, threadTs, orderTs],
+    );
+    if (Utils.isListEmpty(results)) {
+      return null;
+    }
+    result = results.first;
+    if (Utils.isMapEmpty(result)) {
+      return null;
+    }
+    return result["drink_id"] == 1;
+  }
+
+  @override
+  Future<void> setDrinkOrderPaid(
+      String userId, String shopName, String threadTs, String orderTs) async {
+    Database db = await openDB();
+    await db.update(
+      "DrinkOrder",
+      {"paid": 1},
+      where: "user_id = ? AND shop_name = ? AND thread_ts = ? AND order_ts = ?",
+      whereArgs: [userId, shopName, threadTs, orderTs],
+    );
+  }
+
   Future<Database> _initDB() async {
     String dirPath = await getDatabasesPath();
     String path = join(dirPath, _DbName);
@@ -324,7 +360,7 @@ class AppLocalRepo implements LocalRepo {
 
     await db.execute("""
         CREATE TABLE DrinkOrder (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id TEXT, 
-        shop_name TEXT, thread_ts TEXT, drink_id INTEGER, order_ts TEXT, 
+        shop_name TEXT, thread_ts TEXT, drink_id INTEGER, order_ts TEXT, paid INTEGER DEFAULT 0,
         created_date TEXT DEFAULT (datetime('now')), 
         updated_date TEXT DEFAULT (datetime('now')), 
         FOREIGN KEY (user_id) REFERENCES User (user_id), 

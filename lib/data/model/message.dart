@@ -77,6 +77,10 @@ abstract class Message implements Built<Message, MessageBuilder> {
   @BuiltValueField(compare: false, serialize: false)
   bool get isFavoriteDrink;
 
+  @nullable
+  @BuiltValueField(compare: false, serialize: false)
+  bool get paid;
+
   String toJson() {
     return json.encode(serializers.serializeWith(Message.serializer, this));
   }
