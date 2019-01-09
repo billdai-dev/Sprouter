@@ -173,7 +173,7 @@ class OtherIngredient extends Ingredient {
 
 enum IceLevel { warm, no, low, less, normal }
 
-enum SugarLevel { no, low, half, less, standard }
+enum SugarLevel { no, little, low, half, less, standard }
 
 enum PearlType { black, white }
 
@@ -207,6 +207,9 @@ String getIngredientMapping(Ingredient ingredient) {
       switch (level) {
         case SugarLevel.no:
           name = "無糖";
+          break;
+        case SugarLevel.little:
+          name = "一分糖";
           break;
         case SugarLevel.low:
           name = "微糖";
