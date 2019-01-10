@@ -86,11 +86,11 @@ class CheckInBloc {
 
   Future<void> _setReminder(bool isEnabled) {
     if (!isEnabled) {
-      return cancelNotification();
+      return cancelNotification(NotificationEvent.CheckIn);
     }
     bool latestCheckInStatus = _latestCheckInStatus.value;
     if (latestCheckInStatus == null || !latestCheckInStatus) {
-      return cancelNotification();
+      return cancelNotification(NotificationEvent.CheckIn);
     }
     String latestTimestamp = _latestJibbleTimestamp.value;
     if (latestTimestamp == null) {
@@ -101,10 +101,11 @@ class CheckInBloc {
             .add(Duration(hours: 8));
     DateTime now = DateTime.now();
     if (now.isAfter(scheduledTime)) {
-      return cancelNotification();
+      return cancelNotification(NotificationEvent.CheckIn);
     }
-    return scheduleNotification(
-        scheduledTime, "Jibble reminder", "你今天 Jibble 了嗎？");
+    return sendNotification(
+        NotificationEvent.CheckIn, "Jibble reminder", "你今天 Jibble 了嗎？",
+        scheduledTime: scheduledTime);
   }
 
   void dispose() {

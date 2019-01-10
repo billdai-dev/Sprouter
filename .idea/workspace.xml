@@ -14,8 +14,12 @@
   <component name="ChangeListManager">
     <list default="true" id="49aa6c1c-098f-474e-bcad-6c3fb146f3a1" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/notification.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/notification.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ui/main_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/main_app.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -67,16 +71,16 @@
         <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="264">
-              <caret line="311" lean-forward="true" selection-start-line="311" selection-end-line="311" />
+              <caret line="311" selection-start-line="311" selection-end-line="311" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="today_drink_page.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="635" column="27" lean-forward="true" selection-start-line="635" selection-start-column="27" selection-end-line="635" selection-end-column="27" />
+            <state relative-caret-position="288">
+              <caret line="71" column="14" selection-start-line="71" selection-start-column="14" selection-end-line="71" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -93,8 +97,50 @@
       <file leaf-file-name="today_drink_bloc.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="57" column="9" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
+            <state relative-caret-position="186">
+              <caret line="103" column="9" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main_app.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/ui/main_app.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="136" column="32" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="check_in_bloc.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="147">
+              <caret line="70" column="2" selection-start-line="70" selection-start-column="2" selection-end-line="70" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="check_in_page.dart" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="407">
+              <caret line="414" column="2" selection-start-line="414" selection-start-column="2" selection-end-line="414" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="notification.dart" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/notification.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -113,15 +159,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
               <caret line="280" column="28" selection-start-line="280" selection-start-column="28" selection-end-line="280" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="local_repo.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/data/local/local_repo.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="558">
-              <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -192,7 +229,6 @@
         <option value="$PROJECT_DIR$/lib/util/utils.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/slack/profile.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart" />
-        <option value="$PROJECT_DIR$/lib/notification.dart" />
         <option value="$PROJECT_DIR$/lib/env_config.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/slack/user_identity.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/slack/get_simple_identity.dart" />
@@ -202,12 +238,10 @@
         <option value="$PROJECT_DIR$/lib/data/remote/remote_repo.dart" />
         <option value="$PROJECT_DIR$/lib/data/remote/app_remote_repo.dart" />
         <option value="$PROJECT_DIR$/lib/ui/slack_login/slack_login_bloc.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" />
         <option value="$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart" />
         <option value="$PROJECT_DIR$/android/app/proguard-rules.pro" />
         <option value="$PROJECT_DIR$/android/app/build.gradle" />
-        <option value="$PROJECT_DIR$/lib/ui/main_app.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/model/drink_data.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/message.dart" />
         <option value="$PROJECT_DIR$/lib/data/repository.dart" />
@@ -217,8 +251,11 @@
         <option value="$PROJECT_DIR$/lib/data/model/drink_order.dart" />
         <option value="$PROJECT_DIR$/lib/data/local/app_local_repo.dart" />
         <option value="$PROJECT_DIR$/lib/data/app_repository.dart" />
-        <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/main_app.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
+        <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" />
+        <option value="$PROJECT_DIR$/lib/notification.dart" />
       </list>
     </option>
   </component>
@@ -238,7 +275,7 @@
     <panes />
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="orderdrinp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;todr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todapa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;todab&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;applo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;localre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;drinkda&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/model/drink_data.dart&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;puy&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;repo&#9;null&#9;null&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;local&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;messa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;localrep&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;todaybloc&#9;null&#9;null&#10;cupertab&#9;null&#9;null&#10;cupertinopa&#9;null&#9;null&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;publo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;todaydrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;flutterwebviewpl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/ios/Pods/.symlinks/plugins/flutter_webview_plugin/android/src/main/java/com/flutter_webview_plugin/FlutterWebviewPlugin.java&#10;fluttewebv&#9;null&#9;null&#10;slaclo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;pu&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;pubsp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;todaydrip&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;webvi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;slacklogi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;slacklo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;profil&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/slack/profile.dart&#10;web&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;appremote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;env&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;enco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;slacklog&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackwe&#9;null&#9;null&#10;main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;apps&#9;null&#9;null&#10;flavo&#9;null&#9;null&#10;timer&#9;null&#9;null&#10;dura&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/main_app.dart&#10;notifica&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/notification.dart&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;orderdrinp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;todr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todapa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;todab&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;applo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;localre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;drinkda&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/model/drink_data.dart&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;puy&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;repo&#9;null&#9;null&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;local&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;messa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;localrep&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;todaybloc&#9;null&#9;null&#10;cupertab&#9;null&#9;null&#10;cupertinopa&#9;null&#9;null&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;publo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;todaydrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;flutterwebviewpl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/ios/Pods/.symlinks/plugins/flutter_webview_plugin/android/src/main/java/com/flutter_webview_plugin/FlutterWebviewPlugin.java&#10;fluttewebv&#9;null&#9;null&#10;slaclo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;pu&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;pubsp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;todaydrip&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;webvi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;slacklogi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;slacklo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;profil&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/slack/profile.dart&#10;web&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;appremote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;env&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;enco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;slacklog&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackwe&#9;null&#9;null&#10;apps&#9;null&#9;null&#10;flavo&#9;null&#9;null" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="project.structure.last.edited" value="Project" />
@@ -383,39 +420,39 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="FindBugs-IDEA" order="8" />
+      <window_info anchor="bottom" id="FindBugs-IDEA" order="7" />
       <window_info id="Designer" order="2" />
-      <window_info anchor="bottom" id="Dart Analysis" order="14" />
+      <window_info anchor="bottom" id="Dart Analysis" order="13" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32948717" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
-      <window_info anchor="bottom" id="Run" order="3" />
-      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="right" id="Fabric" order="9" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" id="Flutter Inspector" order="3" />
       <window_info id="Favorites" order="5" side_tool="true" />
       <window_info id="Captures" order="6" weight="0.3297568" />
       <window_info id="Capture Tool" order="7" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Fabric" order="9" />
       <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" />
       <window_info anchor="right" id="Flutter Outline" order="6" />
-      <window_info anchor="bottom" id="Logcat" order="11" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="12" visible="true" weight="0.32948717" />
-      <window_info anchor="bottom" id="Terminal" order="13" />
+      <window_info anchor="bottom" id="Logcat" order="10" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32948717" />
+      <window_info anchor="bottom" id="Terminal" order="12" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.24964234" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.32948717" />
-      <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.32948717" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="2" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -473,18 +510,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart</url>
-          <line>40</line>
+          <line>30</line>
           <option name="timeStamp" value="97" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart</url>
-          <line>41</line>
+          <line>39</line>
           <option name="timeStamp" value="98" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart</url>
-          <line>414</line>
-          <option name="timeStamp" value="99" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart</url>
@@ -492,7 +524,7 @@
           <option name="timeStamp" value="101" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="102" />
+      <option name="time" value="105" />
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -577,27 +609,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Flutter/flutter/packages/flutter/lib/src/widgets/async.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="386" column="11" lean-forward="true" selection-start-line="386" selection-start-column="11" selection-end-line="386" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/util/utils.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="37" column="35" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter_1.0/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_webview_plugin-0.2.1+2/lib/src/base.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -661,13 +672,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7110">
-          <caret line="402" column="8" selection-start-line="402" selection-start-column="8" selection-end-line="402" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ios/Pods/.symlinks/plugins/flutter_webview_plugin/android/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
@@ -721,6 +725,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
           <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -731,13 +738,6 @@
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/main_app.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -792,13 +792,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/data/model/message.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="79" column="11" lean-forward="true" selection-start-line="79" selection-start-column="11" selection-end-line="79" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/order_drink/model/drink_data.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="53">
@@ -819,13 +812,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="558">
           <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Flutter_1.0/flutter/bin/cache/pkg/sky_engine/lib/core/iterable.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="245" column="14" selection-start-line="245" selection-start-column="14" selection-end-line="245" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -885,13 +871,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="57" column="9" selection-start-line="57" selection-start-column="9" selection-end-line="57" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Flutter_1.0/flutter/packages/flutter/lib/src/material/dialog.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
@@ -930,14 +909,76 @@
     <entry file="file://$PROJECT_DIR$/lib/data/app_repository.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
-          <caret line="311" lean-forward="true" selection-start-line="311" selection-end-line="311" />
+          <caret line="311" selection-start-line="311" selection-end-line="311" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_page.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="635" column="27" lean-forward="true" selection-start-line="635" selection-start-column="27" selection-end-line="635" selection-end-column="27" />
+        <state relative-caret-position="288">
+          <caret line="71" column="14" selection-start-line="71" selection-start-column="14" selection-end-line="71" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Flutter_1.0/flutter/bin/cache/pkg/sky_engine/lib/core/iterable.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="383" column="7" selection-start-line="383" selection-start-column="7" selection-end-line="383" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/data/model/message.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="81" column="11" selection-start-line="81" selection-start-column="11" selection-end-line="81" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Flutter_1.0/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_local_notifications-0.4.3/lib/src/flutter_local_notifications.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="97" column="9" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/main_app.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="136" column="32" selection-start-line="136" selection-start-column="32" selection-end-line="136" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="70" column="2" selection-start-line="70" selection-start-column="2" selection-end-line="70" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="414" column="2" selection-start-line="414" selection-start-column="2" selection-end-line="414" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="103" column="9" selection-start-line="103" selection-start-column="9" selection-end-line="103" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/notification.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

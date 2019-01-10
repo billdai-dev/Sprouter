@@ -130,7 +130,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   Future<dynamic> _onNotificationTapped(String payload) {
-    setState(() => _currentPageIndex = checkInPageIndex);
+    if (payload == null) {
+      return null;
+    }
+    if (payload == NotificationEvent.CheckIn.toString()) {
+      setState(() => _currentPageIndex = checkInPageIndex);
+    }
     return null;
   }
 }

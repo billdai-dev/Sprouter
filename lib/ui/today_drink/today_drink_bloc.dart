@@ -4,12 +4,14 @@ import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/app_repository.dart';
 import 'package:sprouter/data/model/message.dart';
 import 'package:sprouter/data/remote/api_error.dart';
+import 'package:sprouter/notification.dart';
 import 'package:sprouter/util/utils.dart';
 
 class TodayDrinkBloc {
   AppRepository repository;
   Message _drinkShopMessage;
   List<Message> _drinkMessages;
+  bool isUnpaidOrderNotificationShowed = false;
 
   Message get drinkShopMessage => _drinkShopMessage;
 
@@ -98,6 +100,15 @@ class TodayDrinkBloc {
         orderKeywords.last.text == "點單";
     _isOrdering.sink.add(isNowOrdering);
     _drinkMessage.sink.add(_drinkMessages);
+
+    if (!isUnpaidOrderNotificationShowed && !isNowOrdering) {
+      bool unpaidOrder = _drinkMessages.any(
+          (message) => message.isAddedBySprouter && !(message.paid ?? true));
+      if (unpaidOrder) {
+        sendNotification(NotificationEvent.PayOrder, "Pay pei", "你有尚未付錢的飲料哦");
+        isUnpaidOrderNotificationShowed = true;
+      }
+    }
   }
 
   void _handleDeletingMessage(int index) {
