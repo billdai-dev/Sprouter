@@ -8,7 +8,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sprouter/data/model/message.dart';
-import 'package:sprouter/data/model/slack/profile_response.dart';
 import 'package:sprouter/data/remote/api_error.dart';
 import 'package:sprouter/ui/check_in/check_in_bloc_provider.dart';
 import 'package:sprouter/ui/empty_data_view.dart';
@@ -296,8 +295,26 @@ class TodayDrinkPageState extends State<TodayDrinkPage>
     bool isAddedBySprouter = reply?.isAddedBySprouter ?? false;
     bool isFavoriteDrink =
         isAddedBySprouter && (reply?.isFavoriteDrink ?? false);
+    bool shouldPay = isAddedBySprouter && !(reply?.paid ?? true);
 
     Widget _buildTrailingIcon() {
+      if (shouldPay) {
+        return IconButton(
+            icon: Icon(
+              FontAwesomeIcons.moneyBillWave,
+              color: Colors.green,
+            ),
+            onPressed: () async {
+              switch (await showDialog(
+                  context: context, builder: (context) => _PayOrderDialog())) {
+                case _PayOrderDialogOption.yet:
+                  break;
+                case _PayOrderDialogOption.paid:
+                  todayDrinkBloc?.payForOrder(index);
+                  break;
+              }
+            });
+      }
       if (isFavoriteDrink) {
         return Icon(
           FontAwesomeIcons.solidHeart,
@@ -605,3 +622,41 @@ class _SlackLoginButtonState extends State<_SlackLoginButton>
     );
   }
 }
+
+class _PayOrderDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      title: Text(
+        "付錢給 peipei 了嗎\n(*´･д･)?",
+        textAlign: TextAlign.center,
+        style: TextStyle(height: 1.4),
+      ),
+      children: <Widget>[
+        SimpleDialogOption(
+          onPressed: () {
+            Navigator.pop(context, _PayOrderDialogOption.yet);
+          },
+          child: Text(
+            "還沒   (ﾟдﾟ≡ﾟдﾟ)",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).primaryTextTheme.button,
+          ),
+        ),
+        SimpleDialogOption(
+          onPressed: () {
+            Navigator.pop(context, _PayOrderDialogOption.paid);
+          },
+          child: Text(
+            "付了   (＊゜ー゜)b",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).primaryTextTheme.button,
+          ),
+        ),
+      ],
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    );
+  }
+}
+
+enum _PayOrderDialogOption { paid, yet }

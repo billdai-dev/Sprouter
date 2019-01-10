@@ -53,6 +53,24 @@ class TodayDrinkBloc {
     _fetchMessage.add(null);
   }
 
+  void payForOrder(int itemIndex) {
+    repository
+        .setDrinkOrderPaid(
+            _drinkShopMessage?.getShopName,
+            _drinkShopMessage?.threadTs,
+            _drinkMessages
+                ?.skip(1)
+                ?.elementAt(itemIndex)
+                ?.ts) //index+1 because we exclude first item when displaying replies
+        .then((response) {
+      Message updatedMessage =
+          _drinkMessages[itemIndex + 1].rebuild((b) => b..paid = true);
+      _drinkMessages
+          .replaceRange(itemIndex + 1, itemIndex + 2, [updatedMessage]);
+      _drinkMessage.sink.add(_drinkMessages);
+    });
+  }
+
   void _handleFetchingMessages(void _) async {
     List<Message> newDrinkMessages;
     try {
@@ -89,7 +107,7 @@ class TodayDrinkBloc {
             _drinkShopMessage?.threadTs,
             _drinkMessages?.skip(1)?.elementAt(index)?.ts)
         .then((response) {
-      //index+1 because we exclude first item when displaying message list
+      //index+1 because we exclude first item when displaying replies
       _drinkMessages?.removeAt(index + 1);
       _drinkMessage.sink.add(_drinkMessages);
     });
