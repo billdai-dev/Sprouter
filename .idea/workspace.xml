@@ -13,13 +13,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49aa6c1c-098f-474e-bcad-6c3fb146f3a1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/notification.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/notification.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/main_app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/main_app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -85,15 +79,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="order_drink_page.dart" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/order_drink/order_drink_page.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="914" selection-start-line="914" selection-end-line="914" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="today_drink_bloc.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart">
           <provider selected="true" editor-type-id="text-editor">
@@ -133,14 +118,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="notification.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="notification.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/notification.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+            <state relative-caret-position="162">
+              <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="13">
+              <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -241,7 +235,6 @@
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_page.dart" />
         <option value="$PROJECT_DIR$/lib/ui/slack_login/slack_login_web_view_page.dart" />
         <option value="$PROJECT_DIR$/android/app/proguard-rules.pro" />
-        <option value="$PROJECT_DIR$/android/app/build.gradle" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/order_drink/model/drink_data.dart" />
         <option value="$PROJECT_DIR$/lib/data/model/message.dart" />
         <option value="$PROJECT_DIR$/lib/data/repository.dart" />
@@ -256,6 +249,7 @@
         <option value="$PROJECT_DIR$/lib/ui/check_in/check_in_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/ui/today_drink/today_drink_bloc.dart" />
         <option value="$PROJECT_DIR$/lib/notification.dart" />
+        <option value="$PROJECT_DIR$/android/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -272,7 +266,92 @@
       <autoscrollFromSource AndroidView="true" ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sprouter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sprouter" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sprouter" type="462c0819:PsiDirectoryNode" />
+              <item name="android" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sprouter" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="sprouter" type="1abcf292:AndroidViewProjectNode" />
+              <item name="sprouter" type="e9137016:NonAndroidModuleNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="1abcf292:AndroidViewProjectNode" />
+              <item name="sprouter" type="e9137016:NonAndroidModuleNode" />
+              <item name="java" type="f7eae187:NonAndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="1abcf292:AndroidViewProjectNode" />
+              <item name="sprouter" type="e9137016:NonAndroidModuleNode" />
+              <item name="java" type="f7eae187:NonAndroidSourceTypeNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="1abcf292:AndroidViewProjectNode" />
+              <item name="sprouter" type="e9137016:NonAndroidModuleNode" />
+              <item name="java" type="f7eae187:NonAndroidSourceTypeNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="today_drink" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="1abcf292:AndroidViewProjectNode" />
+              <item name="sprouter" type="e9137016:NonAndroidModuleNode" />
+              <item name="java" type="f7eae187:NonAndroidSourceTypeNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="today_drink" type="462c0819:PsiDirectoryNode" />
+              <item name="order_drink" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sprouter" type="1abcf292:AndroidViewProjectNode" />
+              <item name="sprouter" type="e9137016:NonAndroidModuleNode" />
+              <item name="java" type="f7eae187:NonAndroidSourceTypeNode" />
+              <item name="ui" type="462c0819:PsiDirectoryNode" />
+              <item name="today_drink" type="462c0819:PsiDirectoryNode" />
+              <item name="order_drink" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/main_app.dart&#10;notifica&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/notification.dart&#10;checkinbl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_bloc.dart&#10;orderdrinp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/order_drink_page.dart&#10;todr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;todapa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;todab&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_bloc.dart&#10;applo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;applocal&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/app_local_repo.dart&#10;localre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;drinkda&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/order_drink/model/drink_data.dart&#10;pub&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;puy&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;apprepo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;repo&#9;null&#9;null&#10;appre&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;local&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;messa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/message.dart&#10;app&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/app_repository.dart&#10;localrep&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/local/local_repo.dart&#10;todaybloc&#9;null&#9;null&#10;cupertab&#9;null&#9;null&#10;cupertinopa&#9;null&#9;null&#10;mai&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/main.dart&#10;publo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;todaydrpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;flutterwebviewpl&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/ios/Pods/.symlinks/plugins/flutter_webview_plugin/android/src/main/java/com/flutter_webview_plugin/FlutterWebviewPlugin.java&#10;fluttewebv&#9;null&#9;null&#10;slaclo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;pu&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.lock&#10;pubsp&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/pubspec.yaml&#10;checkinpa&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/check_in/check_in_page.dart&#10;todaydrip&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackblo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;webvi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;slacklogi&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;slacklo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_bloc.dart&#10;appremo&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;remotere&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;remote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/remote_repo.dart&#10;profil&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/model/slack/profile.dart&#10;web&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;appremote&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/data/remote/app_remote_repo.dart&#10;env&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;enco&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/env_config.dart&#10;slacklog&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/slack_login/slack_login_web_view_page.dart&#10;todaydr&#9;FILE&#9;file:///Users/bill/projects/example/sprouter/lib/ui/today_drink/today_drink_page.dart&#10;slackwe&#9;null&#9;null&#10;apps&#9;null&#9;null&#10;flavo&#9;null&#9;null" />
@@ -401,7 +480,7 @@
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info id="Image Layers" order="2" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32948717" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32948717" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32948717" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Captures" order="2" weight="0.3297568" />
@@ -423,7 +502,7 @@
       <window_info anchor="bottom" id="FindBugs-IDEA" order="7" />
       <window_info id="Designer" order="2" />
       <window_info anchor="bottom" id="Dart Analysis" order="13" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32948717" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32948717" />
       <window_info id="Build Variants" order="3" side_tool="true" />
       <window_info id="Image Layers" order="4" />
       <window_info anchor="right" id="Fabric" order="9" />
@@ -441,10 +520,10 @@
       <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" />
       <window_info anchor="right" id="Flutter Outline" order="6" />
       <window_info anchor="bottom" id="Logcat" order="10" />
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32948717" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="11" visible="true" weight="0.32948717" />
       <window_info anchor="bottom" id="Terminal" order="12" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info content_ui="combo" id="Project" order="0" weight="0.24964234" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
       <window_info anchor="bottom" id="Messages" order="14" weight="0.32948717" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -683,13 +762,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -974,11 +1046,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/notification.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+        <state relative-caret-position="162">
+          <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13">
+          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
         </state>
       </provider>
     </entry>
