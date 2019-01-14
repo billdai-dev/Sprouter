@@ -287,7 +287,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/FMDB/FMDB.framework",
-				"${PODS_ROOT}/.symlinks/flutter/ios/Flutter.framework",
+				"${PODS_ROOT}/.symlinks/flutter/ios-release/Flutter.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_local_notifications/flutter_local_notifications.framework",
 				"${BUILT_PRODUCTS_DIR}/flutter_webview_plugin/flutter_webview_plugin.framework",
 				"${BUILT_PRODUCTS_DIR}/path_provider/path_provider.framework",
@@ -473,6 +473,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "06264747-37e1-48b5-92b9-2200c0407d7a";
 				PROVISIONING_PROFILE_SPECIFIER = 25_official_wildcard_dev_profile;
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -508,6 +509,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "7edda2d9-c224-40fb-930b-c438b25b1ae0";
 				PROVISIONING_PROFILE_SPECIFIER = Sprouter;
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -596,6 +598,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "06264747-37e1-48b5-92b9-2200c0407d7a";
 				PROVISIONING_PROFILE_SPECIFIER = 25_official_wildcard_dev_profile;
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -680,6 +683,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "70360110-776a-47ae-8c70-bab264854dfc";
 				PROVISIONING_PROFILE_SPECIFIER = "Sprouter Ad hoc";
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
@@ -768,6 +772,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "06264747-37e1-48b5-92b9-2200c0407d7a";
 				PROVISIONING_PROFILE_SPECIFIER = 25_official_wildcard_dev_profile;
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -852,6 +857,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "6f4431dd-32f7-45f0-abf7-8db84d0b3633";
 				PROVISIONING_PROFILE_SPECIFIER = "Sprouter Ad hoc";
+				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
